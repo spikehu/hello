@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="lab2：system callsPreparationRead chapter 2 and xv6 code: kernel&#x2F;proc.h, kernel&#x2F;defs.h, kernel&#x2F;entry.S, kernel&#x2F;main.c, user&#x2F;initcode.S, user&#x2F;init.c, and skim kernel&#x2F;p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MIT-6.S081lab2">
+<meta property="og:url" content="http://example.com/2022/10/05/MIT-6.S081lab2/index.html">
+<meta property="og:site_name" content="How about tea">
+<meta property="og:description" content="lab2：system callsPreparationRead chapter 2 and xv6 code: kernel&#x2F;proc.h, kernel&#x2F;defs.h, kernel&#x2F;entry.S, kernel&#x2F;main.c, user&#x2F;initcode.S, user&#x2F;init.c, and skim kernel&#x2F;p">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-05T01:25:00.000Z">
+<meta property="article:modified_time" content="2022-10-11T02:51:13.939Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="MIT-OS">
+<meta property="article:tag" content="LAB-2">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/10/05/MIT-6.S081lab2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/05/MIT-6.S081lab2/","path":"2022/10/05/MIT-6.S081lab2/","title":"MIT-6.S081lab2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MIT-6.S081lab2 | How about tea</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">How about tea</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#lab2%EF%BC%9Asystem-calls"><span class="nav-number">1.</span> <span class="nav-text">lab2：system calls</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Preparation"><span class="nav-number">1.1.</span> <span class="nav-text">Preparation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-call-tracing-moderate"><span class="nav-number">1.2.</span> <span class="nav-text">System call tracing(moderate)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E5%A4%A7%E6%84%8F%E8%A6%81%E6%B1%82"><span class="nav-number">1.2.1.</span> <span class="nav-text">实验大意要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.2.2.</span> <span class="nav-text">前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%EF%BC%9A"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">函数指针：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">1.2.3.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.4.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">1.2.5.</span> <span class="nav-text">运行结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sysinfo-Moderate"><span class="nav-number">1.3.</span> <span class="nav-text">Sysinfo(Moderate)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%9F%E8%AE%A1%E5%89%A9%E4%BD%99%E5%86%85%E5%AD%98%E7%9A%84%E5%A4%A7%E5%B0%8F%EF%BC%9A"><span class="nav-number">1.3.1.</span> <span class="nav-text">统计剩余内存的大小：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%9F%E8%AE%A1%E7%8A%B6%E6%80%81%E4%B8%8D%E4%B8%BAUNUSED%E7%9A%84%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%95%B0%E9%87%8F"><span class="nav-number">1.3.2.</span> <span class="nav-text">统计状态不为UNUSED的进程的数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sys-sysinfo%E7%9A%84%E4%BB%A3%E7%A0%81%E9%83%A8%E5%88%86"><span class="nav-number">1.3.3.</span> <span class="nav-text">sys_sysinfo的代码部分</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/05/MIT-6.S081lab2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="How about tea">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MIT-6.S081lab2 | How about tea">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MIT-6.S081lab2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-05 09:25:00" itemprop="dateCreated datePublished" datetime="2022-10-05T09:25:00+08:00">2022-10-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-11 10:51:13" itemprop="dateModified" datetime="2022-10-11T10:51:13+08:00">2022-10-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MIT-OS/" itemprop="url" rel="index"><span itemprop="name">MIT-OS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="lab2：system-calls"><a href="#lab2：system-calls" class="headerlink" title="lab2：system calls"></a>lab2：system calls</h1><h2 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a><strong>Preparation</strong></h2><p><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/xv6/book-riscv-rev2.pdf">Read chapter 2</a> and xv6 code: <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/proc.h">kernel&#x2F;proc.h</a>, <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/defs.h">kernel&#x2F;defs.h</a>, <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/entry.S">kernel&#x2F;entry.S</a>, <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/main.c">kernel&#x2F;main.c</a>, <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/user/initcode.S">user&#x2F;initcode.S</a>, <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/user/init.c">user&#x2F;init.c</a>, and skim <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/proc.c">kernel&#x2F;proc.c</a> and <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/exec.c">kernel&#x2F;exec.c</a></p>
+<p>In the last lab you used systems calls to write a few utilities. In this lab you will add some new system calls to xv6, which will help you understand how they work and will expose you to some of the internals of the xv6 kernel. You will add more system calls in later labs.</p>
+<span id="more"></span>
+
+<p>Before you start coding, read Chapter 2 of the <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/xv6/book-riscv-rev1.pdf">xv6 book</a>, and Sections 4.3 and 4.4 of Chapter 4, and related source files:</p>
+<ul>
+<li>The user-space code for systems calls is in <code>user/user.h</code> and <code>user/usys.pl</code>.</li>
+<li>The kernel-space code is <code>kernel/syscall.h</code>, kernel&#x2F;syscall.c.</li>
+<li>The process-related code is <code>kernel/proc.h</code> and <code>kernel/proc.c</code>.</li>
+</ul>
+<p>这个实验前的准备比较复杂，参考B站Up进行配置</p>
+<p>To start the lab, switch to the syscall branch:</p>
+<pre><code>  $ git fetch
+  $ git checkout syscall
+  $ make clean
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1VZ4y197uk/?spm_id_from=333.788&amp;vd_source=3beb6fdc520324dc1427808056eb9e4e">https://www.bilibili.com/video/BV1VZ4y197uk/?spm_id_from=333.788&amp;vd_source=3beb6fdc520324dc1427808056eb9e4e</a></p>
+<p>得到的trace.c文件为：</p>
+<pre><code class="C">#include &quot;kernel/param.h&quot;
+#include &quot;kernel/types.h&quot;
+#include &quot;kernel/stat.h&quot;
+#include &quot;user/user.h&quot;
+
+int
+main(int argc, char *argv[])
+&#123;
+  int i;
+  char *nargv[MAXARG];
+
+  if(argc &lt; 3 || (argv[1][0] &lt; &#39;0&#39; || argv[1][0] &gt; &#39;9&#39;))&#123;
+    fprintf(2, &quot;Usage: %s mask command\n&quot;, argv[0]);
+    exit(1);
+  &#125;
+
+  if (trace(atoi(argv[1])) &lt; 0) &#123;
+    fprintf(2, &quot;%s: trace failed\n&quot;, argv[0]);
+    exit(1);
+  &#125;
+    
+  for(i = 2; i &lt; argc &amp;&amp; i &lt; MAXARG; i++)&#123;
+    nargv[i-2] = argv[i];
+  &#125;
+  exec(nargv[0], nargv);
+  exit(0);
+&#125;
+</code></pre>
+<p>这段代码比较简单，就是在trace中调用后面输入的命令</p>
+<h2 id="System-call-tracing-moderate"><a href="#System-call-tracing-moderate" class="headerlink" title="System call tracing(moderate)"></a>System call tracing(moderate)</h2><pre><code>In this assignment you will add a system call tracing feature that may help you when debugging later labs. You&#39;ll create a new trace system call that will control tracing. It should take one argument, an integer &quot;mask&quot;, whose bits specify which system calls to trace. For example, to trace the fork system call, a program calls trace(1 &lt;&lt; SYS_fork), where SYS_fork is a syscall number from kernel/syscall.h. You have to modify the xv6 kernel to print out a line when each system call is about to return, if the system call&#39;s number is set in the mask. The line should contain the process id, the name of the system call and the return value; you don&#39;t need to print the system call arguments. The trace system call should enable tracing for the process that calls it and any children that it subsequently forks, but should not affect other processes.
+</code></pre>
+<h3 id="实验大意要求"><a href="#实验大意要求" class="headerlink" title="实验大意要求"></a>实验大意要求</h3><p>让我们写一个trace的系统函数，这个函数有一个参数表示掩码mask，用来表示trace哪个系统函数。比如，trace fork这个系统函数，那么程序调用就是:trace(1&lt;&lt;SYS_fork),1&lt;&lt;fork就是表示将1左移多少位，SYS_fork是位于kernel&#x2F;syscall.h文件的一个syscall number,表示一个系统函数的一个序号（比如fork就是1左移一位的数字就是1，大概是这个意思）.我们需要修改xv6的内核，打印出什么时候系统调用返回的，如果这个系统函数的number在mask中的话。我们需要打印出process id, the name of system call ,以及system call的返回值，不需要打印出system call 的参数。这个trace系统函数需要能够tracing调用它的进程以及它的子进程，但是不能影响其他进程。</p>
+<p>We provide a <code>trace</code> user-level program that runs another program with tracing enabled (see <code>user/trace.c</code>). When you’re done, you should see output like this:</p>
+<pre><code class="bash">$ trace 32 grep hello README
+3: syscall read -&gt; 1023
+3: syscall read -&gt; 966
+3: syscall read -&gt; 70
+3: syscall read -&gt; 0
+$
+$ trace 2147483647 grep hello README
+4: syscall trace -&gt; 0
+4: syscall exec -&gt; 3
+4: syscall open -&gt; 3
+4: syscall read -&gt; 1023
+4: syscall read -&gt; 966
+4: syscall read -&gt; 70
+4: syscall read -&gt; 0
+4: syscall close -&gt; 0
+$
+$ grep hello README
+$
+$ trace 2 usertests forkforkfork
+usertests starting
+test forkforkfork: 407: syscall fork -&gt; 408
+408: syscall fork -&gt; 409
+409: syscall fork -&gt; 410
+410: syscall fork -&gt; 411
+409: syscall fork -&gt; 412
+410: syscall fork -&gt; 413
+409: syscall fork -&gt; 414
+411: syscall fork -&gt; 415
+...
+$   
+</code></pre>
+<p>In the first example above, trace invokes grep tracing just the read system call. The 32 is <code>1&lt;&lt;SYS_read</code>. In the second example, trace runs grep while tracing all system calls; the 2147483647 has all 31 low bits set. In the third example, the program isn’t traced, so no trace output is printed. In the fourth example, the fork system calls of all the descendants of the <code>forkforkfork</code> test in <code>usertests</code> are being traced. Your solution is correct if your program behaves as shown above (though the process IDs may be different).</p>
+<p>Some hints:</p>
+<ul>
+<li>Add <code>$U/_trace</code> to UPROGS in Makefile</li>
+<li>Run make qemu and you will see that the compiler cannot compile <code>user/trace.c</code>, because the user-space stubs for the system call don’t exist yet: add a prototype for the system call to <code>user/user.h</code>, a stub to <code>user/usys.pl</code>, and a syscall number to <code>kernel/syscall.h</code>. The Makefile invokes the perl script <code>user/usys.pl</code>, which produces <code>user/usys.S</code>, the actual system call stubs, which use the RISC-V <code>ecall</code> instruction to transition to the kernel. Once you fix the compilation issues, run trace 32 grep hello README; it will fail because you haven’t implemented the system call in the kernel yet.</li>
+<li>Add a <code>sys_trace()</code> function in <code>kernel/sysproc.c</code> that implements the new system call by remembering its argument in a new variable in the <code>proc</code> structure (see <code>kernel/proc.h</code>). The functions to retrieve system call arguments from user space are in <code>kernel/syscall.c</code>, and you can see examples of their use in <code>kernel/sysproc.c</code>.</li>
+<li>Modify <code>fork()</code> (see <code>kernel/proc.c</code>) to copy the trace mask from the parent to the child process.</li>
+<li>Modify the <code>syscall()</code> function in <code>kernel/syscall.c</code> to print the trace output. You will need to add an array of syscall names to index into.</li>
+</ul>
+<p>跟着上面的步骤就可以将准备工作做好了。</p>
+<h3 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h3><h4 id="函数指针："><a href="#函数指针：" class="headerlink" title="函数指针："></a>函数指针：</h4><p>函数指针是指向函数的指针，函数指针的声明方法为</p>
+<pre><code>返回值类型 (*指针变量名)（[形参列表]）
+</code></pre>
+<p>例子：</p>
+<pre><code class="C">int func(int x); /* 声明一个函数 */
+int (*f) (int x); /* 声明一个函数指针  其中形参可有可无 视情况而定*/
+f=func; /* 将func函数的首地址赋给指针f */
+</code></pre>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>分析命令 trace 32 grep hello README</p>
+<p>首先在用户模式下调用trace.c ，由于在trace.c中调用了内核中得指令trace,所以sys_trace被调用。在trace.c中如下代码块中可以发现：</p>
+<pre><code class="C">  if (trace(atoi(argv[1])) &lt; 0) &#123;
+    fprintf(2, &quot;%s: trace failed\n&quot;, argv[0]);
+    exit(1);
+  &#125;
+</code></pre>
+<p>其中atoi(argv[1])指传入的参数32。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>在sysproc.c中的sys_trace(void)加入如下代码：</p>
+<pre><code class="C">uint64 sys_trace(void)
+&#123;
+  struct proc *p = myproc();
+  //取得传入的参数
+  int arg  ;
+  if(argint(0,&amp;arg)&lt;0) return -1; 
+  p-&gt;mask = arg;
+  return 0;
+&#125;
+</code></pre>
+<p>在proc.h中 proc数据结构中加入mask，用来表示追踪的命令。</p>
+<p>pro：存储进程相关信息的结构</p>
+<pre><code class="C">// Per-process state
+struct proc &#123;
+  struct spinlock lock;
+
+  // p-&gt;lock must be held when using these:
+  enum procstate state;        // Process state
+  void *chan;                  // If non-zero, sleeping on chan
+  int killed;                  // If non-zero, have been killed
+  int xstate;                  // Exit status to be returned to parent&#39;s wait
+  int pid;                     // Process ID
+ 
+  // wait_lock must be held when using this:
+  struct proc *parent;         // Parent process
+
+  // these are private to the process, so p-&gt;lock need not be held.
+  uint64 kstack;               // Virtual address of kernel stack
+  uint64 sz;                   // Size of process memory (bytes)
+  pagetable_t pagetable;       // User page table
+  struct trapframe *trapframe; // data page for trampoline.S
+  struct context context;      // swtch() here to run process
+  struct file *ofile[NOFILE];  // Open files
+  struct inode *cwd;           // Current directory
+  char name[16];               // Process name (debugging)
+  
+  //在该结构中存放trace中传入的掩码
+  int mask;
+&#125;;
+</code></pre>
+<p>在syscall.c中syscall(void)代码如下:</p>
+<pre><code class="C">
+void
+syscall(void)
+&#123;
+  int num;
+  struct proc *p = myproc();
+  num = p-&gt;trapframe-&gt;a7;
+
+
+  if(num &gt; 0 &amp;&amp; num &lt; NELEM(syscalls) &amp;&amp; syscalls[num]) &#123;
+
+    p-&gt;trapframe-&gt;a0 = syscalls[num]();
+  &#125; else &#123;
+    printf(&quot;%d %s: unknown sys call %d\n&quot;,
+            p-&gt;pid, p-&gt;name, num);
+    p-&gt;trapframe-&gt;a0 = -1;
+  &#125;
+    //如果该sysycall是从trace.c调用的 
+  //且mask进行了标记 那么就打印出syscall的消息
+  if((p-&gt;mask)&gt;&gt;num &amp;1)
+  &#123;
+      printf(&quot;syscall %s -&gt; %d\n&quot;,syscall_names[num-1],p-&gt;trapframe-&gt;a0);
+  &#125;
+
+&#125;
+</code></pre>
+<p>以及</p>
+<pre><code class="C">char* syscall_names[]=&#123;&quot;sys_fork&quot;,&quot;sys_exit&quot;,
+                      &quot;sys_wait&quot;,&quot;sys_pipe&quot;,&quot;sys_read&quot;,
+                      &quot;sys_kill&quot;,&quot;sys_exec&quot;,&quot;sys_fstat&quot;,
+                      &quot;sys_chdir&quot;,&quot;sys_dup&quot;,&quot;sys_getpid&quot;,
+                      &quot;sys_sbrk&quot;,&quot;sys_sleep&quot;,&quot;sys_uptime&quot;,
+                      &quot;sys_open&quot;,&quot;sys_write&quot;,&quot;sys_mknod&quot;,
+                      &quot;sys_unlink&quot;,&quot;sys_link&quot;,&quot;sys_mkdir&quot;,
+                      &quot;sys_close&quot;,&quot;sys_trace&quot;,
+                      &#125;;
+</code></pre>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><pre><code class="bash">$  trace 2 usertests forkforkfork
+usertests starting
+3: syscall sys_fork -&gt; 4
+test forkforkfork: 3: syscall sys_fork -&gt; 5
+5: syscall sys_fork -&gt; 6
+6: syscall sys_fork -&gt; 7
+7: syscall sys_fork -&gt; 8
+7: syscall sys_fork -&gt; 9
+6: syscall sys_fork -&gt; 10
+7: syscall sys_fork -&gt; 11
+8: syscall sys_fork -&gt; 12
+6: syscall sys_fork -&gt; 13
+6: syscall sys_fork -&gt; 14
+8: syscall sys_fork -&gt; 15
+7: syscall sys_fork -&gt; 16
+6: syscall sys_fork -&gt; 17
+8: syscall sys_fork -&gt; 18
+7: syscall sys_fork -&gt; 19
+6: syscall sys_fork -&gt; 20
+8: syscall sys_fork -&gt; 21
+6: syscall sys_fork -&gt; 22
+7: syscall sys_fork -&gt; 23
+7: syscall sys_fork -&gt; 24
+8: syscall sys_fork -&gt; 25
+6: syscall sys_fork -&gt; 26
+23: syscall sys_fork -&gt; 27
+23: syscall sys_fork -&gt; 28
+6: syscall sys_fork -&gt; 29
+7: syscall sys_fork -&gt; 30
+6: syscall sys_fork -&gt; 31
+7: syscall sys_fork -&gt; 32
+8: syscall sys_fork -&gt; 33
+6: syscall sys_fork -&gt; 34
+7: syscall sys_fork -&gt; 35
+8: syscall sys_fork -&gt; 36
+6: syscall sys_fork -&gt; 37
+9: syscall sys_fork -&gt; 38
+6: syscall sys_fork -&gt; 39
+22: syscall sys_fork -&gt; 40
+23: syscall sys_fork -&gt; 41
+9: syscall sys_fork -&gt; 42
+21: syscall sys_fork -&gt; 43
+6: syscall sys_fork -&gt; 44
+21: syscall sys_fork -&gt; 45
+6: syscall sys_fork -&gt; 46
+38: syscall sys_fork -&gt; 47
+38: syscall sys_fork -&gt; 48
+38: syscall sys_fork -&gt; 49
+38: syscall sys_fork -&gt; 50
+38: syscall sys_fork -&gt; 51
+7: syscall sys_fork -&gt; 52
+6: syscall sys_fork -&gt; 53
+9: syscall sys_fork -&gt; 54
+6: syscall sys_fork -&gt; 55
+7: syscall sys_fork -&gt; 56
+13: syscall sys_fork -&gt; 57
+24: syscall sys_fork -&gt; 58
+24: syscall sys_fork -&gt; 59
+OK
+3: syscall sys_fork -&gt; 60
+ALL TESTS PASSED
+</code></pre>
+<h2 id="Sysinfo-Moderate"><a href="#Sysinfo-Moderate" class="headerlink" title="Sysinfo(Moderate)"></a>Sysinfo(Moderate)</h2><pre><code>In this assignment you will add a system call, sysinfo, that collects information about the running system. The system call takes one argument: a pointer to a struct sysinfo (see kernel/sysinfo.h). The kernel should fill out the fields of this struct: the freemem field should be set to the number of bytes of free memory, and the nproc field should be set to the number of processes whose state is not UNUSED. We provide a test program sysinfotest; you pass this assignment if it prints &quot;sysinfotest: OK&quot;.
+</code></pre>
+<p>题目要求：</p>
+<p>完成一个名为sysinfo的syste </p>
+<ul>
+<li>freemem: 还可以使用的内存的字节数量</li>
+<li>nproc:进程状态<strong>不为</strong>UNUSED的状态的数量</li>
+</ul>
+<p>完成后使用sysinfotest进行检测</p>
+<p>Some hints:</p>
+<ul>
+<li><p>Add <code>$U/_sysinfotest</code> to UPROGS in Makefile</p>
+</li>
+<li><p>Run make qemu; <code>user/sysinfotest.c</code> will fail to compile. Add the system call sysinfo, following the same steps as in the previous assignment. To declare the prototype for sysinfo() <code>in user/user.h</code> you need predeclare the existence of <code>struct sysinfo</code>:</p>
+<p>​		</p>
+<pre><code class="C">    struct sysinfo;
+    int sysinfo(struct sysinfo *);
+</code></pre>
+</li>
+</ul>
+<p>​			Once you fix the compilation issues, run sysinfotest; it will fail because you haven’t implemented the system call 			in the kernel yet.</p>
+<ul>
+<li><p>sysinfo needs to copy a <code>struct sysinfo</code> back to user space; see <code>sys_fstat()</code> (<code>kernel/sysfile.c</code>) and <code>filestat()</code> (<code>kernel/file.c</code>) for examples of how to do that using <code>copyout()</code>.</p>
+</li>
+<li><p>To collect the amount of free memory, add a function to <code>kernel/kalloc.c</code></p>
+</li>
+<li><p>To collect the number of processes, add a function to <code>kernel/proc.c</code></p>
+</li>
+</ul>
+<p>根据hint的提示，查看sys_fstat 和 filestat的代码</p>
+<p><em>sys_fstat：</em></p>
+<pre><code class="C">
+uint64
+sys_fstat(void)
+&#123;
+  struct file *f;
+  uint64 st; // user pointer to struct stat
+
+  if(argfd(0, 0, &amp;f) &lt; 0 || argaddr(1, &amp;st) &lt; 0)
+    return -1;
+  return filestat(f, st);
+&#125;
+</code></pre>
+<p><em>filestas:</em></p>
+<pre><code class="C">// Get metadata about file f.
+// addr is a user virtual address, pointing to a struct stat.
+int
+filestat(struct file *f, uint64 addr)
+&#123;
+  struct proc *p = myproc();
+  struct stat st;
+  
+  if(f-&gt;type == FD_INODE || f-&gt;type == FD_DEVICE)&#123;
+    ilock(f-&gt;ip);
+    stati(f-&gt;ip, &amp;st);
+    iunlock(f-&gt;ip);
+    if(copyout(p-&gt;pagetable, addr, (char *)&amp;st, sizeof(st)) &lt; 0)
+      return -1;
+    return 0;
+  &#125;
+  return -1;
+&#125;
+</code></pre>
+<p><em>argfd:</em></p>
+<p>取得syscall传入的文件描述符</p>
+<p>返回文件描述符以及文件的结构体</p>
+<pre><code class="C">// Fetch the nth word-sized system call argument as a file descriptor
+// and return both the descriptor and the corresponding struct file.
+static int
+argfd(int n, int *pfd, struct file **pf)
+&#123;
+  int fd;
+  struct file *f;
+
+  if(argint(n, &amp;fd) &lt; 0)
+    return -1;
+  if(fd &lt; 0 || fd &gt;= NOFILE || (f=myproc()-&gt;ofile[fd]) == 0)
+    return -1;
+  if(pfd)
+    *pfd = fd;
+  if(pf)
+    *pf = f;
+  return 0;
+&#125;
+</code></pre>
+<p><em>argaddr</em>:</p>
+<p>取得参数的地址</p>
+<pre><code class="C">// Retrieve an argument as a pointer.
+// Doesn&#39;t check for legality, since
+// copyin/copyout will do that.
+int
+argaddr(int n, uint64 *ip)
+&#123;
+  *ip = argraw(n);
+  return 0;
+&#125;
+</code></pre>
+<p><em>copyout.c(vm.c):</em></p>
+<p>从内核复制到用户空间，复制n个字节从目的地址到虚拟地址（指定的page table）。</p>
+<pre><code class="C">// Copy from kernel to user.
+// Copy len bytes from src to virtual address dstva in a given page table.
+// Return 0 on success, -1 on error.
+int
+copyout(pagetable_t pagetable, uint64 dstva, char *src, uint64 len)
+&#123;
+  uint64 n, va0, pa0;
+
+  while(len &gt; 0)&#123;
+    va0 = PGROUNDDOWN(dstva);
+    pa0 = walkaddr(pagetable, va0);
+    if(pa0 == 0)
+      return -1;
+    n = PGSIZE - (dstva - va0);
+    if(n &gt; len)
+      n = len;
+    memmove((void *)(pa0 + (dstva - va0)), src, n);
+
+    len -= n;
+    src += n;
+    dstva = va0 + PGSIZE;
+  &#125;
+  return 0;
+&#125;
+</code></pre>
+<h3 id="统计剩余内存的大小："><a href="#统计剩余内存的大小：" class="headerlink" title="统计剩余内存的大小："></a>统计剩余内存的大小：</h3><p>从kfree函数可以看出，freelist是一个链表，每一个节点表示可以使用的空的内存块，一块的大小是PAGESIZE个字节。</p>
+<pre><code class="C">// Physical memory allocator, for user processes,
+// kernel stacks, page-table pages,
+// and pipe buffers. Allocates whole 4096-byte pages.
+
+#include &quot;types.h&quot;
+#include &quot;param.h&quot;
+#include &quot;memlayout.h&quot;
+#include &quot;spinlock.h&quot;
+#include &quot;riscv.h&quot;
+#include &quot;defs.h&quot;
+
+void freerange(void *pa_start, void *pa_end);
+
+extern char end[]; // first address after kernel.
+                   // defined by kernel.ld.
+
+struct run &#123;
+  struct run *next;
+&#125;;
+
+struct &#123;
+  struct spinlock lock;
+  struct run *freelist;
+&#125; kmem;
+
+void
+kinit()
+&#123;
+  initlock(&amp;kmem.lock, &quot;kmem&quot;);
+  freerange(end, (void*)PHYSTOP);
+&#125;
+
+void
+freerange(void *pa_start, void *pa_end)
+&#123;
+  char *p;
+  p = (char*)PGROUNDUP((uint64)pa_start);
+  for(; p + PGSIZE &lt;= (char*)pa_end; p += PGSIZE)
+    kfree(p);
+&#125;
+
+// Free the page of physical memory pointed at by v,
+// which normally should have been returned by a
+// call to kalloc().  (The exception is when
+// initializing the allocator; see kinit above.)
+void
+kfree(void *pa)
+&#123;
+  struct run *r;
+
+  if(((uint64)pa % PGSIZE) != 0 || (char*)pa &lt; end || (uint64)pa &gt;= PHYSTOP)
+    panic(&quot;kfree&quot;);
+
+  // Fill with junk to catch dangling refs.
+  memset(pa, 1, PGSIZE);
+
+  r = (struct run*)pa;
+
+  acquire(&amp;kmem.lock);
+  r-&gt;next = kmem.freelist;
+  kmem.freelist = r;
+  release(&amp;kmem.lock);
+&#125;
+
+// Allocate one 4096-byte page of physical memory.
+// Returns a pointer that the kernel can use.
+// Returns 0 if the memory cannot be allocated.
+void *
+kalloc(void)
+&#123;
+  struct run *r;
+
+  acquire(&amp;kmem.lock);
+  r = kmem.freelist;
+  if(r)
+    kmem.freelist = r-&gt;next;
+  release(&amp;kmem.lock);
+
+    
+  if(r)
+    memset((char*)r, 5, PGSIZE); // fill with junk
+  return (void*)r;
+&#125;
+</code></pre>
+<p>于是统计剩余内存大小的函数为:</p>
+<pre><code class="C">//统计还有多少可以使用的字节大小
+uint64 acquire_free_mem()
+&#123;
+   uint64  freeMemNum = 0;
+   struct run* r;
+   r = kmem.freelist;
+   while(r)
+   &#123;
+      freeMemNum++;
+      r =r-&gt;next;
+   &#125;
+   return freeMemNum*PGSIZE;
+&#125;
+</code></pre>
+<h3 id="统计状态不为UNUSED的进程的数量"><a href="#统计状态不为UNUSED的进程的数量" class="headerlink" title="统计状态不为UNUSED的进程的数量"></a>统计状态不为UNUSED的进程的数量</h3><p>首先阅读proc.c文件</p>
+<p>前面一行有如下代码：</p>
+<pre><code class="c">struct proc proc[NPROC];
+</code></pre>
+<p>这应该是将所有线程的一个数组（线程池？），后面这个创建线程的方法可以佐证这一点（在寻找state为UNUSED这个方法中可以看到）</p>
+<pre><code class="C">// Look in the process table for an UNUSED proc.
+// If found, initialize state required to run in the kernel,
+// and return with p-&gt;lock held.
+// If there are no free procs, or a memory allocation fails, return 0.
+static struct proc*
+allocproc(void)
+&#123;
+  struct proc *p;
+
+  for(p = proc; p &lt; &amp;proc[NPROC]; p++) &#123;
+    acquire(&amp;p-&gt;lock);
+    if(p-&gt;state == UNUSED) &#123;
+      goto found;
+    &#125; else &#123;
+      release(&amp;p-&gt;lock);
+    &#125;
+  &#125;
+  return 0;
+
+found:
+  p-&gt;pid = allocpid();
+  p-&gt;state = USED;
+
+  // Allocate a trapframe page.
+  if((p-&gt;trapframe = (struct trapframe *)kalloc()) == 0)&#123;
+    freeproc(p);
+    release(&amp;p-&gt;lock);
+    return 0;
+  &#125;
+
+  // An empty user page table.
+  p-&gt;pagetable = proc_pagetable(p);
+  if(p-&gt;pagetable == 0)&#123;
+    freeproc(p);
+    release(&amp;p-&gt;lock);
+    return 0;
+  &#125;
+
+  // Set up new context to start executing at forkret,
+  // which returns to user space.
+  memset(&amp;p-&gt;context, 0, sizeof(p-&gt;context));
+  p-&gt;context.ra = (uint64)forkret;
+  p-&gt;context.sp = p-&gt;kstack + PGSIZE;
+
+  return p;
+&#125;
+</code></pre>
+<p>再看struct proc的结构</p>
+<pre><code class="C">// Per-process state
+struct proc &#123;
+  struct spinlock lock;
+
+  // p-&gt;lock must be held when using these:
+  enum procstate state;        // Process state
+  void *chan;                  // If non-zero, sleeping on chan
+  int killed;                  // If non-zero, have been killed
+  int xstate;                  // Exit status to be returned to parent&#39;s wait
+  int pid;                     // Process ID
+ 
+  // wait_lock must be held when using this:
+  struct proc *parent;         // Parent process
+
+  // these are private to the process, so p-&gt;lock need not be held.
+  uint64 kstack;               // Virtual address of kernel stack
+  uint64 sz;                   // Size of process memory (bytes)
+  pagetable_t pagetable;       // User page table
+  struct trapframe *trapframe; // data page for trampoline.S
+  struct context context;      // swtch() here to run process
+  struct file *ofile[NOFILE];  // Open files
+  struct inode *cwd;           // Current directory
+  char name[16];               // Process name (debugging)
+  
+  //在该结构中存放trace中传入的掩码
+  int mask;
+&#125;;
+</code></pre>
+<pre><code class="C">  // p-&gt;lock must be held when using these:
+  enum procstate state;        // Process state
+</code></pre>
+<p>由上代码及注释可以知道，如果要访问一个线程的state，必须hold   p-&gt;lock，调用acquire(&amp;p-&gt;lock)去实现，释放的话就是release(&amp;p-&gt;lock);</p>
+<p>代码如下：</p>
+<pre><code class="C">
+//统计state 不是UNUSED的进程的数量
+//需要找到可以遍历所以线程的一个变量
+uint64 acquire_unused_pro_num()
+&#123;
+   struct proc *p;
+   int unused_proc_num =0;
+   for(p = proc ; p &lt;  &amp;proc[NPROC];p++)
+   &#123;
+      acquire(&amp;p-&gt;lock);
+      if(p-&gt;state != UNUSED)
+      &#123;
+        unused_proc_num++;
+      &#125;
+      release(&amp;p-&gt;lock);
+   &#125;
+  
+   return unused_proc_num;
+&#125;
+</code></pre>
+<h3 id="sys-sysinfo的代码部分"><a href="#sys-sysinfo的代码部分" class="headerlink" title="sys_sysinfo的代码部分"></a>sys_sysinfo的代码部分</h3><pre><code class="C">uint64 sys_sysinfo(void)
+&#123;
+  struct proc *p = myproc();
+  struct sysinfo sf;
+  uint64 infoAddr;//指向struct sysinfo的指针
+  if(argaddr(0,&amp;infoAddr) &lt;0)return -1;
+  // copyout(p-&gt;pagetable,infoAddr,);
+  sf.freemem = acquire_free_mem();
+  sf.nproc =acquire_unused_pro_num();
+
+  if(copyout(p-&gt;pagetable,infoAddr,(char*)&amp;sf,sizeof(sf)))
+  return -1;
+  return 0;
+&#125;
+</code></pre>
+<p>运行结果：</p>
+<pre><code class="bash">$ sysinfotest
+sysinfotest: start
+sysinfotest: OK
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MIT-OS/" rel="tag"># MIT-OS</a>
+              <a href="/tags/LAB-2/" rel="tag"># LAB-2</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/10/05/MIT-6.S081%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99/" rel="prev" title="MIT-6.S081相关资料">
+                  <i class="fa fa-chevron-left"></i> MIT-6.S081相关资料
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="MIT 6.S081实验 lab1前言：测试时候注意事项1.完成程序，添加配置在完成程序之后，需要在Makefile中添加配置，这下面添加的是copy.c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MIT-6.S081实验lab-1">
+<meta property="og:url" content="http://example.com/2022/10/03/MIT-6.S081%E5%AE%9E%E9%AA%8Clab1/index.html">
+<meta property="og:site_name" content="How about tea">
+<meta property="og:description" content="MIT 6.S081实验 lab1前言：测试时候注意事项1.完成程序，添加配置在完成程序之后，需要在Makefile中添加配置，这下面添加的是copy.c">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/typora-user-images%5Cimage-20220930222707955.png">
+<meta property="og:image" content="http://example.com/typora-user-images%5Cimage-20220930223202780.png">
+<meta property="og:image" content="http://example.com/typora-user-images%5Cimage-20221004142714644.png">
+<meta property="og:image" content="http://example.com/typora-user-images%5Cimage-20221005095836273.png">
+<meta property="og:image" content="http://example.com/typora-user-images%5Cimage-20221005193325550.png">
+<meta property="article:published_time" content="2022-10-03T01:25:00.000Z">
+<meta property="article:modified_time" content="2022-10-11T02:54:10.552Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="MIT-OS">
+<meta property="article:tag" content="LAB1">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/typora-user-images%5Cimage-20220930222707955.png">
+
+
+<link rel="canonical" href="http://example.com/2022/10/03/MIT-6.S081%E5%AE%9E%E9%AA%8Clab1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/03/MIT-6.S081%E5%AE%9E%E9%AA%8Clab1/","path":"2022/10/03/MIT-6.S081实验lab1/","title":"MIT-6.S081实验lab-1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MIT-6.S081实验lab-1 | How about tea</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">How about tea</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MIT-6-S081%E5%AE%9E%E9%AA%8C-lab1"><span class="nav-number">1.</span> <span class="nav-text">MIT 6.S081实验 lab1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80%EF%BC%9A%E6%B5%8B%E8%AF%95%E6%97%B6%E5%80%99%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.0.1.</span> <span class="nav-text">前言：测试时候注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%8C%E6%88%90%E7%A8%8B%E5%BA%8F%EF%BC%8C%E6%B7%BB%E5%8A%A0%E9%85%8D%E7%BD%AE"><span class="nav-number">1.0.2.</span> <span class="nav-text">1.完成程序，添加配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">1.1.</span> <span class="nav-text">2.如何进行测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lab-1"><span class="nav-number">1.2.</span> <span class="nav-text">Lab-1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lab-1-1-sleep%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.1.</span> <span class="nav-text">lab-1.1 sleep函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lab-1-2-pingpong"><span class="nav-number">1.2.2.</span> <span class="nav-text">lab-1.2 pingpong</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lab-1-3-primes"><span class="nav-number">1.2.3.</span> <span class="nav-text">lab-1.3 primes</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-1%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">1.3.1前置知识</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lab-1-4-find"><span class="nav-number">1.2.4.</span> <span class="nav-text">lab-1.4 find</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-1%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">1.4.1前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#strut-stat"><span class="nav-number">1.2.4.1.1.</span> <span class="nav-text">strut stat</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#fstat%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.4.1.2.</span> <span class="nav-text">fstat函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#struct-dirent"><span class="nav-number">1.2.4.1.3.</span> <span class="nav-text">struct dirent</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#VX6%E4%B8%ADls-c%E6%BA%90%E7%A0%81"><span class="nav-number">1.2.4.1.4.</span> <span class="nav-text">VX6中ls.c源码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-2%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.4.1.5.</span> <span class="nav-text">1.4.2代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lab1-5-Xargs"><span class="nav-number">1.2.5.</span> <span class="nav-text">lab1.5 Xargs</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-1%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">1.5.1前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%A1%E9%81%93%E7%AC%A6"><span class="nav-number">1.2.5.1.1.</span> <span class="nav-text">管道符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#xargs"><span class="nav-number">1.2.5.1.2.</span> <span class="nav-text">xargs</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/03/MIT-6.S081%E5%AE%9E%E9%AA%8Clab1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="How about tea">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MIT-6.S081实验lab-1 | How about tea">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MIT-6.S081实验lab-1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-03 09:25:00" itemprop="dateCreated datePublished" datetime="2022-10-03T09:25:00+08:00">2022-10-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-11 10:54:10" itemprop="dateModified" datetime="2022-10-11T10:54:10+08:00">2022-10-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MIT-OS/" itemprop="url" rel="index"><span itemprop="name">MIT-OS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="MIT-6-S081实验-lab1"><a href="#MIT-6-S081实验-lab1" class="headerlink" title="MIT 6.S081实验 lab1"></a>MIT 6.S081实验 lab1</h1><h3 id="前言：测试时候注意事项"><a href="#前言：测试时候注意事项" class="headerlink" title="前言：测试时候注意事项"></a>前言：测试时候注意事项</h3><h3 id="1-完成程序，添加配置"><a href="#1-完成程序，添加配置" class="headerlink" title="1.完成程序，添加配置"></a>1.完成程序，添加配置</h3><p>在完成程序之后，需要在Makefile中添加配置，这下面添加的是copy.c</p>
+<span id="more"></span>
+
+<p><img src="/typora-user-images%5Cimage-20220930222707955.png" alt="image-20220930222707955"></p>
+<h2 id="2-如何进行测试"><a href="#2-如何进行测试" class="headerlink" title="2.如何进行测试"></a>2.如何进行测试</h2><p>进行程序的测试的时候需要将qemu退出，然后测试，在linux终端中进行如下测试：</p>
+<pre><code>./grade-lab-util pingpong
+</code></pre>
+<h2 id="Lab-1"><a href="#Lab-1" class="headerlink" title="Lab-1"></a>Lab-1</h2><h3 id="lab-1-1-sleep函数"><a href="#lab-1-1-sleep函数" class="headerlink" title="lab-1.1 sleep函数"></a>lab-1.1 sleep函数</h3><pre><code>Implement the UNIX program sleep for xv6; your sleep should pause for a user-specified number of ticks. (A tick is a notion of time defined by the xv6 kernel, namely the time between two interrupts from the timer chip.) Your solution should be in the file user/sleep.c.
+</code></pre>
+<p><strong>Some hints:</strong></p>
+<ul>
+<li>Look at some of the other programs in <code>user/</code> to see how you can obtain the command-line arguments passed to a program. If the user forgets to pass an argument, sleep should print an error message.</li>
+<li>The command-line argument is passed as a string; you can convert it to an integer using <code>atoi</code> (see user&#x2F;ulib.c).</li>
+<li>Use the system call <code>sleep</code> (see user&#x2F;usys.S and kernel&#x2F;sysproc.c).</li>
+<li>Make sure <code>main</code> calls <code>exit()</code> in order to exit your program.</li>
+<li>Add the program to <code>UPROGS</code> in Makefile and compile user programs by typing <code>make fs.img</code>.</li>
+<li>Look at Kernighan and Ritchie’s book <em>The C programming language (second edition)</em> (K&amp;R) to learn about C.</li>
+</ul>
+<p>编写如下sleep.c 文件</p>
+<pre><code class="c">
+#include &quot;kernel/types.h&quot;
+#include&quot;user/user.h&quot;
+
+int main(int argc , char* argv[])
+&#123;
+    if(argc==0||argc&gt;2)
+    &#123;
+         printf(&quot;argument number error(Usage: sleep number(integer)) \n&quot;);
+         exit(1);
+    &#125;
+    int sleepTime = atoi(argv[1]);
+    sleep(sleepTime);
+    exit(1);
+&#125;
+</code></pre>
+<p>进行测试</p>
+<p><img src="/typora-user-images%5Cimage-20220930223202780.png" alt="image-20220930223202780"></p>
+<h3 id="lab-1-2-pingpong"><a href="#lab-1-2-pingpong" class="headerlink" title="lab-1.2 pingpong"></a>lab-1.2 pingpong</h3><pre><code>Write a program that uses UNIX system calls to ``ping-pong&#39;&#39; a byte between two processes over a pair of pipes, one for each direction. The parent sends by writing a byte to parent_fd[1] and the child receives it by reading from parent_fd[0]. After receiving a byte from parent, the child responds with its own byte by writing to child_fd[1], which the parent then reads. Your solution should be in the file user/pingpong.c.
+</code></pre>
+<ul>
+<li>Use <code>pipe</code> to create a pipe.</li>
+<li>Use <code>fork</code> to create a child.</li>
+<li>Use <code>read</code> to read from the pipe, and <code>write</code> to write to the pipe.</li>
+</ul>
+<p>Run the program from the xv6 shell and it should produce the following output:</p>
+<pre><code>   $ make qemu
+    ...
+    init: starting sh
+    $ pingpong
+    4: received ping
+    3: received pong
+    $
+  
+</code></pre>
+<p>Your solution is correct, if your program behaves as shown above. The number before “:” is the process id of the process printing the output. You can get the process id by calling the system call <code>getpid</code>.</p>
+<p><strong>dup：重新生成一个文件描述符指向oldfd指向的文件，且取当前可以取的最小值</strong></p>
+<pre><code>The dup() system call creates a copy of the file descriptor oldfd, using the lowest-numbered unused file descriptor for the new descriptor.
+
+       After a successful return, the old and new file descriptors may be used interchangeably.  They refer to the same open file description (see open(2)) and thus share file offset and file status
+       flags; for example, if the file offset is modified by using lseek(2) on one of the file descriptors, the offset is also changed for the other.
+
+       The two file descriptors do not share file descriptor flags (the close-on-exec flag).  The close-on-exec flag (FD_CLOEXEC; see fcntl(2)) for the duplicate descriptor off.
+</code></pre>
+<p>代码实现：</p>
+<pre><code class="C">#include &quot;kernel/types.h&quot;
+#include&quot;user/user.h&quot;
+//The parent sends by writing a byte to parent_fd[1] 
+//the child receives it by reading from parent_fd[0]. 
+// After receiving a byte from parent, the child responds with its own byte by writing to child_fd[1], which the parent then reads. 
+
+#define BUF_SIZE 1024
+
+int main(int argc ,char* argv[])
+&#123;
+  
+    if(argc&gt;1)
+    &#123;
+        printf(&quot;too much argument(Usage: pingpong)&quot;);
+        exit(1);
+    &#125;
+    int parent_fd[2];//a pair if pipes that parent send the message
+    pipe(parent_fd);
+
+    int child_fd[2];//child process send message to 
+    pipe(child_fd);
+
+    char buf[BUF_SIZE];
+    //create a process 
+    if( fork() ==0)//child process
+    &#123;
+
+        close(parent_fd[1]);
+        close(child_fd[0]);
+        //read from parent process
+        if(read(parent_fd[0],buf,BUF_SIZE)==-1)exit(1);
+        if(sizeof(buf) == 0)
+        &#123;
+            printf(&quot;receive no byete&quot;);   
+            exit(1);
+        &#125;
+        printf(&quot;%d: received %s&quot;,getpid(),buf);
+        if(write(child_fd[1],&quot;pong\n&quot;,5)==-1)exit(1);
+    &#125;else
+    &#123;
+        //parent process
+        //write byte to the pipe
+        close(parent_fd[0]);
+        close(child_fd[1]);
+        if(write(parent_fd[1],&quot;ping\n&quot;,5)==-1)exit(1);
+        if(read(child_fd[0],buf,BUF_SIZE)==-1)exit(1);
+        printf(&quot;%d: received %s&quot;,getpid(),buf);
+    &#125;
+    
+    exit(1);
+&#125;
+</code></pre>
+<h3 id="lab-1-3-primes"><a href="#lab-1-3-primes" class="headerlink" title="lab-1.3 primes"></a>lab-1.3 primes</h3><pre><code>Write a concurrent version of prime sieve using pipes. This idea is due to Doug McIlroy, inventor of Unix pipes. The picture halfway down [this page](http://swtch.com/~rsc/thread/) and the surrounding text explain how to do it. Your solution should be in the file `user/primes.c`.
+</code></pre>
+<h4 id="1-3-1前置知识"><a href="#1-3-1前置知识" class="headerlink" title="1.3.1前置知识"></a>1.3.1前置知识</h4><p>阅读<a target="_blank" rel="noopener" href="https://swtch.com/~rsc/thread/">Bell Labs and CSP Threads</a>。</p>
+<p>需要掌握的模型如下：</p>
+<p><img src="/typora-user-images%5Cimage-20221004142714644.png" alt="image-20221004142714644"></p>
+<p>题目要求：</p>
+<p>Your goal is to use <code>pipe</code> and <code>fork</code> to set up the pipeline. The first process feeds the numbers 2 through 35 into the pipeline. For each prime number, you will arrange to create one process that reads from its left neighbor over a pipe and writes to its right neighbor over another pipe. Since xv6 has limited number of file descriptors and processes, the first process can stop at 35.</p>
+<p>Some hints:</p>
+<ul>
+<li>Be careful to close file descriptors that a process doesn’t need, because otherwise your program will run xv6 out of resources before the first process reaches 35.</li>
+<li>Once the first process reaches 35, you should arrange that the pipeline terminates cleanly, including all children (Hint: read will return an end-of-file when the write-side of the pipe is closed).</li>
+<li>It’s simplest to directly write 32-bit <code>int</code>s to the pipes, rather than using formatted ASCII I&#x2F;O.</li>
+<li>You should create the processes in the pipeline as they are needed.</li>
+</ul>
+<p>​	</p>
+<p>Your solution is correct if it produces the following output:</p>
+<pre><code class="shell">  $ make qemu
+    ...
+    init: starting sh
+    $ primes
+    prime 2
+    prime 3
+    prime 5
+    prime 7
+    prime 11
+    prime 13
+    prime 17
+    prime 19
+    prime 23
+    prime 29
+    prime 31
+    $
+</code></pre>
+<p>题目大意就是通过一个线程将处理一组数据，将第一个数字num输出，后面可以被num整除的数字舍弃，否则传入下一个子进程，两个进程间使用管道进行通信。</p>
+<p>代码如下：</p>
+<pre><code class="C">#include&quot;kernel/types.h&quot;
+#include&quot;user/user.h&quot;
+#define WR 1
+#define RD 0
+
+const int INT_SIZE = sizeof(int);
+void primes(int* p)
+&#123;
+    close(p[WR]);
+    //从左管道读取数据
+    int firstNum = 0;
+    if(read(p[RD],&amp;firstNum,INT_SIZE)!=INT_SIZE)exit(1);
+
+    printf(&quot;prime %d\n&quot;,firstNum);
+    //读取管道中剩余的数字 将符合要求的数字写入下一个管道
+    int data = 0; 
+    int p2[2];
+    pipe(p2);
+    while(read(p[RD],&amp;data,INT_SIZE)==INT_SIZE)
+    &#123;
+        if(data%firstNum)write(p2[WR],&amp;data,INT_SIZE);
+    &#125;
+    close(p[RD]);
+    if(fork()==0)
+    &#123;
+        primes(p2);
+    &#125;else
+    &#123;
+        close(p2[WR]);
+        wait(0);
+    &#125;
+     exit(1);
+&#125;
+int main(int argc , char* argv[]) &#123;
+    int fd[2];
+    pipe(fd);
+    for(int i = 2 ; i&lt;=35;i++)
+    &#123;
+        write(fd[WR],&amp;i,INT_SIZE);
+    &#125;
+    if(fork()==0)//子进程 对数据进行处理
+    &#123;
+        primes(fd);
+    &#125;else
+    &#123;
+        close(fd[1]);
+        close(fd[0]);
+        wait(0);
+    &#125;
+    exit(1);    
+&#125;
+</code></pre>
+<p>测试结果如下：</p>
+<p><img src="/typora-user-images%5Cimage-20221005095836273.png" alt="image-20221005095836273"></p>
+<h3 id="lab-1-4-find"><a href="#lab-1-4-find" class="headerlink" title="lab-1.4 find"></a>lab-1.4 find</h3><pre><code>Write a simple version of the UNIX find program: find all the files in a directory tree whose name matches a string. Your solution should be in the file user/find.c.
+</code></pre>
+<p>Some hints:</p>
+<ul>
+<li>Look at user&#x2F;ls.c to see how to read directories.</li>
+<li>Use recursion to allow find to descend into sub-directories.</li>
+<li>Don’t recurse into “.” and “..”.</li>
+<li>Changes to the file system persist across runs of qemu; to get a clean file system run make clean and then make qemu.</li>
+<li>You’ll need to use C strings. Have a look at K&amp;R (the C book), for example Section 5.5.</li>
+</ul>
+<p>Optional: support regular expressions in name matching. <code>grep.c</code> has some primitive support for regular expressions.</p>
+<p>Your solution is correct if produces the following output (when the file system contains a file <code>a/b</code>):</p>
+<pre><code class="shell">  $ make qemu
+    ...
+    init: starting sh
+    $ mkdir a
+    $ echo &gt; a/b
+    $ find . b
+    ./a/b
+    $ 
+  
+</code></pre>
+<h4 id="1-4-1前置知识"><a href="#1-4-1前置知识" class="headerlink" title="1.4.1前置知识"></a>1.4.1前置知识</h4><h5 id="strut-stat"><a href="#strut-stat" class="headerlink" title="strut stat"></a><em>strut stat</em></h5><pre><code>用来描述linux文件系统中的文件属性的结构
+</code></pre>
+<p>在vx6中 stat.h：</p>
+<pre><code class="C">#define T_DIR     1   // Directory
+#define T_FILE    2   // File
+#define T_DEVICE  3   // Device
+
+struct stat &#123;
+  int dev;     // File system&#39;s disk device
+  uint ino;    // Inode number
+  short type;  // Type of file
+  short nlink; // Number of links to file
+  uint64 size; // Size of file in bytes
+&#125;;
+</code></pre>
+<h5 id="fstat函数"><a href="#fstat函数" class="headerlink" title="fstat函数"></a>fstat函数</h5><pre><code class="C">int fstat(int fd, struct stat *statbuf);
+</code></pre>
+<p><strong>description:</strong></p>
+<pre><code>fstat() is identical to stat(), except that the file about which information is to be retrieved is specified by the file descriptor fd.即通过指针获取文件信息。
+</code></pre>
+<h5 id="struct-dirent"><a href="#struct-dirent" class="headerlink" title="struct dirent"></a>struct dirent</h5><pre><code>LINUX系统下的一个头文件,在这个目录下/usr/include
+为了获取某文件夹目录内容，所使用的结构体。
+</code></pre>
+<p>在vx6中的结构如下：</p>
+<pre><code class="c">struct dirent &#123;
+  ushort inum;
+  char name[DIRSIZ];
+&#125;;
+</code></pre>
+<h5 id="VX6中ls-c源码"><a href="#VX6中ls-c源码" class="headerlink" title="VX6中ls.c源码"></a>VX6中ls.c源码</h5><pre><code class="C">#include &quot;kernel/types.h&quot;
+#include &quot;kernel/stat.h&quot;
+#include &quot;user/user.h&quot;
+#include &quot;kernel/fs.h&quot;
+
+char*
+fmtname(char *path)
+&#123;
+  static char buf[DIRSIZ+1];
+  char *p;
+
+  // Find first character after last slash.
+  for(p=path+strlen(path); p &gt;= path &amp;&amp; *p != &#39;/&#39;; p--)
+    ;
+  p++;
+
+  // Return blank-padded name.
+  if(strlen(p) &gt;= DIRSIZ)
+    return p;
+  memmove(buf, p, strlen(p));
+  memset(buf+strlen(p), &#39; &#39;, DIRSIZ-strlen(p));
+  return buf;
+&#125;
+
+void
+ls(char *path)
+&#123;
+  char buf[512], *p;//文件名
+  int fd;//文件描述符
+  struct dirent de;//linux 目录信息数据结构
+  struct stat st;//文件信息数据结构
+
+  if((fd = open(path, 0)) &lt; 0)&#123;
+    fprintf(2, &quot;ls: cannot open %s\n&quot;, path);
+    return;
+  &#125;
+
+  if(fstat(fd, &amp;st) &lt; 0)&#123;
+    fprintf(2, &quot;ls: cannot stat %s\n&quot;, path);
+    close(fd);
+    return;
+  &#125;
+
+  switch(st.type)&#123;
+  case T_FILE:
+    printf(&quot;%s %d %d %l\n&quot;, fmtname(path), st.type, st.ino, st.size);
+    break;
+
+  case T_DIR:
+    if(strlen(path) + 1 + DIRSIZ + 1 &gt; sizeof buf)&#123;
+      printf(&quot;ls: path too long\n&quot;);
+      break;
+    &#125;
+    strcpy(buf, path);
+    p = buf+strlen(buf);
+    *p++ = &#39;/&#39;;
+    while(read(fd, &amp;de, sizeof(de)) == sizeof(de))&#123;
+      if(de.inum == 0)//inum 都是从1开始
+        continue;
+      memmove(p, de.name, DIRSIZ);
+      p[DIRSIZ] = 0;
+      if(stat(buf, &amp;st) &lt; 0)&#123;
+        printf(&quot;ls: cannot stat %s\n&quot;, buf);
+        continue;
+      &#125;
+      printf(&quot;%s %d %d %d\n&quot;, fmtname(buf), st.type, st.ino, st.size);
+    &#125;
+    break;
+  &#125;
+  close(fd);
+&#125;
+
+int
+main(int argc, char *argv[])
+&#123;
+  int i;
+
+  if(argc &lt; 2)&#123;
+    ls(&quot;.&quot;);
+    exit(0);
+  &#125;
+  for(i=1; i&lt;argc; i++)
+    ls(argv[i]);
+  exit(0);
+&#125;
+</code></pre>
+<p>要求就是打印出指定目录下文件的所有路径。</p>
+<h5 id="1-4-2代码"><a href="#1-4-2代码" class="headerlink" title="1.4.2代码"></a>1.4.2代码</h5><pre><code class="c">#include &quot;kernel/types.h&quot;
+#include &quot;kernel/stat.h&quot;
+#include &quot;user/user.h&quot;
+#include &quot;kernel/fs.h&quot;
+//p:文件名字的末尾
+//fil:文件名
+int myStrcmp(char* p , char* fil)
+&#123;
+    while(*p!=&#39;/&#39;)p--;
+    p++;
+    return strcmp(p,fil);
+&#125;
+
+//find all the files in a directory tree whose name matches a string. Your solution should be in the file user/find.c.
+void  find(char* path ,char* filename)
+&#123;
+    //p指针指向文件名字(buf)的最后一个字符
+    char buf[512] , *p;
+    int fd ;
+    struct stat st;//文件信息结构
+    struct dirent de; //目录的信息结构
+
+
+    memset(buf,0,sizeof(buf));
+    strcpy(buf,path);
+    p = buf+strlen(buf);
+    
+
+   
+    //先打开文件目录
+    if((fd = open(path,0)) &lt; 0)
+    &#123;
+        printf(&quot;can not open %s\n&quot;,path);
+        return ;
+    &#125;
+    
+    //在获取文件信息
+    if(fstat(fd,&amp;st)&lt;0)
+    &#123;
+        printf(&quot;can not stat %s\n&quot;,path);
+        close(fd);
+        return ;
+    &#125;
+   
+
+    //根据path 是文件还是目录进行不同的处理
+    switch(st.type)
+    &#123;
+        case T_FILE:
+        //如果是文件 就看文件的名字和查找的文件名字是否一致 一致的话打印出该文件的路径 
+        //由于path中包含目录 需要将其去掉只比较文件名
+        if(myStrcmp(p,filename)==0)printf(&quot;%s\n&quot;,path);
+        break;
+        case T_DIR:
+        //进行目录相关的处理
+        //读取目录中的所有文件
+        *p++= &#39;/&#39;;
+        while(read(fd,&amp;de,sizeof(de))==sizeof(de))
+        &#123;
+            
+            
+            if(de.inum == 0 ||de.name[0]==&#39;.&#39;)continue;
+            
+            //在buf后面加上遍历到的文件的名字
+           
+           
+            memmove(p,de.name,DIRSIZ);
+            p[DIRSIZ] = 0;
+            //最后buf 就是该目录下的一个子文件
+            //使用递归进行再次比较
+            // printf(&quot;directory:%s\n&quot;,buf);
+            find(buf,filename);
+        &#125;
+        break;
+    &#125;
+    close(fd);
+&#125;
+int main(int argc , char* argv[])
+&#123;
+    //需要从main中获取3个参数 一个命令 一个文件目录 一个需要查找的文件名
+    if(argc !=3)
+    &#123;
+        printf(&quot;wrong argument,Usage: find [directory] [filename]&quot;);
+        exit(1);
+    &#125;
+    //输入文件名 进行查找 并将相关信息进行打印
+    find(argv[1],argv[2]);
+    exit(1);
+&#125;
+</code></pre>
+<p><img src="/typora-user-images%5Cimage-20221005193325550.png" alt="image-20221005193325550"></p>
+<h3 id="lab1-5-Xargs"><a href="#lab1-5-Xargs" class="headerlink" title="lab1.5 Xargs"></a>lab1.5 Xargs</h3><pre><code>Write a simple version of the UNIX xargs program: read lines from standard input and run a command for each line, supplying the line as arguments to the command. Your solution should be in the file user/xargs.c.
+</code></pre>
+<p>The following example illustrates xarg’s behavior:</p>
+<pre><code class="shell"> $ xargs echo bye
+    hello too
+    bye hello too
+    ctrl-d
+    $
+</code></pre>
+<p>Note that the command here is “echo bye” and the additional arguments are “hello too”, making the command “echo bye hello too”, which outputs “bye hello too”.</p>
+<p>Some hints:</p>
+<ul>
+<li>Use <code>fork</code> and <code>exec</code> system call to invoke the command on each line of input. Use <code>wait</code> in the parent to wait for the child to complete running the command.</li>
+<li>Read from stdin a character at the time until the newline character (‘\n’).</li>
+<li>kernel&#x2F;param.h declares MAXARG, which may be useful if you need to declare an argv.</li>
+<li>Changes to the file system persist across runs of qemu; to get a clean file system run make clean and then make qemu.</li>
+</ul>
+<p>xargs, find, and grep combine well:</p>
+<pre><code class="shell">  $ find . b | xargs grep hello
+</code></pre>
+<p>will run “grep hello” on each file named b in the directories below “.”.</p>
+<p>To test your solution for xargs, run the shell script xargstest.sh. Your solution is correct if it produces the following output:</p>
+<pre><code class="bash"> $ make qemu
+  ...
+  init: starting sh
+  $ sh &lt; xargstest.sh
+  $ $ $ $ $ $ hello
+  hello
+  hello
+  $ $   
+</code></pre>
+<p>You may have to fix bugs in your find program. The output has many <code>$</code> because the xv6 shell is primitive and doesn’t realize it is processing commands from a file instead of from the console, and prints a <code>$</code> for each command in the file.</p>
+<h4 id="1-5-1前置知识"><a href="#1-5-1前置知识" class="headerlink" title="1.5.1前置知识"></a>1.5.1前置知识</h4><h5 id="管道符"><a href="#管道符" class="headerlink" title="管道符"></a>管道符</h5><pre><code class="bash">cmdA | cmdB
+</code></pre>
+<p>命令行cmdA的输出会作为cmdB的输入。</p>
+<h5 id="xargs"><a href="#xargs" class="headerlink" title="xargs"></a>xargs</h5><pre><code class="bash">cmdA| xargs cmdB
+</code></pre>
+<p>将xargs搭配管道符使用，cmdA的输出会作为cmdB的一个参数进行执行。</p>
+<pre><code class="C">#include &quot;kernel/types.h&quot;
+#include &quot;user/user.h&quot;
+#include&quot;kernel/param.h&quot;
+//Write a simple version of the UNIX xargs program: read lines from standard input 
+//and run a command for each line, supplying the line as arguments to the command. 
+//配合管道符使用：cmdA|cmdB 将cmdA的输出作为cmdB命令的参数 然后执行 cmdB 
+int main(int argc ,char* argv[])
+&#123;
+    if(argc==1)
+    &#123;
+        printf(&quot;too few argument,usage:xargs [command]...&quot;);
+    &#125; 
+    char buf[MAXARG];
+    char *newArgv[MAXARG+1];
+    while(1)
+    &#123;
+        //将cmdA执行的输出进行读取
+    //需要舍弃换行符
+    int index = 0; 
+    while(read(0,&amp;buf[index],sizeof(char))&gt;0 &amp;&amp; buf[index] !=&#39;\n&#39;)
+    &#123;
+        index++;
+    &#125;
+    if(index == 0)break;
+    //将换行符 舍弃
+    buf[index]  = 0;
+    //argv[0]是 xargs
+    //argv[1] :是指令
+    for(int i = 1; i &lt; argc;i++)
+    &#123;
+         newArgv[i-1] = argv[i];
+    &#125;
+    newArgv[argc]= 0;
+    newArgv[argc-1] =buf;
+
+    //执行
+    if(fork()==0)
+    &#123;
+        exec(argv[1],newArgv);
+        printf(&quot;exec error.\n&quot;);
+        exit(0);
+    &#125;else
+    &#123;
+        wait(0);
+    &#125;
+    &#125;
+    exit(1);
+
+&#125;   
+</code></pre>
+<p>运行结果：</p>
+<pre><code class="bash">make: &#39;kernel/kernel&#39; is up to date.
+== Test xargs == xargs: OK (6.1s) 
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MIT-OS/" rel="tag"># MIT-OS</a>
+              <a href="/tags/LAB1/" rel="tag"># LAB1</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/10/05/virus-porpagation-paper-1/" rel="next" title="Effects of Social Network Structure on Epidemic Disease Spread Dynamics with Application to Ad Hoc Networks">
+                  Effects of Social Network Structure on Epidemic Disease Spread Dynamics with Application to Ad Hoc Networks <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
