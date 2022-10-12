@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://example.com/typora-user-images%5Cimage-20221005095836273.png">
 <meta property="og:image" content="http://example.com/typora-user-images%5Cimage-20221005193325550.png">
 <meta property="article:published_time" content="2022-10-03T01:25:00.000Z">
-<meta property="article:modified_time" content="2022-10-11T02:54:10.552Z">
+<meta property="article:modified_time" content="2022-10-12T14:34:24.482Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="MIT-OS">
 <meta property="article:tag" content="LAB1">
@@ -214,7 +214,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-11 10:54:10" itemprop="dateModified" datetime="2022-10-11T10:54:10+08:00">2022-10-11</time>
+      <time title="Modified: 2022-10-12 22:34:24" itemprop="dateModified" datetime="2022-10-12T22:34:24+08:00">2022-10-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -239,7 +239,7 @@
         <h1 id="MIT-6-S081实验-lab1"><a href="#MIT-6-S081实验-lab1" class="headerlink" title="MIT 6.S081实验 lab1"></a>MIT 6.S081实验 lab1</h1><h3 id="前言：测试时候注意事项"><a href="#前言：测试时候注意事项" class="headerlink" title="前言：测试时候注意事项"></a>前言：测试时候注意事项</h3><h3 id="1-完成程序，添加配置"><a href="#1-完成程序，添加配置" class="headerlink" title="1.完成程序，添加配置"></a>1.完成程序，添加配置</h3><p>在完成程序之后，需要在Makefile中添加配置，这下面添加的是copy.c</p>
 <span id="more"></span>
 
-<p><img src="/typora-user-images%5Cimage-20220930222707955.png" alt="image-20220930222707955"></p>
+<p><img src="/../typora-user-images%5Cimage-20220930222707955.png" alt="image-20220930222707955"></p>
 <h2 id="2-如何进行测试"><a href="#2-如何进行测试" class="headerlink" title="2.如何进行测试"></a>2.如何进行测试</h2><p>进行程序的测试的时候需要将qemu退出，然后测试，在linux终端中进行如下测试：</p>
 <pre><code>./grade-lab-util pingpong
 </code></pre>
@@ -272,7 +272,7 @@ int main(int argc , char* argv[])
 &#125;
 </code></pre>
 <p>进行测试</p>
-<p><img src="/typora-user-images%5Cimage-20220930223202780.png" alt="image-20220930223202780"></p>
+<p><img src="/../typora-user-images%5Cimage-20220930223202780.png" alt="image-20220930223202780"></p>
 <h3 id="lab-1-2-pingpong"><a href="#lab-1-2-pingpong" class="headerlink" title="lab-1.2 pingpong"></a>lab-1.2 pingpong</h3><pre><code>Write a program that uses UNIX system calls to ``ping-pong&#39;&#39; a byte between two processes over a pair of pipes, one for each direction. The parent sends by writing a byte to parent_fd[1] and the child receives it by reading from parent_fd[0]. After receiving a byte from parent, the child responds with its own byte by writing to child_fd[1], which the parent then reads. Your solution should be in the file user/pingpong.c.
 </code></pre>
 <ul>
@@ -356,7 +356,7 @@ int main(int argc ,char* argv[])
 </code></pre>
 <h4 id="1-3-1前置知识"><a href="#1-3-1前置知识" class="headerlink" title="1.3.1前置知识"></a>1.3.1前置知识</h4><p>阅读<a target="_blank" rel="noopener" href="https://swtch.com/~rsc/thread/">Bell Labs and CSP Threads</a>。</p>
 <p>需要掌握的模型如下：</p>
-<p><img src="/typora-user-images%5Cimage-20221004142714644.png" alt="image-20221004142714644"></p>
+<p><img src="/../typora-user-images%5Cimage-20221004142714644.png" alt="image-20221004142714644"></p>
 <p>题目要求：</p>
 <p>Your goal is to use <code>pipe</code> and <code>fork</code> to set up the pipeline. The first process feeds the numbers 2 through 35 into the pipeline. For each prime number, you will arrange to create one process that reads from its left neighbor over a pipe and writes to its right neighbor over another pipe. Since xv6 has limited number of file descriptors and processes, the first process can stop at 35.</p>
 <p>Some hints:</p>
@@ -440,7 +440,7 @@ int main(int argc , char* argv[]) &#123;
 &#125;
 </code></pre>
 <p>测试结果如下：</p>
-<p><img src="/typora-user-images%5Cimage-20221005095836273.png" alt="image-20221005095836273"></p>
+<p><img src="/../typora-user-images%5Cimage-20221005095836273.png" alt="image-20221005095836273"></p>
 <h3 id="lab-1-4-find"><a href="#lab-1-4-find" class="headerlink" title="lab-1.4 find"></a>lab-1.4 find</h3><pre><code>Write a simple version of the UNIX find program: find all the files in a directory tree whose name matches a string. Your solution should be in the file user/find.c.
 </code></pre>
 <p>Some hints:</p>
@@ -669,7 +669,7 @@ int main(int argc , char* argv[])
     exit(1);
 &#125;
 </code></pre>
-<p><img src="/typora-user-images%5Cimage-20221005193325550.png" alt="image-20221005193325550"></p>
+<p><img src="/../typora-user-images%5Cimage-20221005193325550.png" alt="image-20221005193325550"></p>
 <h3 id="lab1-5-Xargs"><a href="#lab1-5-Xargs" class="headerlink" title="lab1.5 Xargs"></a>lab1.5 Xargs</h3><pre><code>Write a simple version of the UNIX xargs program: read lines from standard input and run a command for each line, supplying the line as arguments to the command. Your solution should be in the file user/xargs.c.
 </code></pre>
 <p>The following example illustrates xarg’s behavior:</p>

@@ -30,15 +30,15 @@
 <meta property="og:image" content="http://example.com/typora-user-images%5Cimage-20221006224329676.png">
 <meta property="og:image" content="http://example.com/typora-user-images%5Cimage-20221006224729196.png">
 <meta property="og:image" content="http://example.com/typora-user-images%5Cimage-20221007092853792.png">
-<meta property="og:image" content="http://example.com/2022/10/05/virus-porpagation-paper-1/typora-user-images/image-20221007093046909.png">
-<meta property="og:image" content="http://example.com/2022/10/05/virus-porpagation-paper-1/typora-user-images/image-20221007100457137.png">
+<meta property="og:image" content="http://example.com/2022/10/05/typora-user-images/image-20221007093046909.png">
+<meta property="og:image" content="http://example.com/2022/10/05/typora-user-images/image-20221007100457137.png">
 <meta property="og:image" content="http://example.com/typora-user-images%5Cimage-20221007102804213.png">
 <meta property="og:image" content="http://example.com/typora-user-images%5Cimage-20221007103259974.png">
-<meta property="og:image" content="http://example.com/2022/10/05/virus-porpagation-paper-1/typora-user-images/image-20221007152231994.png">
+<meta property="og:image" content="http://example.com/2022/10/05/typora-user-images/image-20221007152231994.png">
 <meta property="og:image" content="http://example.com/typora-user-images%5Cimage-20221007153617687.png">
 <meta property="og:image" content="http://example.com/typora-user-images%5Cimage-20221007165036091.png">
 <meta property="article:published_time" content="2022-10-05T01:25:00.000Z">
-<meta property="article:modified_time" content="2022-10-11T02:54:05.782Z">
+<meta property="article:modified_time" content="2022-10-12T14:33:11.010Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="VIRUS">
 <meta property="article:tag" content="NETWORK">
@@ -219,7 +219,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-11 10:54:05" itemprop="dateModified" datetime="2022-10-11T10:54:05+08:00">2022-10-11</time>
+      <time title="Modified: 2022-10-12 22:33:11" itemprop="dateModified" datetime="2022-10-12T22:33:11+08:00">2022-10-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -248,9 +248,9 @@
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>一些流行病模型可以用于对移动网络中的病毒传播进行分析，每个设备就相当于一个可以通过通信技术如Wifi，蓝牙，和蜂窝网络的agent与其他设备进行交互。目前主要的对抗措施就是对软件进行更新。但是对于大型网络，进行全局的更新是不太可行的，更好的是对特定的分组和区域进行更新。本文中我们评估了常用的病毒模型和网络拓扑结构的影响，并提供了SEIR模型在流行病学以及Mobile Ad-hoc Networks中的病毒传播中不同聚集程度的有效性评估。</p>
 <p>SIR或SEIR模型可以进一步分类为概率模型和确定性模型。在确定性模型中，每一个agent的状态的保持时间都是固定的，这是一种较弱的假设。而概率模型则可以更加准确地抓住传播非确定性这一概念，在这些模型中每个状态的保持时间都是跟随一个已知的概率分布的。在SEIR模型中最重要的因素就是agents之间的相互作用。这一因素可以更加深入的理解社交网络结构如何影响病毒的传播的。</p>
 <h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><h2 id="Agent-Based-Model"><a href="#Agent-Based-Model" class="headerlink" title="Agent Based Model"></a>Agent Based Model</h2><p>该模型允许可视化网络中病毒传播的详细行为,是一个主要关注详细行为和个体特点的微型模拟模型。</p>
-<p><img src="/typora-user-images%5Cimage-20221006224329676.png" alt="image-20221006224329676"></p>
+<p><img src="/../typora-user-images%5Cimage-20221006224329676.png" alt="image-20221006224329676"></p>
 <p>将AB模型用与模拟SEIR模型的传播，每个agent一天中可以有3个活动：home ,work, transprotation.基于这些活动，节点可以表示agent, 边表示2个节点参与了一样的活动。</p>
-<p><img src="/typora-user-images%5Cimage-20221006224729196.png" alt="image-20221006224729196"></p>
+<p><img src="/../typora-user-images%5Cimage-20221006224729196.png" alt="image-20221006224729196"></p>
 <p>A susceptible agent can be infected if it comes in contact with both exposed and infected agents. </p>
 <p>CES：exposed 和susceptible之间的接触率。</p>
 <p>CIS：Infected和Susceptible之间的接触率</p>
@@ -258,9 +258,9 @@
 <h2 id="Spatial-Based-Model"><a href="#Spatial-Based-Model" class="headerlink" title="Spatial Based Model"></a>Spatial Based Model</h2><p>该模型以网状结构将人群进行表示， 并考虑到距离因素，所以可以分析病毒的速度和方向。</p>
 <h2 id="Global-Population-Model"><a href="#Global-Population-Model" class="headerlink" title="Global Population Model"></a>Global Population Model</h2><p>全球人口（GP）模型是一种宏观模拟模型，它代表了整个人口的粗粒流行病动态,GP模型是AB模型的一种泛化，GP模型的感染率和接触率是基于AB模型的。GP不考虑网络结构以及agent的属性。</p>
 <p>Eulers’ method can be used to estimate both transmission rate (b) and contact rate (k) for the GP model through the SIR equations listed below [9]: </p>
-<p><img src="/typora-user-images%5Cimage-20221007092853792.png" alt="image-20221007092853792"></p>
+<p><img src="/../typora-user-images%5Cimage-20221007092853792.png" alt="image-20221007092853792"></p>
 <p>The AB, SB, and GP models can be presented as an SEIR-based FSM, as shown in Fig. 2. </p>
-<img src="typora-user-images\image-20221007093046909.png" alt="image-20221007093046909" style="zoom: 67%;" />
+<img src="../typora-user-images\image-20221007093046909.png" alt="image-20221007093046909" style="zoom: 67%;" />
 
 <h2 id="Effect-of-NetWork-Topology-On-The-Dynamics-of-Epidemic"><a href="#Effect-of-NetWork-Topology-On-The-Dynamics-of-Epidemic" class="headerlink" title="Effect of NetWork Topology On The Dynamics of Epidemic"></a>Effect of NetWork Topology On The Dynamics of Epidemic</h2><p>Rahmandad and Sterman [8] explored the eff ect of the AB and GP models on fi ve diff erent types of network structures&#x2F;topologies: small world, scale-free, random, connected, and lattice.</p>
 <p>Low clustered networks:</p>
@@ -274,22 +274,22 @@
 <li>such as scale free and lattice networks exhibit slower disease spread after initial neighbors are infected since the chance of contacting a susceptible agent declines</li>
 </ul>
 <p>Therefore, for high clustered networks, the die out rate of the epidemic is slightly slower than that of a fully connected or random network, as can be seen from Table 2.The major contributor of the diff erence in metrics is the high or low clustering in networks. </p>
-<img src="typora-user-images\image-20221007100457137.png" alt="image-20221007100457137" style="zoom:80%;" />
+<img src="../typora-user-images\image-20221007100457137.png" alt="image-20221007100457137" style="zoom:80%;" />
 
 <h2 id="Developed-SEIR-AB-Model"><a href="#Developed-SEIR-AB-Model" class="headerlink" title="Developed SEIR AB Model"></a>Developed SEIR AB Model</h2><p>SEIR-FSM模型是基于高斯混合模型发展来的。</p>
-<p>transmission probability equation of an individual agent :<img src="/typora-user-images%5Cimage-20221007102804213.png" alt="image-20221007102804213"></p>
+<p>transmission probability equation of an individual agent :<img src="/../typora-user-images%5Cimage-20221007102804213.png" alt="image-20221007102804213"></p>
 <p>M是活动的数量，X是D维的包含agent 人口统计和活动特征的向量。Wi是活动的权重，可由Table 2明确，u是病毒传播率β。</p>
-<p><img src="/typora-user-images%5Cimage-20221007103259974.png" alt="image-20221007103259974"></p>
+<p><img src="/../typora-user-images%5Cimage-20221007103259974.png" alt="image-20221007103259974"></p>
 <p>β accounts for the heterogeneity factor (δi) based on the diff erent activities of the social network. </p>
 <h2 id="Experiment-And-Result-For-A-Synthsized-Population"><a href="#Experiment-And-Result-For-A-Synthsized-Population" class="headerlink" title="Experiment And Result For A Synthsized Population"></a>Experiment And Result For A Synthsized Population</h2><p>实验所使用的数据集是包含322,000个agent的小世界网络，每个agent有3个活动（home,work,transport），以及相应的人口统计数据。实验将8：00至11：59分为4个时间段，分别表示4个活动：home,transport,work, and transport.对于AB模型，使用Table 1作为参数。</p>
 <p>Scenario 1（Fig 3a and 3b）：I0 &#x3D; 600 and estimated disease parameters b and k are 1.24 and 0.24.</p>
 <p><em>Note, the GP model closely follows the trend of the AB model for the individuals in both state S and state I.</em></p>
 <p>Scenario 2（Fig 3c and cd）: I0 &#x3D; 153 and estimated disease parameters b &#x3D;0.848 ,k  &#x3D; 0.099</p>
-<img src="typora-user-images\image-20221007152231994.png" alt="image-20221007152231994" style="zoom:80%;" />
+<img src="../typora-user-images\image-20221007152231994.png" alt="image-20221007152231994" style="zoom:80%;" />
 
 <p>场景2的密集程度是小于场景1的，场景1更早的到达峰值，持续时间是10天，场景二持续了13天。由于场景二的estimated disease parameters rate b 和 k要小一些，所以得出结论：These results conclude that both the size and the location of the initial infection play an important role in terms of the dynamics of disease spread. </p>
 <h2 id="Virus-Spread-In-Mobile-Ad-Hoc-networks"><a href="#Virus-Spread-In-Mobile-Ad-Hoc-networks" class="headerlink" title="Virus Spread In Mobile Ad Hoc networks"></a>Virus Spread In Mobile Ad Hoc networks</h2><p>MANET具有如下特点：一点范围内的设备可以通信，不同范围的设备也可以通过中间节点进行通信，设备可以随时加入或者退出网络，这就导致了MANNET的网络结构是动态变化的。</p>
-<p><img src="/typora-user-images%5Cimage-20221007153617687.png" alt="image-20221007153617687"></p>
+<p><img src="/../typora-user-images%5Cimage-20221007153617687.png" alt="image-20221007153617687"></p>
 <p>上面的实验结果可以扩展应用到MANET中的病毒传播。</p>
 <p>For this information ,we utilize a Traffic Flow Table (TFT) and a Traffic Information Table (TIT) maintained by each mobile device. These tables are used for two purposes. First, they provide connectivity information among nodes. Second, a TFT can be used to identify infected agents through characteristics such as packet drop, buffer overflow, bandwidth consumption, and so on. </p>
 <h2 id="Disease-spread-rules-In-Ad-Hoc-Mobile-Networks"><a href="#Disease-spread-rules-In-Ad-Hoc-Mobile-Networks" class="headerlink" title="Disease spread rules In Ad Hoc Mobile Networks"></a>Disease spread rules In Ad Hoc Mobile Networks</h2><p>为了将流行病模型应用到MANET，我们利用CVSS（Common Vulnerability Scoring System),CVSS提供了一个开放的框架来描述设备在不同病毒攻击方面的漏洞。[11] P. Mell et al., ”A Complete Guide to the Common Vulnerability Scoring System (CVSS) Version 2.0, Forum of Incident Response and Security Teams,” <a target="_blank" rel="noopener" href="http://www.first.org/cvss/">http://www.first.org/cvss/</a> cvss-guide.html, June 2007.</p>
@@ -298,7 +298,7 @@
 <p><em>Contact rate &#x3D; f(access vector, authenticity).</em> </p>
 <p>A high level of authenticity denotes that an agent while trying to connect to another agent needs to go through several steps of authentication.()<br>认证水平越高代表两个节点的连接就需要更多的认证过程。</p>
 <p>Access complexity :与网络的异构系数δ对应。</p>
-<p><img src="/typora-user-images%5Cimage-20221007165036091.png" alt="image-20221007165036091"></p>
+<p><img src="/../typora-user-images%5Cimage-20221007165036091.png" alt="image-20221007165036091"></p>
 <p>where AV is the access vector, AC is the access complexity, and Au is the authentication level. </p>
 
     </div>
