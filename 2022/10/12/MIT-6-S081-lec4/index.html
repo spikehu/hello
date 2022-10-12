@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="lec4-Virtual Memroy准备工作，阅读【1】中第3章；阅读memlayout.h【2】；阅读vm.c【3】；阅读kalloc【4】；阅读riscv.h【5】；阅读exec.c【6】 【1】https:&#x2F;&#x2F;pdos.csail.mit.edu&#x2F;6.828&#x2F;2020&#x2F;xv6&#x2F;book-riscv-rev1.pdf 【2】https:&#x2F;&#x2F;github.com&#x2F;mit-pdos&#x2F;xv6-ri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MIT-6.S081-lec4">
+<meta property="og:url" content="http://example.com/2022/10/12/MIT-6-S081-lec4/index.html">
+<meta property="og:site_name" content="How about tea">
+<meta property="og:description" content="lec4-Virtual Memroy准备工作，阅读【1】中第3章；阅读memlayout.h【2】；阅读vm.c【3】；阅读kalloc【4】；阅读riscv.h【5】；阅读exec.c【6】 【1】https:&#x2F;&#x2F;pdos.csail.mit.edu&#x2F;6.828&#x2F;2020&#x2F;xv6&#x2F;book-riscv-rev1.pdf 【2】https:&#x2F;&#x2F;github.com&#x2F;mit-pdos&#x2F;xv6-ri">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221012100850021.png">
+<meta property="og:image" content="http://example.com/2022/10/12/typora-user-images/image-20221012101210002.png">
+<meta property="og:image" content="http://example.com/2022/10/12/typora-user-images/image-20221012104613436.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221012195509306.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221012212711147.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221012222057626.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221012222106594.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221012222138184.png">
+<meta property="article:published_time" content="2022-10-12T01:38:14.000Z">
+<meta property="article:modified_time" content="2022-10-12T14:22:18.346Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="MIT-OS">
+<meta property="article:tag" content="LEC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/typora-user-images/image-20221012100850021.png">
+
+
+<link rel="canonical" href="http://example.com/2022/10/12/MIT-6-S081-lec4/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/12/MIT-6-S081-lec4/","path":"2022/10/12/MIT-6-S081-lec4/","title":"MIT-6.S081-lec4"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MIT-6.S081-lec4 | How about tea</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">How about tea</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#lec4-Virtual-Memroy"><span class="nav-number">1.</span> <span class="nav-text">lec4-Virtual Memroy</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter-3"><span class="nav-number">1.1.</span> <span class="nav-text">Chapter 3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-paging-hardware"><span class="nav-number">1.1.1.</span> <span class="nav-text">3.1 paging hardware</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Kernel-address-space"><span class="nav-number">1.1.2.</span> <span class="nav-text">3.2 Kernel address space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Code-creating-an-address-space"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.3 Code:creating an address space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Physical-memory-allocation"><span class="nav-number">1.1.4.</span> <span class="nav-text">3.4 Physical memory allocation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-Code-Physical-memory-allocator"><span class="nav-number">1.1.5.</span> <span class="nav-text">3.5 Code: Physical memory allocator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-Process-address-space"><span class="nav-number">1.1.6.</span> <span class="nav-text">3.6 Process address space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-Code-sbrk"><span class="nav-number">1.1.7.</span> <span class="nav-text">3.7 Code:sbrk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-Code-exec"><span class="nav-number">1.1.8.</span> <span class="nav-text">3.8 Code:exec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-Real-world"><span class="nav-number">1.1.9.</span> <span class="nav-text">3.9 Real world</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-10-Exercise"><span class="nav-number">1.1.10.</span> <span class="nav-text">3.10 Exercise</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/12/MIT-6-S081-lec4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="How about tea">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MIT-6.S081-lec4 | How about tea">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MIT-6.S081-lec4
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-10-12 09:38:14 / Modified: 22:22:18" itemprop="dateCreated datePublished" datetime="2022-10-12T09:38:14+08:00">2022-10-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MIT-OS/" itemprop="url" rel="index"><span itemprop="name">MIT-OS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="lec4-Virtual-Memroy"><a href="#lec4-Virtual-Memroy" class="headerlink" title="lec4-Virtual Memroy"></a>lec4-Virtual Memroy</h1><p>准备工作，阅读【1】中第3章；阅读memlayout.h【2】；阅读vm.c【3】；阅读kalloc【4】；阅读riscv.h【5】；阅读exec.c【6】</p>
+<p>【1】<a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf">https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf</a></p>
+<p>【2】<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/memlayout.h">https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/memlayout.h</a></p>
+<p>【3】<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/vm.c">https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/vm.c</a></p>
+<p>【4】<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/kalloc.c">https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/kalloc.c</a></p>
+<p>【5】<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/riscv.h">https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/riscv.h</a></p>
+<p>【6】<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/exec.c">https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/exec.c</a></p>
+<span id="more"></span>
+
+<h2 id="Chapter-3"><a href="#Chapter-3" class="headerlink" title="Chapter 3"></a>Chapter 3</h2><p>page table是一种实现让进程拥有自己的地址空间和内存的机制。实现进程间的隔离性。</p>
+<h3 id="3-1-paging-hardware"><a href="#3-1-paging-hardware" class="headerlink" title="3.1 paging hardware"></a>3.1 paging hardware</h3><p>xv6中64bit的虚拟地址只有低39位被使用了。逻辑上，page table是一组大小为2^(27)个page table entries（PTEs）的数组，每个PTE包含一个44位的physical page number(PPN)以及一些flags。paging hardware将虚拟地址39bit中的前27位映射到page table 中去找到PTE，然后得到一个56位的物理地址，其中高44bits来自PTE中的PPN，低12位来自原虚拟地址的offset，如图所示。</p>
+<p><img src="/../typora-user-images/image-20221012100850021.png" alt="image-20221012100850021"></p>
+<p>页表使操作系统能够以4096（2^12）字节的对齐块粒度控制虚拟地址到物理地址的转换，这样的块称为page.</p>
+<p>在图3.2可以看到，实际转换过程有3步。The root of the tree is a 4096-byte page-table page that contains 512 PTEs, which contain the physical addresses for page-table pages in the next level of the tree.意思就是虚拟地址L2 L1 L0的9位去寻找在page directory中的PTE，这个page directory有4096个字节，包含512个PPN。</p>
+<img src="../typora-user-images/image-20221012101210002.png" alt="image-20221012101210002" style="zoom:80%;" />
+
+<p>如果3个PTEs中的任何一个想映射一个不存在的地址，paging hardware 就会抛出一个 page-fault exception到内核，让内核去处理（见chapter 4）。每一个PTE都有flag bits告诉paging hardware相关联的虚拟地址的使用权限。</p>
+<ul>
+<li><strong>PTE_V</strong> indicates whether the PTE is present: if it is not set, a reference to thepagecausesanexception(i.e.isnotallowed). </li>
+<li><strong>PTE_R</strong> controlswhetherinstructionsareallowed to read to the page. </li>
+<li><strong>PTE_W</strong> controls whether instructions are allowed to write to the page. </li>
+<li><strong>PTE_W</strong> controls whether instructions are allowed to write to the page. </li>
+<li><strong>PTE_U</strong> controls whether instructions in user mode are allowed to access the page</li>
+<li><strong>PTE_U</strong> is not set,the PTE can be used only in supervisor mode（也就是内核态）.</li>
+</ul>
+<pre><code>To tell the hardware to use a page table, the kernel must write the physical address of the root page-table page into the satp register. 
+</code></pre>
+<p>为了让硬件使用page table,内核必须将root page-table page的物理地址写入satp寄存器。每个CPU有自己的一个satp。所以一个CPU可以运行一个进程。</p>
+<h3 id="3-2-Kernel-address-space"><a href="#3-2-Kernel-address-space" class="headerlink" title="3.2 Kernel address space"></a>3.2 Kernel address space</h3><p>Xv6为每一个进程维护一个page table来描述每个进程的用户地址，加上一个单独的page table描述内核地址空间。内核设置了自己的地址空间的layout以此达到获取物理内存和各种硬件资源的虚拟地址。图3.3展示了内核虚拟地址到物理地址的布局映射（layout map），文件（kernel&#x2F;memlayout.h）声明了xv6的内核内存布局的常数。</p>
+<img src="../typora-user-images/image-20221012104613436.png" alt="image-20221012104613436"  />
+
+<p>QEMU从物理地址0x80000000开始模拟包含RAM（physical memory）的计算机，知道地址在0x86400000，在xv6中称之为PHYSTOP.0x80000000以下的地址都是一些I&#x2F;O设备，内核直接通过这些设备的物理地址与其进行交互而不是通过RAM。在Chapter 4解释了xv6如何与这些设备进行交互的，与设备进行交互的话，虚拟地址就等于他们的物理地址了。</p>
+<p>有一些内核虚拟地址不是直接映射的：</p>
+<ul>
+<li>**The trampoline page.**It is mapped at the top of the virtual address space; user page tables have this same mapping. Chapter 4 discusses the role of the trampoline page, but we see here an interesting use case of page tables; a physical page (holding the trampoline code) is mapped twice in the virtual address space of the kernel: once at top of the virtual address space and once with a direct mapping.</li>
+<li>**The kernel pages.**Each process has its own kernel stack, which is mapped high so that below it xv6 can leave an unmapped guard page. The guard page’s PTE is invalid (i.e., PTE_V isnotset),so that if the kernel overﬂows a kernel stack,itwill likely cause an exception and the kernel will panic. Without a guard page an overﬂowing stack would overwrite other kernel memory, resulting in incorrect operation. A panic crash is preferable.</li>
+</ul>
+<h3 id="3-3-Code-creating-an-address-space"><a href="#3-3-Code-creating-an-address-space" class="headerlink" title="3.3 Code:creating an address space"></a>3.3 Code:creating an address space</h3><p>V6中大多数用来操作地址空间和页表（page table）的代码都在<em>vm.c</em>文件中（kernel&#x2F;vm.c）。最核心的数据结构是pagetable_t,实际上是一个指向RISC-V根页表的指针。一个pagetable_t可以是一个内核的page table,或者是一个进程的page table。最核心的一个函数是<em>walk</em>,用来找到对于虚拟地址的PTE和<em>mappages</em>,mappages为新的映射安装PTEs.以<em>kvm</em>开头的函数操作内核页表；以<em>uvm</em>开头的函数操作用户页表，其他函数则是两者都有。<em>copyout</em>和<em>copyin</em>以system call参数的形式将数据复制到用户虚拟地址，或者从用户虚拟地址复制数据；这两个函数在<em>vm.c</em>中，因为他们需要显式的将虚拟地址转换为相应的物理内存。</p>
+<p>在引导顺序的前期，<em>main</em>调用<em>kvminit</em>(kernel&#x2F;vm.c)去创造一个内核页表。这个调用出现在<em>xv6</em>将页表置入RISC-V中，所以地址都是直接映射到物理内存.kvminit开始分配一个页表大小的物理内存用来存放root page-table page。然后再调用kvmmap加载内核需要的转换（translations）。这个转换包括内核指令集以及数据，物理地址最高到PHYSOP,这些内存的范围都实际指向了设备（and memory ranges which are actually devices）。</p>
+<p>kvmmap（kernel&#x2F;vm.c:118）调用mappages(kernel&#x2F;vm.c:149)，这个函数将一定范围的虚拟地址与之对应范围的物理地址的映射加载到页表。<u><strong>对于该范围内的虚拟地址都是以页面为间隔(单位？)进行单独操作的</strong></u>（不z理解，原文： It does this separately for each virtual address in the range, <strong>at page intervals</strong>）。对于每个被映射的虚拟地址，mappages调用<em>walk</em>函数去找到PTE中对应的地址。然后在初始化PTE去存放相关的physical page number,以及相关的期望的权限（PTE_W,PTE_X,and&#x2F;or PTE_R）,PTE_V标志这个给PTE是可以获取到的(valid)（kernel&#x2F;vm.c:161）。</p>
+<p><em>walk</em>(kernel&#x2F;vm.c:72)函数模仿了RISC-V paging harware因为它为虚拟地址寻找PTE。<em>walk</em> descends the 3-level  page table 9 bits at the time.它利用虚拟地址中每一级level的9 bits去找到下一级page table  或者 final page的PTE（kernel&#x2F;vm.c:78）。如果这个PTE是无效的，就表示需要的页表没有被分配。如果<em>alloc</em>的参数被设置好，<em>walk</em>将分配一个新的page-table 并且把它的物理地址放入PTE中。它返回树中最低层级PTE的地址（kernel&#x2F;vm.c:88）。</p>
+<p>上述的代码依赖于被直接映射到内核虚拟地址空间的物理地址。比如，当walk去遍历各层级page table，它直接从PTE(kernel&#x2F;vm.c:80)拉取下一层级page table的物理地址，接着使用该地址作为一个虚拟地址去得到下一个层级的PTE。</p>
+<p><em>*<em>main</em>函数调用*kvminithart</em>（kernel&#x2F;vm.c:53）去加载内核page table。它将根页表的物理地址写到寄存器<em>satp</em>。后面CPU就会根据这个内核页表对地址进行转换，**Since the kernel uses an identity mapping, the now virtual address of the next instruction will map to the right physical memory address。</p>
+<p><em>procinit</em>（kernel&#x2F;proc.c:26），这个函数被main调用，它为每一个进程分配一个内核栈。它将每个栈映射到<em>KSTACK</em>生成的虚拟地址，这将为有效的stack-guard留下空间。<em>kvmmap</em>将PTEs映射到内核页表(kernel page table)，接着调用<em>kvminithart</em>重新加载kernel page table到<em>satp</em>，以达到hardware知道新的PTEs。</p>
+<p>每个RISC-V CPU 将缓存page table 到TLB（Translation Look-aside Buffer）中，当xv6对page table进行了更改，它必须告诉CPU使得TLB中对应缓存的entries无效（应该指的是PTE）。如果没有这样做，在某一时刻，TLB可能会使用一个旧的缓存的映射，同时将其指向一个phsical page，但是这个physical page已经分配给其他进程了，这样的后果就是，一个进程可能去污染其他进程的内存。RISC-V有一个叫sfence.vma的指令，用以刷新CPU的TLB。xv6在kvminithart中执行sfence.vma在重新加载satp寄存器之后，而在返回到用户空间之前trampoline中的代码会切换到一个用户页表(kernel&#x2F;trampolin.S:79).</p>
+<h3 id="3-4-Physical-memory-allocation"><a href="#3-4-Physical-memory-allocation" class="headerlink" title="3.4 Physical memory allocation"></a>3.4 Physical memory allocation</h3><p>内核在运行过程中必须为页表(page table)、用户内存(user memory)、内核栈(kernel stack)、和管道缓存(pipe buffers)分配和释放物理内存。</p>
+<p>xv6使用在内核末端和PHYSOTP之间的物理内存来在运行期间进行分配。一次性分配和释放整个4096字节的page。<u>它将通过将pages形成链表来跟踪哪个page是可以使用的（原文:Since the kernel uses an identity mapping, the now virtual address of the next instruction will map to the right physical memory address）</u>分配过程包含将一个page从链表中移除；释放包含将free page 增加道链表。</p>
+<h3 id="3-5-Code-Physical-memory-allocator"><a href="#3-5-Code-Physical-memory-allocator" class="headerlink" title="3.5 Code: Physical memory allocator"></a>3.5 Code: Physical memory allocator</h3><p>分配器在<em>kalloc.c</em>(kernel&#x2F;kalloc.c:1)。这个分配器的数据结构是一个可以分配的物理内存<em>pages</em>的<em>free list</em> ，每一个free page&#96;s的链表元素是一个<em>struct run</em>(kernel&#x2F;kalloc.c:17)。分配器是如何得到内存去存放那个数据结构的呢？每个free page保留自己的<em>run</em>数据结构，因为在那里没有其它东西被存放。这个free list 被一个spin lock(kernel&#x2F;kalloc.c:21-24)保护。这个list和lock被封装在一个结构体中用来明确锁可以保护结构体中的field。现在忽略lock和<em>acquire</em>以及<em>release</em>；第6章会将详细讲解lock.</p>
+<p>函数<em>main</em>会调用<em>kinit</em>初始化allocator(kernnel&#x2F;kalloc.c:27)。<em>kinit</em>会初始化free list去hold每一个在kernel的末端和PHYSTOP之间的page。xv6应该通过解析硬件提供的配置信息决定还有多少物理内存可以得到。相反，xv6假设这个机器有128兆字节的<strong>RAM</strong>。<em>kinit</em>调用freerange通过per-page calls to <em>kfree</em>去将空闲的内存加到free list 后。PTE只能引用在4096字节边界上对齐的物理地址（是4096的倍数），因此<em>freerange</em>使用PGROUP来确保它只能释放对齐的物理地址。<u>allocator开始没有内存；这些kfree的调用给了它一些去管理。（The allocator starts with no memory; these calls to kfree give it some to manage. ）</u></p>
+<p>allocator有时候将地址当作整型以方便进行算术运算(e.g., traversing all pages in freerange)，有时又将其当作指针去读和写这些内存(e.g.,manipulatingthe run structurestoredineachpage)；</p>
+<p>函数kfree(kernel&#x2F;kalloc.c:47)将所有被释放的内存的每个字节都置为1。这造成了如果代码使用了释放后的内存，将会读取到垃圾内容而不是原来有效的内容。从而希望这种代码更快的break。然后<em>kfree</em>将这个page加入到free list: it casts pa to a pointer to <em>struct run</em>, records the old start of the free list in r-&gt;next, and sets the free list equal to r.  <em>kalloc</em> removes and returns the ﬁrst element in the free list.</p>
+<h3 id="3-6-Process-address-space"><a href="#3-6-Process-address-space" class="headerlink" title="3.6 Process address space"></a>3.6 Process address space</h3><p>每个进程都有自己单独的page table，当xv6在切换进程的时候，也会切换page tables。如figure 23所示，一个进程的用户内存从虚拟地址0开始并且最大到MAXVA(kernel&#x2F;riscv.h:348)，原则上允许进程有256GB大小的内存（因为虚拟地址可以用39位，就是2^39字节）。</p>
+<p>当一个进程想xv6要求更多的用户内存的时候，xv6首先会使用<em>kalloc</em>去申请physical pages.然后会将PTEs加入进程的page table，这个page table指向新的physical page。Xv6将在这些PTEs中设置PTE_W,PTE_X,PTE_R,PTE_U和PTE_V标志位。大多数进程都用不完整个用户地址空间;xv6在未使用的PTEs中清除PTE_V。</p>
+<p>我们会在这里介绍一些page tables的一些漂亮的例子。首先，不同的进程的page tables将用户地址转换为不同的物理内存的pages，因此每个进程有自己的私人用户内存。其次，每个进程将自己的内存是为从0开始连续的虚拟地址，但是进程的物理内存可以不是连续的。第三，内核通过用户地址空间顶部的trampoline代码映射一个page<u>,因此，在所有地址空间中都会显示一页物理内存( thus a single page of physical memory shows up in all address spaces. )。</u></p>
+<p>figure 3.4显示了一个正在xv6中运行的进程的用户内存的更为详细的布局。The stack is a single page, and is shown with the initial contents as created by exec. 包含命令行参数的字符串以及指向他们的指针数组在栈的最上方。在下面是允许一个程序在启动<em>mian</em>可以使用的值只要函数*main(argc,argv)*被调用的话。</p>
+<p><img src="/../typora-user-images/image-20221012195509306.png" alt="image-20221012195509306"></p>
+<p>为了检测一个用户栈溢出分配的栈内存，xv6在栈的正下方放置了一个无效的guard page。如果用户堆栈溢出且进程在堆栈下方使用地址，硬件将生成一个页面错误异常，因为映射无效。在真实世界中的操作系统可能会自动为用户栈分配更多的内存如果发送溢出的话。</p>
+<h3 id="3-7-Code-sbrk"><a href="#3-7-Code-sbrk" class="headerlink" title="3.7 Code:sbrk"></a>3.7 Code:sbrk</h3><p><em>sbrk</em>是一个进程用来缩小或者扩大自己内存的系统函数。这个系统函数是由函数<em>grwoproc</em>(kernel&#x2F;proc.c:239)完成的。<em>grwoproc</em>调用<em>uvmalloc</em>或者<em>uvmdealloc</em>，取决于n是正数还是负数。uvmalloc(kernel&#x2F;vm.c:229)和<em>kalloc</em>一起分配物理内存，并使用<em>mappages</em>将PTEs加入到用户表。<em>uvmalloc</em>调用<em>uvmunmap</em>（kernel&#x2F;vm.c:174）,它使用<em>walk</em>去寻找PTEs以及kfree去释放与之相关的物理内存。</p>
+<p>xv6使用page tables不仅是告诉硬件如何映射虚拟地址，而且还是物理内存page被分配到哪个进程的唯一记录。这也是为什么释放用户内存（in uvmunmap）需要检测用户页表。</p>
+<h3 id="3-8-Code-exec"><a href="#3-8-Code-exec" class="headerlink" title="3.8 Code:exec"></a>3.8 Code:exec</h3><p><em>Exec</em>是创造地址空间用户部分的系统调用（之前都是翻译的系统函数，感觉系统调用更加贴切）。它从存储在文件系统中的文件中初始化地址空间的用户部分。<em>Exec</em>(kernel&#x2F;exec.c:13)使用namei(kernel&#x2F;exec.c:26)打开命名为<em>path</em>的二进制地址，在第8章回进行解释。然后它回读取ELF头部（header）。Xv6应用以广泛使用的ELF 格式进行描述（Xv6 applications are described in the widely-used <strong>ELF</strong> format）定义在（kernel&#x2F;elf.h）。一个ELF二进制由<em>ELF header,struct elfhd</em>(kernel&#x2F;elf.h:6)构成,后面跟着一系列程序部分的headers,<em>struct proghdr</em>(kernel&#x2F;elf.h:25).每个<em>proghdr</em>描述了一部分必须加载到内存的应用；xv6程序只有一个program section header,但是其他的系统对于指令和数据有单独的部分。</p>
+<p>第一步是快速检测这个文件是否包含ELF二进制。一个ELF binar以四字节的”magic number：*”0x7F,’E’,’F’<em>开始，或者</em>ELF_MAGIC<em>（kernel&#x2F;elf.h:3）。如果ELF header有正确的magic number,那么</em>exec*就假设这个二进制是正确的。</p>
+<p><em>Exec</em>使用 <em>proc_pagetable</em>(kernel&#x2F;exec.c:38) 分配一个没有用户映射的新页表，使用 <em>uvmalloc</em> (kernel&#x2F;exec.c:52) 为每个 ELF 段分配内存，并使用 <em>loadseg</em> (kernel&#x2F;exec.c:10) 将每个段加载到内存中&#x2F;exec.c:10)。<em>loadseg</em>使用<em>walkaddr</em>去找到分配的内存的物理地址，在分配的内存中可以写入每个page的ELF部分，然后readi去从文件中读取。</p>
+<p>这是*&#x2F;init的<em>程序段头部（program section header）,&#x2F;<em>init</em>是</em>exec*创建的第一个用户程序，看起来是这个样子的：</p>
+<p><img src="/../typora-user-images/image-20221012212711147.png" alt="image-20221012212711147"></p>
+<p>程序部分的header&#96;s的<em>filesz</em>可能小于<em>memsz</em>,表明之间的gap应该用0来填充（是C的全局变量）而不是从文件中读取。对于&#x2F;<em>init</em>，<em>filesz</em>是2112字节，而<em>memsz</em>是2136字节，因此<em>uvmalloc</em>分配了足够的物理内存去存放2136个字节，但是只从文件&#x2F;<em>init</em>中读取2112个字节。</p>
+<p>现在<em>exec</em>分配和初始化用户栈。它只分配一个stack page。<em>Exec</em>将参数字符串一次性复制到栈顶，在<em>ustack</em>中记录指向他们的指针。它将在传入到<em>main</em>的<em>argv</em>列表（list）的最后的部分放置一个空指针。前三个在<em>ustack</em>中的<em>entries</em>是<u>假的返回计数器、argc和argv指针( the fake return program counter, argc, and argv pointer).</u></p>
+<p><em>Exec</em>将不可访问page放置在stack page的正下方，因此程序想使用超过一个page就会出错。这个不可访问的page也允许<em>exec</em>去处理太大的参数；在这种情况下，<em>exec</em>使用copyout将参数复制到这个栈时，copyout将会意识到这个目的page 是不可以访问的，然后返回-1。</p>
+<p>在准备新内存镜像（new memory image）的过程中，如果<em>exec</em>检测到如无效程序片段之类的错误，它将跳转到标签（label）<em>bad</em>,释放这个新的映像，然后返回-1。<em>Exec</em>必须等着释放旧的镜像直到系统调用成功：如果旧的镜像消失了，这个系统调用就无法返回-1给<em>Exec</em>.这是exec在创建镜像过程中唯一发生的错误示例。一旦镜像准备成功，exec就可以将其提交到新的<em>page table</em>(kernel&#x2F;exec.c:113)以及释放旧的镜像（kernel&#x2F;exec.c:117）。</p>
+<p><em>Exec</em>加载在ELF文件中的字节到ELF文件指定的内存地址中。用户或者进程可以将想要的地址写入ELF文件。所以<em>exec</em>具有风险性，因为这个ELF文件可能有意或则无意引用到了kernel。对于粗心的结果就是一次崩溃到病毒对于内核隔离机制的破坏前三个在<em>ustack</em>中的<em>entries</em>是<u>假的返回计数器、argc和argv指针( the fake return program counter, argc, and argv pointer)</u>。xv6为了避免这种风险进行了一系列的检测。比如 <em>if(ph.vaddr + ph.memsz  &lt;  ph.vaddr)<em>检测和是否溢出于64位整型。 这点的危险就在于用户可以创建一个ELF二进制文件，这个文件带有指向用户选择的地址的ph.vaddr，以及足够大的ph.memsz，和可以溢出到0x1000，看起来像是一个无效的值。在旧版本的xv6中，用户地址空间包含了内核（但是在用户模式不能读写），用户可以选择与内核内存对应的地址并将ELF文件的数据复制到这个内核中。在RSC-V版本的xv6，这不会再发生，因为这个内核有自己单独的page table：</em>loadseg</em>加载到进程的page table，而不是内核的page table。</p>
+<p>It is easy for a kernel developer to omit a crucial check, and real-world kernels have a long history of missing checks whose absence can be exploited by user programs to obtain kernel privileges. It is likely that xv6 doesn’t do a complete job of validating user-level data supplied to the kernel, which a malicious user program might be able to exploit to circumvent xv6’s isolation.</p>
+<h3 id="3-9-Real-world"><a href="#3-9-Real-world" class="headerlink" title="3.9 Real world"></a>3.9 Real world</h3><p>后面就不翻译了，放图片格式好点。</p>
+<p><img src="/../typora-user-images/image-20221012222057626.png" alt="image-20221012222057626"></p>
+<p><img src="/../typora-user-images/image-20221012222106594.png" alt="image-20221012222106594"></p>
+<h3 id="3-10-Exercise"><a href="#3-10-Exercise" class="headerlink" title="3.10 Exercise"></a>3.10 Exercise</h3><p><img src="/../typora-user-images/image-20221012222138184.png" alt="image-20221012222138184"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MIT-OS/" rel="tag"># MIT-OS</a>
+              <a href="/tags/LEC/" rel="tag"># LEC</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/10/11/Veins%E5%AE%9E%E9%AA%8C%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/" rel="prev" title="Veins实验操作记录">
+                  <i class="fa fa-chevron-left"></i> Veins实验操作记录
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
