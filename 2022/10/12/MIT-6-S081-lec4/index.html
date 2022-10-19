@@ -20,12 +20,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="lec4-Virtual Memroy准备工作，阅读【1】中第3章；阅读memlayout.h【2】；阅读vm.c【3】；阅读kalloc【4】；阅读riscv.h【5】；阅读exec.c【6】 【1】https:&#x2F;&#x2F;pdos.csail.mit.edu&#x2F;6.828&#x2F;2020&#x2F;xv6&#x2F;book-riscv-rev1.pdf 【2】https:&#x2F;&#x2F;github.com&#x2F;mit-pdos&#x2F;xv6-ri">
+    <meta name="description" content="lec4-Virtual Memroy准备工作，阅读【1】中第3章；阅读memlayout.h【2】；阅读vm.c【3】；阅读kalloc【4】；阅读riscv.h【5】；阅读exec.c【6】">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MIT-6.S081-lec4">
 <meta property="og:url" content="http://example.com/2022/10/12/MIT-6-S081-lec4/index.html">
 <meta property="og:site_name" content="How about tea">
-<meta property="og:description" content="lec4-Virtual Memroy准备工作，阅读【1】中第3章；阅读memlayout.h【2】；阅读vm.c【3】；阅读kalloc【4】；阅读riscv.h【5】；阅读exec.c【6】 【1】https:&#x2F;&#x2F;pdos.csail.mit.edu&#x2F;6.828&#x2F;2020&#x2F;xv6&#x2F;book-riscv-rev1.pdf 【2】https:&#x2F;&#x2F;github.com&#x2F;mit-pdos&#x2F;xv6-ri">
+<meta property="og:description" content="lec4-Virtual Memroy准备工作，阅读【1】中第3章；阅读memlayout.h【2】；阅读vm.c【3】；阅读kalloc【4】；阅读riscv.h【5】；阅读exec.c【6】">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/typora-user-images/image-20221012100850021.png">
 <meta property="og:image" content="http://example.com/typora-user-images/image-20221012101210002.png">
@@ -36,7 +36,7 @@
 <meta property="og:image" content="http://example.com/typora-user-images/image-20221012222106594.png">
 <meta property="og:image" content="http://example.com/typora-user-images/image-20221012222138184.png">
 <meta property="article:published_time" content="2022-10-12T01:38:14.000Z">
-<meta property="article:modified_time" content="2022-10-12T14:43:20.677Z">
+<meta property="article:modified_time" content="2022-10-19T02:15:39.904Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="MIT-OS">
 <meta property="article:tag" content="LEC">
@@ -120,7 +120,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#lec4-Virtual-Memroy"><span class="nav-number">1.</span> <span class="nav-text">lec4-Virtual Memroy</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter-3"><span class="nav-number">1.1.</span> <span class="nav-text">Chapter 3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-paging-hardware"><span class="nav-number">1.1.1.</span> <span class="nav-text">3.1 paging hardware</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Kernel-address-space"><span class="nav-number">1.1.2.</span> <span class="nav-text">3.2 Kernel address space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Code-creating-an-address-space"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.3 Code:creating an address space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Physical-memory-allocation"><span class="nav-number">1.1.4.</span> <span class="nav-text">3.4 Physical memory allocation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-Code-Physical-memory-allocator"><span class="nav-number">1.1.5.</span> <span class="nav-text">3.5 Code: Physical memory allocator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-Process-address-space"><span class="nav-number">1.1.6.</span> <span class="nav-text">3.6 Process address space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-Code-sbrk"><span class="nav-number">1.1.7.</span> <span class="nav-text">3.7 Code:sbrk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-Code-exec"><span class="nav-number">1.1.8.</span> <span class="nav-text">3.8 Code:exec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-Real-world"><span class="nav-number">1.1.9.</span> <span class="nav-text">3.9 Real world</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-10-Exercise"><span class="nav-number">1.1.10.</span> <span class="nav-text">3.10 Exercise</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#lec4-Virtual-Memroy"><span class="nav-number">1.</span> <span class="nav-text">lec4-Virtual Memroy</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter-3"><span class="nav-number">1.1.</span> <span class="nav-text">Chapter 3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-paging-hardware"><span class="nav-number">1.1.1.</span> <span class="nav-text">3.1 paging hardware</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Kernel-address-space"><span class="nav-number">1.1.2.</span> <span class="nav-text">3.2 Kernel address space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Code-creating-an-address-space"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.3 Code:creating an address space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Physical-memory-allocation"><span class="nav-number">1.1.4.</span> <span class="nav-text">3.4 Physical memory allocation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-Code-Physical-memory-allocator"><span class="nav-number">1.1.5.</span> <span class="nav-text">3.5 Code: Physical memory allocator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-Process-address-space"><span class="nav-number">1.1.6.</span> <span class="nav-text">3.6 Process address space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-Code-sbrk"><span class="nav-number">1.1.7.</span> <span class="nav-text">3.7 Code:sbrk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-Code-exec"><span class="nav-number">1.1.8.</span> <span class="nav-text">3.8 Code:exec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-Real-world"><span class="nav-number">1.1.9.</span> <span class="nav-text">3.9 Real world</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-10-Exercise"><span class="nav-number">1.1.10.</span> <span class="nav-text">3.10 Exercise</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-amp-%E7%AC%94%E8%AE%B0"><span class="nav-number">1.2.</span> <span class="nav-text">总结&amp;笔记</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -133,16 +133,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -209,9 +209,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-10-12 09:38:14 / Modified: 22:43:20" itemprop="dateCreated datePublished" datetime="2022-10-12T09:38:14+08:00">2022-10-12</time>
+      <time title="Created: 2022-10-12 09:38:14" itemprop="dateCreated datePublished" datetime="2022-10-12T09:38:14+08:00">2022-10-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-19 10:15:39" itemprop="dateModified" datetime="2022-10-19T10:15:39+08:00">2022-10-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -234,13 +240,15 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="lec4-Virtual-Memroy"><a href="#lec4-Virtual-Memroy" class="headerlink" title="lec4-Virtual Memroy"></a>lec4-Virtual Memroy</h1><p>准备工作，阅读【1】中第3章；阅读memlayout.h【2】；阅读vm.c【3】；阅读kalloc【4】；阅读riscv.h【5】；阅读exec.c【6】</p>
+<span id="more"></span>
+
 <p>【1】<a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf">https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf</a></p>
 <p>【2】<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/memlayout.h">https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/memlayout.h</a></p>
 <p>【3】<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/vm.c">https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/vm.c</a></p>
 <p>【4】<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/kalloc.c">https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/kalloc.c</a></p>
 <p>【5】<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/riscv.h">https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/riscv.h</a></p>
 <p>【6】<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/exec.c">https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/exec.c</a></p>
-<span id="more"></span>
+<!--more-->
 
 <h2 id="Chapter-3"><a href="#Chapter-3" class="headerlink" title="Chapter 3"></a>Chapter 3</h2><p>page table是一种实现让进程拥有自己的地址空间和内存的机制。实现进程间的隔离性。</p>
 <h3 id="3-1-paging-hardware"><a href="#3-1-paging-hardware" class="headerlink" title="3.1 paging hardware"></a>3.1 paging hardware</h3><p>xv6中64bit的虚拟地址只有低39位被使用了。逻辑上，page table是一组大小为2^(27)个page table entries（PTEs）的数组，每个PTE包含一个44位的physical page number(PPN)以及一些flags。paging hardware将虚拟地址39bit中的前27位映射到page table 中去找到PTE，然后得到一个56位的物理地址，其中高44bits来自PTE中的PPN，低12位来自原虚拟地址的offset，如图所示。</p>
@@ -279,6 +287,7 @@
 <h3 id="3-4-Physical-memory-allocation"><a href="#3-4-Physical-memory-allocation" class="headerlink" title="3.4 Physical memory allocation"></a>3.4 Physical memory allocation</h3><p>内核在运行过程中必须为页表(page table)、用户内存(user memory)、内核栈(kernel stack)、和管道缓存(pipe buffers)分配和释放物理内存。</p>
 <p>xv6使用在内核末端和PHYSOTP之间的物理内存来在运行期间进行分配。一次性分配和释放整个4096字节的page。<u>它将通过将pages形成链表来跟踪哪个page是可以使用的（原文:Since the kernel uses an identity mapping, the now virtual address of the next instruction will map to the right physical memory address）</u>分配过程包含将一个page从链表中移除；释放包含将free page 增加道链表。</p>
 <h3 id="3-5-Code-Physical-memory-allocator"><a href="#3-5-Code-Physical-memory-allocator" class="headerlink" title="3.5 Code: Physical memory allocator"></a>3.5 Code: Physical memory allocator</h3><p>分配器在<em>kalloc.c</em>(kernel&#x2F;kalloc.c:1)。这个分配器的数据结构是一个可以分配的物理内存<em>pages</em>的<em>free list</em> ，每一个free page&#96;s的链表元素是一个<em>struct run</em>(kernel&#x2F;kalloc.c:17)。分配器是如何得到内存去存放那个数据结构的呢？每个free page保留自己的<em>run</em>数据结构，因为在那里没有其它东西被存放。这个free list 被一个spin lock(kernel&#x2F;kalloc.c:21-24)保护。这个list和lock被封装在一个结构体中用来明确锁可以保护结构体中的field。现在忽略lock和<em>acquire</em>以及<em>release</em>；第6章会将详细讲解lock.</p>
+<p>[^]: [!TIP] 对于互斥锁，如果资源已经被占用，资源申请者只能进入睡眠状态。但是自旋锁不会引起调用者睡眠，如果自旋锁已经被别的执行单元保持，调用者就一直循环在那里看是否该自旋锁的保持者已经释放了锁，”自旋”一词就是因此而得名。自旋锁比较适用于锁使用者保持锁时间比较短的情况。正是由于自旋锁使用者一般保持锁时间非常短，因此选择自旋而不是睡眠是非常必要的，自旋锁的效率远高于互斥锁。</p>
 <p>函数<em>main</em>会调用<em>kinit</em>初始化allocator(kernnel&#x2F;kalloc.c:27)。<em>kinit</em>会初始化free list去hold每一个在kernel的末端和PHYSTOP之间的page。xv6应该通过解析硬件提供的配置信息决定还有多少物理内存可以得到。相反，xv6假设这个机器有128兆字节的<strong>RAM</strong>。<em>kinit</em>调用freerange通过per-page calls to <em>kfree</em>去将空闲的内存加到free list 后。PTE只能引用在4096字节边界上对齐的物理地址（是4096的倍数），因此<em>freerange</em>使用PGROUP来确保它只能释放对齐的物理地址。<u>allocator开始没有内存；这些kfree的调用给了它一些去管理。（The allocator starts with no memory; these calls to kfree give it some to manage. ）</u></p>
 <p>allocator有时候将地址当作整型以方便进行算术运算(e.g., traversing all pages in freerange)，有时又将其当作指针去读和写这些内存(e.g.,manipulatingthe run structurestoredineachpage)；</p>
 <p>函数kfree(kernel&#x2F;kalloc.c:47)将所有被释放的内存的每个字节都置为1。这造成了如果代码使用了释放后的内存，将会读取到垃圾内容而不是原来有效的内容。从而希望这种代码更快的break。然后<em>kfree</em>将这个page加入到free list: it casts pa to a pointer to <em>struct run</em>, records the old start of the free list in r-&gt;next, and sets the free list equal to r.  <em>kalloc</em> removes and returns the ﬁrst element in the free list.</p>
@@ -305,6 +314,11 @@
 <p><img src="/../typora-user-images/image-20221012222057626.png" alt="image-20221012222057626"></p>
 <p><img src="/../typora-user-images/image-20221012222106594.png" alt="image-20221012222106594"></p>
 <h3 id="3-10-Exercise"><a href="#3-10-Exercise" class="headerlink" title="3.10 Exercise"></a>3.10 Exercise</h3><p><img src="/../typora-user-images/image-20221012222138184.png" alt="image-20221012222138184"></p>
+<h2 id="总结-amp-笔记"><a href="#总结-amp-笔记" class="headerlink" title="总结&amp;笔记"></a>总结&amp;笔记</h2><p>内核栈：在内核内存布局中可以看到有Kstack 0，Kstack 1等字样，这些就是内核栈，他负责保存进程的消息，即存放上下文切换时的信息。当进程A要切换到进程B时，首先要陷入内核，然后内核将CPU中关于进程A的进程信息（即某些寄存器中的值）保存在进程A的内核栈中，然后从进程B的内核栈中恢复进程B的信息到CPU的某些寄存器中，再退出内核模式回到进程B，这样CPU就开始执行进程B了。</p>
+<p>在内核栈下面有一段没有被映射的虚拟内存guard page，就是为了防止栈溢出。</p>
+<p>TLB:</p>
+<p>当xv6更改页表的时候 ，必须告诉CPU相应的缓存TLB条目无效。xv6重新加载satp寄存器后,在kvminithart执行sfence.vma。</p>
+<p>**Question:**如果是这样的话，那么在进行两个进程之间的切换的时候，需要CPU运行一段时间的内核，将进程信息保存在寄存器中。</p>
 
     </div>
 
@@ -327,6 +341,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2022/10/14/MIT-6-S081-lab3/" rel="next" title="MIT-6.S081-lab3">
+                  MIT-6.S081-lab3 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
