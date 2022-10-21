@@ -24,7 +24,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Debug.Hack第二章">
 <meta property="og:url" content="http://example.com/2022/10/18/Debug-Hack%E7%AC%AC%E4%BA%8C%E7%AB%A0/index.html">
-<meta property="og:site_name" content="BANNA~">
+<meta property="og:site_name" content="哎呀，学不动了">
 <meta property="og:description" content="第二章 调试前的必知必会本章学习GDB使用方法、intel架构的基础、栈的基础知识、函数调用时的参数传递方式、汇编语言的学习方法。 获取进程的内核转储什么式内核转储wiki的解释:">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/typora-user-images/image-20221019224434954.png">
@@ -40,8 +40,16 @@
 <meta property="og:image" content="http://example.com/typora-user-images/image-20221020204716532.png">
 <meta property="og:image" content="http://example.com/typora-user-images/image-20221020204943041.png">
 <meta property="og:image" content="http://example.com/typora-user-images/image-20221020205107660.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221021105344408.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221021110633501.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221021112801693.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221021112819191.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221021154847158.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221021160315053.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221021160729095.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221021160744145.png">
 <meta property="article:published_time" content="2022-10-18T13:48:14.000Z">
-<meta property="article:modified_time" content="2022-10-20T13:04:58.255Z">
+<meta property="article:modified_time" content="2022-10-21T08:07:59.385Z">
 <meta property="article:author" content="Spike Hu">
 <meta property="article:tag" content="-DEBUG.HACKS -GDB">
 <meta name="twitter:card" content="summary">
@@ -55,7 +63,7 @@
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/18/Debug-Hack%E7%AC%AC%E4%BA%8C%E7%AB%A0/","path":"2022/10/18/Debug-Hack第二章/","title":"Debug.Hack第二章"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Debug.Hack第二章 | BANNA~</title>
+<title>Debug.Hack第二章 | 哎呀，学不动了</title>
   
 
 
@@ -83,7 +91,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">BANNA~</p>
+      <p class="site-title">哎呀，学不动了</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -124,14 +132,14 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E8%B0%83%E8%AF%95%E5%89%8D%E7%9A%84%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">第二章 调试前的必知必会</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8"><span class="nav-number">1.1.</span> <span class="nav-text">获取进程的内核转储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E5%BC%8F%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8"><span class="nav-number">1.1.1.</span> <span class="nav-text">什么式内核转储</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E7%94%A8%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8"><span class="nav-number">1.2.</span> <span class="nav-text">启用内核转储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E4%B8%93%E7%94%A8%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8"><span class="nav-number">1.3.</span> <span class="nav-text">在专用目录生成内核转储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E5%99%A8%EF%BC%88GDB%EF%BC%89%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%EF%BC%88%E4%B9%8B%E4%B8%80%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">调试器（GDB）的基本使用方法（之一）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87"><span class="nav-number">1.4.1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8"><span class="nav-number">1.4.2.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%96%AD%E7%82%B9"><span class="nav-number">1.4.3.</span> <span class="nav-text">设置断点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C"><span class="nav-number">1.4.4.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E6%A0%88%E5%B8%A7"><span class="nav-number">1.4.5.</span> <span class="nav-text">显示栈帧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E5%8F%98%E9%87%8F"><span class="nav-number">1.4.6.</span> <span class="nav-text">显示变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">1.4.7.</span> <span class="nav-text">显示寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E6%AD%A5%E6%89%A7%E8%A1%8C"><span class="nav-number">1.4.8.</span> <span class="nav-text">单步执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%A7%E7%BB%AD%E8%BF%90%E8%A1%8C"><span class="nav-number">1.4.9.</span> <span class="nav-text">继续运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E8%A7%86%E7%82%B9"><span class="nav-number">1.4.10.</span> <span class="nav-text">监视点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%96%AD%E7%82%B9%E5%92%8C%E7%9B%91%E8%A7%86%E7%82%B9"><span class="nav-number">1.4.11.</span> <span class="nav-text">删除断点和监视点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E5%8F%98%E5%8F%98%E9%87%8F%E7%9A%84%E5%80%BC"><span class="nav-number">1.4.12.</span> <span class="nav-text">改变变量的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6"><span class="nav-number">1.4.13.</span> <span class="nav-text">生成内核转储文件</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E8%B0%83%E8%AF%95%E5%89%8D%E7%9A%84%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">第二章 调试前的必知必会</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8"><span class="nav-number">1.1.</span> <span class="nav-text">获取进程的内核转储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E5%BC%8F%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8"><span class="nav-number">1.1.1.</span> <span class="nav-text">什么式内核转储</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E7%94%A8%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8"><span class="nav-number">1.2.</span> <span class="nav-text">启用内核转储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E4%B8%93%E7%94%A8%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8"><span class="nav-number">1.3.</span> <span class="nav-text">在专用目录生成内核转储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E5%99%A8%EF%BC%88GDB%EF%BC%89%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%EF%BC%88%E4%B9%8B%E4%B8%80%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">调试器（GDB）的基本使用方法（之一）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87"><span class="nav-number">1.4.1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8"><span class="nav-number">1.4.2.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%96%AD%E7%82%B9"><span class="nav-number">1.4.3.</span> <span class="nav-text">设置断点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C"><span class="nav-number">1.4.4.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E6%A0%88%E5%B8%A7"><span class="nav-number">1.4.5.</span> <span class="nav-text">显示栈帧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E5%8F%98%E9%87%8F"><span class="nav-number">1.4.6.</span> <span class="nav-text">显示变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">1.4.7.</span> <span class="nav-text">显示寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E6%AD%A5%E6%89%A7%E8%A1%8C"><span class="nav-number">1.4.8.</span> <span class="nav-text">单步执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%A7%E7%BB%AD%E8%BF%90%E8%A1%8C"><span class="nav-number">1.4.9.</span> <span class="nav-text">继续运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E8%A7%86%E7%82%B9"><span class="nav-number">1.4.10.</span> <span class="nav-text">监视点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%96%AD%E7%82%B9%E5%92%8C%E7%9B%91%E8%A7%86%E7%82%B9"><span class="nav-number">1.4.11.</span> <span class="nav-text">删除断点和监视点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E5%8F%98%E5%8F%98%E9%87%8F%E7%9A%84%E5%80%BC"><span class="nav-number">1.4.12.</span> <span class="nav-text">改变变量的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6"><span class="nav-number">1.4.13.</span> <span class="nav-text">生成内核转储文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E5%99%A8%EF%BC%88GDB%EF%BC%89%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%EF%BC%88%E4%B9%8B%E4%BA%8C%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">调试器（GDB）的基本使用方法（之二）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attach%E5%88%B0%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.6.</span> <span class="nav-text">attach到守护进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E6%96%AD%E7%82%B9"><span class="nav-number">1.7.</span> <span class="nav-text">条件断点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%A4%8D%E6%89%A7%E8%A1%8C"><span class="nav-number">1.8.</span> <span class="nav-text">反复执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%96%AD%E7%82%B9%E5%92%8C%E7%A6%81%E7%94%A8%E6%96%AD%E7%82%B9"><span class="nav-number">1.9.</span> <span class="nav-text">删除断点和禁用断点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%AD%E7%82%B9%E5%91%BD%E4%BB%A4"><span class="nav-number">1.10.</span> <span class="nav-text">断点命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E7%9C%81%E7%95%A5%E5%BD%A2%E5%BC%8F%EF%BC%88%E5%88%AB%E5%90%8D%EF%BC%89"><span class="nav-number">1.11.</span> <span class="nav-text">常用命令及省略形式（别名）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E5%99%A8%EF%BC%88GDB%EF%BC%89%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%EF%BC%88%E4%B9%8B%E4%B8%89%EF%BC%89"><span class="nav-number">1.12.</span> <span class="nav-text">调试器（GDB）的基本使用方法（之三）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%BC%E7%9A%84%E5%8E%86%E5%8F%B2"><span class="nav-number">1.12.1.</span> <span class="nav-text">值的历史</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F"><span class="nav-number">1.13.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%8E%86%E5%8F%B2"><span class="nav-number">1.14.</span> <span class="nav-text">命令历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%87%E4%BB%B6%EF%BC%88-gdbinit%EF%BC%89%E2%80%94-%E4%B8%8D%E6%87%82"><span class="nav-number">1.15.</span> <span class="nav-text">初始化文件（.gdbinit）—-不懂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%AE%9A%E4%B9%89"><span class="nav-number">1.16.</span> <span class="nav-text">命令定义</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Spike Hu</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">长得丑，脑子也不行，只有努力咯</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
@@ -195,12 +203,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BANNA~">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="哎呀，学不动了">
+      <meta itemprop="description" content="长得丑，脑子也不行，只有努力咯">
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Debug.Hack第二章 | BANNA~">
+      <meta itemprop="name" content="Debug.Hack第二章 | 哎呀，学不动了">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -223,7 +231,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-20 21:04:58" itemprop="dateModified" datetime="2022-10-20T21:04:58+08:00">2022-10-20</time>
+      <time title="Modified: 2022-10-21 16:07:59" itemprop="dateModified" datetime="2022-10-21T16:07:59+08:00">2022-10-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -420,6 +428,169 @@ rwatch &lt;表达式&gt; 被访问时候暂停运行
 <pre><code>gcore &#39;pidof emacs&#39;
 </code></pre>
 <p>该命令无须停止就可以获得内核转储文件。</p>
+<h2 id="调试器（GDB）的基本使用方法（之二）"><a href="#调试器（GDB）的基本使用方法（之二）" class="headerlink" title="调试器（GDB）的基本使用方法（之二）"></a>调试器（GDB）的基本使用方法（之二）</h2><p>这个部分介绍GDB的一些使用技巧</p>
+<h2 id="attach到守护进程"><a href="#attach到守护进程" class="headerlink" title="attach到守护进程"></a>attach到守护进程</h2><p>调试守护进程（daemon process）等已启动进程，或是陷入死循环的进程，用attach命令</p>
+<p>格式</p>
+<pre><code>attach pid
+</code></pre>
+<p>查看进程ID可以用ps命令，下面以sleep为例进行调试，我用自己写的一个文件进行测试</p>
+<p>a.c</p>
+<pre><code class="c">#include&lt;stdio.h&gt;
+#include&lt;unistd.h&gt;
+int main(void)
+&#123;
+
+    while(1)
+    &#123;
+        sleep(1);
+        printf(&quot;sleep 100\n&quot;);
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<p>使用ps aux 得到进程ID</p>
+<pre><code>ubuntu    276238  0.0  0.0   2488   576 pts/7    S+   10:41   0:00 ./a
+</code></pre>
+<p>使用attach 276238进行调试</p>
+<p>输入sudo gdb进入gdb</p>
+<p>输入命令 attach 276238</p>
+<pre><code class="shell">(gdb) attach 276238
+Attaching to process 276238
+Reading symbols from /home/gdbLearning/a...
+Reading symbols from /lib/x86_64-linux-gnu/libc.so.6...
+Reading symbols from /usr/lib/debug/.build-id/18/78e6b475720c7c51969e69ab2d276fae6d1dee.debug...
+Reading symbols from /lib64/ld-linux-x86-64.so.2...
+Reading symbols from /usr/lib/debug/.build-id/45/87364908de169dec62ffa538170118c1c3a078.debug...
+0x00007fb31594c1b4 in __GI___clock_nanosleep (clock_id=&lt;optimized out&gt;, clock_id@entry=0, flags=flags@entry=0, 
+    req=req@entry=0x7fff9fd94c00, rem=rem@entry=0x7fff9fd94c00) at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+78      ../sysdeps/unix/sysv/linux/clock_nanosleep.c: No such file or directory.
+</code></pre>
+<p>输入bt显示栈帧</p>
+<pre><code>(gdb) bt
+#0  0x00007fb31594c1b4 in __GI___clock_nanosleep (clock_id=&lt;optimized out&gt;, clock_id@entry=0, flags=flags@entry=0, 
+    req=req@entry=0x7fff9fd94c00, rem=rem@entry=0x7fff9fd94c00) at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+#1  0x00007fb315951ec7 in __GI___nanosleep (requested_time=requested_time@entry=0x7fff9fd94c00, remaining=remaining@entry=0x7fff9fd94c00)
+    at nanosleep.c:27
+#2  0x00007fb315951dfe in __sleep (seconds=0) at ../sysdeps/posix/sleep.c:55
+#3  0x000056451fae117b in main () at a.c:8
+</code></pre>
+<p><strong>栈帧得从下往上看</strong>，可以知道先进入了main,然后调用了sleep()函数，sleep函数调用了nanosleep ().</p>
+<p>atattch之后就可以使用普通得gdb命令了。</p>
+<h2 id="条件断点"><a href="#条件断点" class="headerlink" title="条件断点"></a>条件断点</h2><p>仅在特定条件下中断</p>
+<p>格式</p>
+<ul>
+<li>break 断点 if  条件</li>
+</ul>
+<p><img src="/../typora-user-images/image-20221021105344408.png" alt="image-20221021105344408"></p>
+<p>格式</p>
+<ul>
+<li>condition 断点编号</li>
+<li>condition 断点编号 条件</li>
+</ul>
+<p>condition命令可以给指定的断点添加或删除触发条件。</p>
+<ul>
+<li>第一个格式删除指定断点编号的触发条件</li>
+<li>第2个格式给断点添加触发条件</li>
+</ul>
+<h2 id="反复执行"><a href="#反复执行" class="headerlink" title="反复执行"></a>反复执行</h2><p>格式</p>
+<ul>
+<li>ignore 断点编号 次数</li>
+</ul>
+<p>在编号指定的断点、监视点、捕获点忽略指定的次数。continue也是一样的。</p>
+<p>格式</p>
+<ul>
+<li>continue 次数</li>
+<li>step 次数</li>
+<li>stepi 次数</li>
+<li>next 次数</li>
+<li>nexti 次数</li>
+</ul>
+<p>格式</p>
+<ul>
+<li>finish</li>
+<li>until</li>
+<li>until 地址</li>
+</ul>
+<p>finish:执行完当前函数后暂停</p>
+<p>until:执行完当前函数等代码块后暂停，如果是循环则跳出循环</p>
+<h2 id="删除断点和禁用断点"><a href="#删除断点和禁用断点" class="headerlink" title="删除断点和禁用断点"></a>删除断点和禁用断点</h2><p>clear删除已定义的断点，只是禁用的话可以使用disable，重新启用的话使用enable命令。</p>
+<p>格式：</p>
+<p>clear</p>
+<p>clear 函数名</p>
+<p>clear 行号</p>
+<p>clear 文件名：行号</p>
+<p>clear 文件名：函数名</p>
+<p>delete [breakpoints]断点编号</p>
+<p>格式</p>
+<p>disable [breakpoints]</p>
+<p>disable [breakpoints] 断点编号</p>
+<p>disable  display 显示编号</p>
+<p>disable mem 内存区域</p>
+<p><img src="/../typora-user-images/image-20221021110633501.png" alt="image-20221021110633501"></p>
+<h2 id="断点命令"><a href="#断点命令" class="headerlink" title="断点命令"></a>断点命令</h2><p>commands 断点编号</p>
+<p>定义在断点中断后自动执行的命令</p>
+<p>格式</p>
+<p>commands 断点编号</p>
+<p>命令</p>
+<p>…</p>
+<p>end</p>
+<p>程序在指定的断点暂停后，就会自动执行命令。下面的例子是在断点处暂停时执行p *iseq(打印iseq)</p>
+<p>这里以这段代码为例</p>
+<pre><code class="c">#include&lt;stdio.h&gt;
+#include&lt;unistd.h&gt;c
+int main(void)
+&#123;
+    int a =10;
+    a++;
+    printf(&quot;%d&quot;,a);
+    return 0;
+&#125;
+</code></pre>
+<p>设置断点后的命令</p>
+<pre><code>(gdb) commands 3 
+Type commands for breakpoint(s) 3, one per line.
+End with a line saying just &quot;end&quot;.
+&gt;p a
+&gt;end
+</code></pre>
+<p>重新运行</p>
+<pre><code>(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /home/gdbLearning/a ./a
+warning: Probes-based dynamic linker interface failed.
+Reverting to original interface.
+
+Breakpoint 3, main () at a.c:4
+4       &#123;
+$2 = 0
+</code></pre>
+<p>可以和silent组合使用，暂停显示执行复杂的显示动作</p>
+<h2 id="常用命令及省略形式（别名）"><a href="#常用命令及省略形式（别名）" class="headerlink" title="常用命令及省略形式（别名）"></a>常用命令及省略形式（别名）</h2><p><img src="/../typora-user-images/image-20221021112801693.png" alt="image-20221021112801693"></p>
+<p><img src="/../typora-user-images/image-20221021112819191.png" alt="image-20221021112819191"></p>
+<h2 id="调试器（GDB）的基本使用方法（之三）"><a href="#调试器（GDB）的基本使用方法（之三）" class="headerlink" title="调试器（GDB）的基本使用方法（之三）"></a>调试器（GDB）的基本使用方法（之三）</h2><p>继续介绍Linux下GDB的使用技巧</p>
+<h3 id="值的历史"><a href="#值的历史" class="headerlink" title="值的历史"></a>值的历史</h3><p>print命令显示得值会记录在值历史中。</p>
+<p>最后得值可以用$访问，如</p>
+<pre><code class="、">p $
+</code></pre>
+<p>还有show value显示值历史中得最后10个值，不过不好用，它显示的是曾经显示的所有的最后10个的值</p>
+<p><img src="/../typora-user-images/image-20221021154847158.png" alt="image-20221021154847158"></p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>变量以$开头，由英文字母和数字组成</p>
+<p>set $i&#x3D;0</p>
+<h2 id="命令历史"><a href="#命令历史" class="headerlink" title="命令历史"></a>命令历史</h2><p>可以将命令历史保存在文件中</p>
+<h2 id="初始化文件（-gdbinit）—-不懂"><a href="#初始化文件（-gdbinit）—-不懂" class="headerlink" title="初始化文件（.gdbinit）—-不懂"></a>初始化文件（.gdbinit）—-不懂</h2><p>linux环境下的初始化文件为.gdbinit。如果存在，GDB就会在启动之前将其作为命令文件运行。初始化文件和命令文件的运行顺序如下：</p>
+<ol>
+<li>$HOME&#x2F;.gdbinit</li>
+<li>运行命令行选项</li>
+<li>.&#x2F;.gdbinit</li>
+<li>通过-x选项给出的命令文件。</li>
+</ol>
+<h2 id="命令定义"><a href="#命令定义" class="headerlink" title="命令定义"></a>命令定义</h2><p>利用define自定义命令，使用document给自定义命令添加说明。help+命令名 可以查看定义的命令。</p>
+<p><img src="/../typora-user-images/image-20221021160315053.png" alt="image-20221021160315053"></p>
+<p>还可以吧各种设置写在文件中，运行调试器时读取这些文件。</p>
+<p>格式</p>
+<p>source  文件名<img src="/../typora-user-images/image-20221021160729095.png" alt="image-20221021160729095"></p>
+<p><img src="/../typora-user-images/image-20221021160744145.png" alt="image-20221021160744145"></p>
 
     </div>
 
