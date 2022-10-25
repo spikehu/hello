@@ -20,28 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="长得丑，脑子也不行，只有努力咯">
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http://example.com/categories/index.html">
+    <meta name="description" content="const修饰成员函数，以及Mutable在类成员函数后面加上const关键字，表示成员函数不会修改该调用对象的成员变量。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="const修饰成员函数">
+<meta property="og:url" content="http://example.com/2022/10/25/const%E4%BF%AE%E9%A5%B0%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="哎呀，学不动了">
-<meta property="og:description" content="长得丑，脑子也不行，只有努力咯">
+<meta property="og:description" content="const修饰成员函数，以及Mutable在类成员函数后面加上const关键字，表示成员函数不会修改该调用对象的成员变量。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-10-20T14:24:31.000Z">
-<meta property="article:modified_time" content="2022-10-20T14:25:14.527Z">
+<meta property="article:published_time" content="2022-10-25T03:11:32.000Z">
+<meta property="article:modified_time" content="2022-10-25T03:22:17.383Z">
 <meta property="article:author" content="Spike Hu">
+<meta property="article:tag" content="-C++primer -C++">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/categories/">
+<link rel="canonical" href="http://example.com/2022/10/25/const%E4%BF%AE%E9%A5%B0%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":true,"permalink":"http://example.com/categories/index.html","path":"categories/index.html","title":"categories"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/25/const%E4%BF%AE%E9%A5%B0%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/","path":"2022/10/25/const修饰成员函数/","title":"const修饰成员函数"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>categories | 哎呀，学不动了
-</title>
+<title>const修饰成员函数 | 哎呀，学不动了</title>
   
 
 
@@ -97,7 +97,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -110,6 +110,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#const%E4%BF%AE%E9%A5%B0%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%EF%BC%8C%E4%BB%A5%E5%8F%8AMutable"><span class="nav-number">1.</span> <span class="nav-text">const修饰成员函数，以及Mutable</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -161,41 +162,108 @@
 </noscript>
 
 
-    <div class="main-inner page posts-expand">
+    <div class="main-inner post posts-expand">
 
 
-    
-    
-    
-    <div class="post-block" lang="en"><header class="post-header">
+  
 
-<h1 class="post-title" itemprop="name headline">categories
-</h1>
 
-<div class="post-meta-container">
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/25/const%E4%BF%AE%E9%A5%B0%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Spike Hu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="哎呀，学不动了">
+      <meta itemprop="description" content="长得丑，脑子也不行，只有努力咯">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="const修饰成员函数 | 哎呀，学不动了">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          const修饰成员函数
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-10-25 11:11:32 / Modified: 11:22:17" itemprop="dateCreated datePublished" datetime="2022-10-25T11:11:32+08:00">2022-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+        </span>
+    </span>
+
+  
 </div>
 
-</header>
+        </div>
+      </header>
 
-      
-      
-      <div class="post-body"><div class="category-all-page">
-  <div class="category-all-title">
-    6 categories in total
-  </div>
-  <div class="category-all">
-    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GDB/">GDB</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MIT-OS/">MIT-OS</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/VIRUSPROPAGATION/">VIRUSPROPAGATION</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/VirusPropagation/">VirusPropagation</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%98%85%E8%AF%BB%E8%AE%A1%E5%88%92/">阅读计划</a><span class="category-list-count">1</span></li></ul>
-  </div>
-</div>
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="const修饰成员函数，以及Mutable"><a href="#const修饰成员函数，以及Mutable" class="headerlink" title="const修饰成员函数，以及Mutable"></a>const修饰成员函数，以及Mutable</h1><p>在类成员函数后面加上const关键字，表示成员函数不会修改该调用对象的成员变量。</p>
+<span id="more"></span>
 
-      </div>
-      
-      
-      
+<ol>
+<li>mutable可以突破const的限制，被mutable修饰的成员变量，永远处于可变的状态</li>
+<li>非const成员函数可以调用const成员函数和非const成员函数</li>
+<li>const成员函数不能调用非const成员函数</li>
+<li>常对象只能访问加了const的成员函数</li>
+</ol>
+
     </div>
 
     
     
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C-primer-C/" rel="tag"># -C++primer -C++</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/10/25/%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/" rel="prev" title="初始化列表">
+                  <i class="fa fa-chevron-left"></i> 初始化列表
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
 
 
 </div>

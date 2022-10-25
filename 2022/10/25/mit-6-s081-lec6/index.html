@@ -20,29 +20,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="6.S08-lecture 3 -OS organization and System Call操作系统隔离性（isolation）操作系统需要隔离性，在应用程序和操作系统之间需要强隔离性。  实现隔离性需要硬件支持：  user&#x2F;kernel mode page table 或者说 virtual memory">
+    <meta name="description" content="LEC 6:Isolation &amp; system call entry&#x2F;exitpreparation:Preparation: Read Chapter 4, except 4.6 and kernel&#x2F;riscv.h, kernel&#x2F;trampoline.S, and kernel&#x2F;trap.c">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MIT6.S081-lec3">
-<meta property="og:url" content="http://example.com/2022/10/05/MIT6.S081-lec3/index.html">
+<meta property="og:title" content="mit--6-s081-lec6">
+<meta property="og:url" content="http://example.com/2022/10/25/mit-6-s081-lec6/index.html">
 <meta property="og:site_name" content="哎呀，学不动了">
-<meta property="og:description" content="6.S08-lecture 3 -OS organization and System Call操作系统隔离性（isolation）操作系统需要隔离性，在应用程序和操作系统之间需要强隔离性。  实现隔离性需要硬件支持：  user&#x2F;kernel mode page table 或者说 virtual memory">
+<meta property="og:description" content="LEC 6:Isolation &amp; system call entry&#x2F;exitpreparation:Preparation: Read Chapter 4, except 4.6 and kernel&#x2F;riscv.h, kernel&#x2F;trampoline.S, and kernel&#x2F;trap.c">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-10-05T01:25:00.000Z">
-<meta property="article:modified_time" content="2022-10-12T07:51:43.812Z">
+<meta property="article:published_time" content="2022-10-25T02:07:29.000Z">
+<meta property="article:modified_time" content="2022-10-25T03:22:42.338Z">
 <meta property="article:author" content="Spike Hu">
 <meta property="article:tag" content="MIT-OS">
 <meta property="article:tag" content="LEC">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2022/10/05/MIT6.S081-lec3/">
+<link rel="canonical" href="http://example.com/2022/10/25/mit-6-s081-lec6/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/05/MIT6.S081-lec3/","path":"2022/10/05/MIT6.S081-lec3/","title":"MIT6.S081-lec3"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/25/mit-6-s081-lec6/","path":"2022/10/25/mit-6-s081-lec6/","title":"mit--6-s081-lec6"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>MIT6.S081-lec3 | 哎呀，学不动了</title>
+<title>mit--6-s081-lec6 | 哎呀，学不动了</title>
   
 
 
@@ -111,7 +111,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#6-S08-lecture-3-OS-organization-and-System-Call"><span class="nav-number">1.</span> <span class="nav-text">6.S08-lecture 3 -OS organization and System Call</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%9A%94%E7%A6%BB%E6%80%A7%EF%BC%88isolation%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">操作系统隔离性（isolation）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#User-x2F-Kernel-Mode"><span class="nav-number">1.1.1.</span> <span class="nav-text">User &#x2F;Kernel Mode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-Memory"><span class="nav-number">1.2.</span> <span class="nav-text">Virtual Memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E7%9A%84%E9%9B%86%E4%B8%AD%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">内核的集中设计方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8F%E5%86%85%E6%A0%B8"><span class="nav-number">1.3.1.</span> <span class="nav-text">宏内核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AE%E5%86%85%E6%A0%B8"><span class="nav-number">1.3.2.</span> <span class="nav-text">微内核</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XV6"><span class="nav-number">1.4.</span> <span class="nav-text">XV6</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LEC-6-Isolation-amp-system-call-entry-x2F-exit"><span class="nav-number">1.</span> <span class="nav-text">LEC 6:Isolation &amp; system call entry&#x2F;exit</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#preparation"><span class="nav-number">1.1.</span> <span class="nav-text">preparation:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Preparation-Read-Chapter-4-except-4-6-and-kernel-x2F-riscv-h-kernel-x2F-trampoline-S-and-kernel-x2F-trap-c"><span class="nav-number">1.2.</span> <span class="nav-text">Preparation: Read Chapter 4, except 4.6 and kernel&#x2F;riscv.h, kernel&#x2F;trampoline.S, and kernel&#x2F;trap.c</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-6-Page-fault-exceptions"><span class="nav-number">1.3.</span> <span class="nav-text">4.6 Page_fault exceptions</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -174,7 +174,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/05/MIT6.S081-lec3/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/25/mit-6-s081-lec6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -187,12 +187,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="MIT6.S081-lec3 | 哎呀，学不动了">
+      <meta itemprop="name" content="mit--6-s081-lec6 | 哎呀，学不动了">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          MIT6.S081-lec3
+          mit--6-s081-lec6
         </h1>
 
         <div class="post-meta-container">
@@ -202,15 +202,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2022-10-05 09:25:00" itemprop="dateCreated datePublished" datetime="2022-10-05T09:25:00+08:00">2022-10-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-12 15:51:43" itemprop="dateModified" datetime="2022-10-12T15:51:43+08:00">2022-10-12</time>
+      <time title="Created: 2022-10-25 10:07:29 / Modified: 11:22:42" itemprop="dateCreated datePublished" datetime="2022-10-25T10:07:29+08:00">2022-10-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -232,22 +226,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="6-S08-lecture-3-OS-organization-and-System-Call"><a href="#6-S08-lecture-3-OS-organization-and-System-Call" class="headerlink" title="6.S08-lecture 3 -OS organization and System Call"></a>6.S08-lecture 3 -OS organization and System Call</h1><h2 id="操作系统隔离性（isolation）"><a href="#操作系统隔离性（isolation）" class="headerlink" title="操作系统隔离性（isolation）"></a>操作系统隔离性（isolation）</h2><p>操作系统需要隔离性，在应用程序和操作系统之间需要强隔离性。</p>
-<p> 实现隔离性需要硬件支持：</p>
-<ul>
-<li>user&#x2F;kernel mode</li>
-<li>page table 或者说 virtual memory<span id="more"></span></li>
-</ul>
-<h3 id="User-x2F-Kernel-Mode"><a href="#User-x2F-Kernel-Mode" class="headerlink" title="User &#x2F;Kernel Mode"></a>User &#x2F;Kernel Mode</h3><p>当处于kernel mode 的时候，可以使用一些特别权限的指令（privileged instruction），当处于user mode的时候，使用普通的权限。</p>
-<h2 id="Virtual-Memory"><a href="#Virtual-Memory" class="headerlink" title="Virtual Memory"></a>Virtual Memory</h2><p>page table :将 virtaul addr 映射到 physic addr</p>
-<p>每一个进程都有一个自己独立的页表，所以每个进程只能访问自己页表中映射的物理地址,即每个用户有自己的内存视图。从而实现 memory isolatioon.</p>
-<p>一般的用户程序就运行在user mode 下，而操作系统就运行在内核模式下（kernel mode），当用户程序调用read  write等system call的时候，需要得到内核的控制权，所以需要一种方法将控制权转如内核（transfro control into kernel）。在RISC-V中，有<strong>ecall</strong>实现该功能。每次调用ecal,程序就会通过一个接入点进入到内核中。比如用户程序调用write函数，并不是直接调用内核的write，而是通过ecall指令进行调用，之后控制权就到了sysycall函数（then transfer control to syscall）,syscall 会实际调用write函数。</p>
-<h2 id="内核的集中设计方法"><a href="#内核的集中设计方法" class="headerlink" title="内核的集中设计方法"></a>内核的集中设计方法</h2><h3 id="宏内核"><a href="#宏内核" class="headerlink" title="宏内核"></a>宏内核</h3><p>将整个内核代码运行在kernel mode，集成性好，有更好的性能，但这样会出现更多的bug，有安全隐患。</p>
-<h3 id="微内核"><a href="#微内核" class="headerlink" title="微内核"></a>微内核</h3><p>只在内核空间运行一小部分操作系统的模块。比如IPC, page table,一部分运行在user mode，比如文件系统FS。由于运行在kernel mode的代码更少，所以更加的安全。</p>
-<p>如果用户空间的程序需要调用文件系统，该程序就需要通过IPC和FS进行通信，FS将运行结果通过IPC告知该程序结果。所以需要<u><strong>在kernel mode 和 user mode 进行2次跳转，性能上就比宏内核差一些</strong>。同时微内核的模块之间分隔的比较好，那么共享就比较差，二宏内核中，共享性就比较好，比如文件系统和虚拟内存系统，可以很容易的共享page cache。</u></p>
-<h2 id="XV6"><a href="#XV6" class="headerlink" title="XV6"></a>XV6</h2><p>kernel:包含所有的内核文件，所有的文件会被编译成一个叫做kernel的二进制文件。这个二进制文件运行在kernel mode。</p>
-<p>user:基本上是运行在user mode的程序。</p>
-<p>mkfs:会创建一个空的镜像文件，这样就可以使用一个空的文件系统。 </p>
+        <h1 id="LEC-6-Isolation-amp-system-call-entry-x2F-exit"><a href="#LEC-6-Isolation-amp-system-call-entry-x2F-exit" class="headerlink" title="LEC 6:Isolation &amp; system call entry&#x2F;exit"></a>LEC 6:Isolation &amp; system call entry&#x2F;exit</h1><h2 id="preparation"><a href="#preparation" class="headerlink" title="preparation:"></a>preparation:</h2><h2 id="Preparation-Read-Chapter-4-except-4-6-and-kernel-x2F-riscv-h-kernel-x2F-trampoline-S-and-kernel-x2F-trap-c"><a href="#Preparation-Read-Chapter-4-except-4-6-and-kernel-x2F-riscv-h-kernel-x2F-trampoline-S-and-kernel-x2F-trap-c" class="headerlink" title="Preparation: Read Chapter 4, except 4.6 and kernel&#x2F;riscv.h, kernel&#x2F;trampoline.S, and kernel&#x2F;trap.c"></a><strong>Preparation</strong>: Read <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/xv6/book-riscv-rev2.pdf">Chapter 4, except 4.6</a> and <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/riscv.h">kernel&#x2F;riscv.h</a>, <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/trampoline.S">kernel&#x2F;trampoline.S</a>, and <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/trap.c">kernel&#x2F;trap.c</a></h2><span id="more"></span>
+
+<h2 id="4-6-Page-fault-exceptions"><a href="#4-6-Page-fault-exceptions" class="headerlink" title="4.6 Page_fault exceptions"></a>4.6 Page_fault exceptions</h2><p>在Xv6中，如果异常发生在用户空间，内核会杀死错误的进程。如果异常发生在内核，内核就会panic（一个方法）.真实的操作系统以更加有趣的形式去处理。</p>
+<p>比如，许多内核使用page fault实现copy-on-write(COW)fork（参考第三章）。fork通过uvmcopy分配内存使孩子进程与父进程拥有一样的内存。如果父进程和孩子进程共享物理内存的话就更有效率了。直接实现不太可能，因为会造成子进程和父进程之间相互中断。</p>
+<p>使用page-fault就可以共享物理内存了。当CPU无法将虚拟地址转换成物理地址，CPU就会生成一个<em>page-fault exception</em>。RISC-V有3中page fault：load page faults（load 指令无法转换虚拟地址），store page fault（store 指令无法转换他的virtual address）,以及page fault（when the address for an instruction dosen&#96;t tranlate）.寄存器<em>scause</em>的值表明了page fault的类型，而stval寄存器包含了无法转换的地址。</p>
+<p>COW fork的基本方案是父子共享进程，但是只能是只读形式的映射。所以，如果一个子进程或父进程发起一次store instruction，RISC-V就会发起一次page_fault exception,并且拷贝这个包含faulted address的pag。分别分配一个可以读写的地址到子进程的地址空间和父进程的地址空间。在更新完这个page table之后，内核恢复错误的进程在造成错误指令的时刻。因为内核已经更新了相关的PTE去允许写，所以这个错误的指令就可以成功执行了。</p>
+<p>后面就是举得一些将page fault与page table结合的一些例子。</p>
 
     </div>
 
@@ -265,13 +250,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/10/05/XV6%E8%BF%90%E8%A1%8C%E4%BB%A5%E5%8F%8A%E9%80%80%E5%87%BA/" rel="prev" title="XV6的运行以及退出">
-                  <i class="fa fa-chevron-left"></i> XV6的运行以及退出
+                <a href="/2022/10/24/sizeof%E6%93%8D%E4%BD%9C%E7%AC%A6-%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%8E%E7%B1%BB%E5%A4%A7%E5%B0%8F/" rel="prev" title="sizeof操作符-结构体与类大小">
+                  <i class="fa fa-chevron-left"></i> sizeof操作符-结构体与类大小
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/10/05/XV6a%20simple,Unix-like%20teaching%20operating%20system/" rel="next" title="XV6a simple,Unix-like teaching operating system">
-                  XV6a simple,Unix-like teaching operating system <i class="fa fa-chevron-right"></i>
+                <a href="/2022/10/25/%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/" rel="next" title="初始化列表">
+                  初始化列表 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
