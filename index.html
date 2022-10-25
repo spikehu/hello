@@ -119,7 +119,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -204,7 +204,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-25 11:19:29" itemprop="dateModified" datetime="2022-10-25T11:19:29+08:00">2022-10-25</time>
+      <time title="Modified: 2022-10-25 22:05:47" itemprop="dateModified" datetime="2022-10-25T22:05:47+08:00">2022-10-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -235,6 +235,141 @@
             </div>
           <!--/noindex-->
         
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/25/C++%E7%9F%A5%E8%AF%86%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Spike Hu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="哎呀，学不动了">
+      <meta itemprop="description" content="长得丑，脑子也不行，只有努力咯">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 哎呀，学不动了">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/10/25/C++%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-10-25 15:19:28 / Modified: 21:09:12" itemprop="dateCreated datePublished" datetime="2022-10-25T15:19:28+08:00">2022-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="C-基础知识"><a href="#C-基础知识" class="headerlink" title="C++基础知识"></a>C++基础知识</h1><h2 id="静态成员变量"><a href="#静态成员变量" class="headerlink" title="静态成员变量"></a>静态成员变量</h2><ul>
+<li>类的静态成员包括静态成员变量和静态成员函数。</li>
+<li>用static关键字把类的成员变量声明为静态，表示在程序中是共享的。</li>
+<li>静态成员必须在好程序的全局区用代码清晰的初始化（用范围解析运算符::）</li>
+<li>静态成员使用类名加范围解析运算符::就可以访问，不需要创建对象。</li>
+<li>如果把类的成员声明为静态的，就可以把它与类的对象独立开来（静态成员不属于对象），存放在静态存储区。</li>
+<li>静态函数只能访问静态成员。</li>
+<li>静态函数没有this</li>
+<li>私有静态成员在类外无法访问。</li>
+<li>const静态成员变量可以在定义类的时候初始化</li>
+</ul>
+<h3 id="对象和类-简单对象模型"><a href="#对象和类-简单对象模型" class="headerlink" title="对象和类-简单对象模型"></a>对象和类-简单对象模型</h3><p>C++有两种数据成员：nonstatic 、static，三种函数成员：nonstatic、static、virtual。</p>
+<ul>
+<li>对象内存的大小包括：1）所有静态数据成员的大小；2）由内存对齐而填补的内存的内存大小；3）为了支持virtural成员而产生的额外负担。</li>
+<li>静态成员变量属于类，不计算在对象大小之内</li>
+<li>成员函数是分开存储的，不论对象是否存在都占用存储空间，在内存中只有一个副本，也不计算在对象大小之内</li>
+<li>用空指针可以访问到没有用到this指针的非静态成员函数（就是这个成员函数没有用到成员变量就可以用空指针去访问）</li>
+<li>对象的地址的第一个非静态成员变量的地址，如果类中没有非静态成员变量，编译器会隐含的增加一个1字节的占位成员</li>
+</ul>
+<h2 id="关系运算符重载"><a href="#关系运算符重载" class="headerlink" title="关系运算符重载"></a>关系运算符重载</h2><p>有6种关系运算符进行重载，最后以成员函数进行重载</p>
+<ul>
+<li>&#x3D;&#x3D;  、 !&#x3D; 、   &gt; 、 &lt;、 &gt;&#x3D; 、&lt;&#x3D;</li>
+</ul>
+<h2 id="左移运算符重载"><a href="#左移运算符重载" class="headerlink" title="左移运算符重载"></a>左移运算符重载</h2><p>用于输出自定义对象的成员变量，只能使用非成员函数版本，如果要输出对象的私有变量，可以配合友元一起使用。</p>
+<pre><code>Ostream&amp; operator &lt;&lt;(Ostream&amp; cout , 传入的第二个参数)
+</code></pre>
+<h2 id="重载下标运算符"><a href="#重载下标运算符" class="headerlink" title="重载下标运算符"></a>重载下标运算符</h2><p>必须以成员函数的形式进行重载</p>
+<pre><code class="c++">返回值类型 &amp;operator[](参数)
+或
+const 返回值类型 &amp;operator[](参数)const 
+</code></pre>
+<p>使用第二种是为了应对常对象的情况。</p>
+<h2 id="重载赋值运算符"><a href="#重载赋值运算符" class="headerlink" title="重载赋值运算符"></a>重载赋值运算符</h2><pre><code class="C++"> 类名&amp; operator=(const 类名&amp; 对象 )
+</code></pre>
+<p>拷贝构造和赋值构造的不同：拷贝构造指原来的对象不存在，用已存在的对象进行构造；赋值构造是已经存在了两个对象，把其中一个对象的成员变量赋值给另一个对象的成员变量</p>
+<h2 id="使用类-重载new-amp-delete运算符"><a href="#使用类-重载new-amp-delete运算符" class="headerlink" title="使用类-重载new &amp; delete运算符"></a>使用类-重载new &amp; delete运算符</h2><p>重载的new和delete函数就算不加static关键字也是静态成员函数，不能访问非静态成员函数。</p>
+<p>C++中，使用new时，编译器做了两件事情：</p>
+<ol>
+<li>调用标准坤函数operator new()分配内存</li>
+<li>调用构造函数初始化内存</li>
+</ol>
+<pre><code class="c++">void* operator new(size_t size)
+</code></pre>
+<p>使用delete时候做了两件事情</p>
+<ol>
+<li>先调用析构函数</li>
+<li>调用标准库函数operator delete()释放内存</li>
+</ol>
+<pre><code class="c++">void operator delete(void* ptr)
+</code></pre>
+<h2 id="内存池"><a href="#内存池" class="headerlink" title="内存池"></a>内存池</h2><ul>
+<li>预先分配一大块的内存空间</li>
+<li>提升分配和归还的速度</li>
+<li>减少内存碎片</li>
+<li>initpool</li>
+<li>freepool</li>
+</ul>
+
       
     </div>
 
@@ -462,7 +597,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-10-25 10:07:29 / Modified: 11:22:42" itemprop="dateCreated datePublished" datetime="2022-10-25T10:07:29+08:00">2022-10-25</time>
+      <time title="Created: 2022-10-25 10:07:29 / Modified: 15:07:01" itemprop="dateCreated datePublished" datetime="2022-10-25T10:07:29+08:00">2022-10-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -484,7 +619,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="LEC-6-Isolation-amp-system-call-entry-x2F-exit"><a href="#LEC-6-Isolation-amp-system-call-entry-x2F-exit" class="headerlink" title="LEC 6:Isolation &amp; system call entry&#x2F;exit"></a>LEC 6:Isolation &amp; system call entry&#x2F;exit</h1><h2 id="preparation"><a href="#preparation" class="headerlink" title="preparation:"></a>preparation:</h2><h2 id="Preparation-Read-Chapter-4-except-4-6-and-kernel-x2F-riscv-h-kernel-x2F-trampoline-S-and-kernel-x2F-trap-c"><a href="#Preparation-Read-Chapter-4-except-4-6-and-kernel-x2F-riscv-h-kernel-x2F-trampoline-S-and-kernel-x2F-trap-c" class="headerlink" title="Preparation: Read Chapter 4, except 4.6 and kernel&#x2F;riscv.h, kernel&#x2F;trampoline.S, and kernel&#x2F;trap.c"></a><strong>Preparation</strong>: Read <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/xv6/book-riscv-rev2.pdf">Chapter 4, except 4.6</a> and <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/riscv.h">kernel&#x2F;riscv.h</a>, <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/trampoline.S">kernel&#x2F;trampoline.S</a>, and <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/trap.c">kernel&#x2F;trap.c</a></h2>
+          <h1 id="LEC-6-Isolation-amp-system-call-entry-x2F-exit"><a href="#LEC-6-Isolation-amp-system-call-entry-x2F-exit" class="headerlink" title="LEC 6:Isolation &amp; system call entry&#x2F;exit"></a>LEC 6:Isolation &amp; system call entry&#x2F;exit</h1><h2 id="preparation"><a href="#preparation" class="headerlink" title="preparation:"></a>preparation:</h2><p><strong>Preparation</strong>: Read <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/xv6/book-riscv-rev2.pdf">Chapter 4, except 4.6</a> and <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/riscv.h">kernel&#x2F;riscv.h</a>, <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/trampoline.S">kernel&#x2F;trampoline.S</a>, and <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/trap.c">kernel&#x2F;trap.c</a></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/10/25/mit-6-s081-lec6/#more" rel="contents">
@@ -546,9 +681,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-10-24 20:46:43 / Modified: 20:47:15" itemprop="dateCreated datePublished" datetime="2022-10-24T20:46:43+08:00">2022-10-24</time>
+      <time title="Created: 2022-10-24 20:46:43" itemprop="dateCreated datePublished" datetime="2022-10-24T20:46:43+08:00">2022-10-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-25 11:25:51" itemprop="dateModified" datetime="2022-10-25T11:25:51+08:00">2022-10-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -570,7 +711,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          
+          <h1 id="sizeof、结构体、类、字节对齐"><a href="#sizeof、结构体、类、字节对齐" class="headerlink" title="sizeof、结构体、类、字节对齐"></a>sizeof、结构体、类、字节对齐</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wiessharling/p/4134657.html">传送门</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/haoel/article/details/1948051">虚函数表</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/10/24/sizeof%E6%93%8D%E4%BD%9C%E7%AC%A6-%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%8E%E7%B1%BB%E5%A4%A7%E5%B0%8F/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -921,99 +1071,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/10/19/C-primer%E7%AC%AC5%E7%AB%A0/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/18/Debug-Hack%E7%AC%AC%E4%BA%8C%E7%AB%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Spike Hu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="哎呀，学不动了">
-      <meta itemprop="description" content="长得丑，脑子也不行，只有努力咯">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 哎呀，学不动了">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/10/18/Debug-Hack%E7%AC%AC%E4%BA%8C%E7%AB%A0/" class="post-title-link" itemprop="url">Debug.Hack第二章</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-10-18 21:48:14" itemprop="dateCreated datePublished" datetime="2022-10-18T21:48:14+08:00">2022-10-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-21 16:07:59" itemprop="dateModified" datetime="2022-10-21T16:07:59+08:00">2022-10-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GDB/" itemprop="url" rel="index"><span itemprop="name">GDB</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="第二章-调试前的必知必会"><a href="#第二章-调试前的必知必会" class="headerlink" title="第二章 调试前的必知必会"></a>第二章 调试前的必知必会</h1><p>本章学习GDB使用方法、intel架构的基础、栈的基础知识、函数调用时的参数传递方式、汇编语言的学习方法。</p>
-<h2 id="获取进程的内核转储"><a href="#获取进程的内核转储" class="headerlink" title="获取进程的内核转储"></a>获取进程的内核转储</h2><h3 id="什么式内核转储"><a href="#什么式内核转储" class="headerlink" title="什么式内核转储"></a>什么式内核转储</h3><p><strong>wiki的解释:</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/10/18/Debug-Hack%E7%AC%AC%E4%BA%8C%E7%AB%A0/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>

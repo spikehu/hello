@@ -28,7 +28,7 @@
 <meta property="og:description" content="LEC 6:Isolation &amp; system call entry&#x2F;exitpreparation:Preparation: Read Chapter 4, except 4.6 and kernel&#x2F;riscv.h, kernel&#x2F;trampoline.S, and kernel&#x2F;trap.c">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-10-25T02:07:29.000Z">
-<meta property="article:modified_time" content="2022-10-25T03:22:42.338Z">
+<meta property="article:modified_time" content="2022-10-25T07:07:01.251Z">
 <meta property="article:author" content="Spike Hu">
 <meta property="article:tag" content="MIT-OS">
 <meta property="article:tag" content="LEC">
@@ -111,7 +111,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LEC-6-Isolation-amp-system-call-entry-x2F-exit"><span class="nav-number">1.</span> <span class="nav-text">LEC 6:Isolation &amp; system call entry&#x2F;exit</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#preparation"><span class="nav-number">1.1.</span> <span class="nav-text">preparation:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Preparation-Read-Chapter-4-except-4-6-and-kernel-x2F-riscv-h-kernel-x2F-trampoline-S-and-kernel-x2F-trap-c"><span class="nav-number">1.2.</span> <span class="nav-text">Preparation: Read Chapter 4, except 4.6 and kernel&#x2F;riscv.h, kernel&#x2F;trampoline.S, and kernel&#x2F;trap.c</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-6-Page-fault-exceptions"><span class="nav-number">1.3.</span> <span class="nav-text">4.6 Page_fault exceptions</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LEC-6-Isolation-amp-system-call-entry-x2F-exit"><span class="nav-number">1.</span> <span class="nav-text">LEC 6:Isolation &amp; system call entry&#x2F;exit</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#preparation"><span class="nav-number">1.1.</span> <span class="nav-text">preparation:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-6-Page-fault-exceptions"><span class="nav-number">1.2.</span> <span class="nav-text">4.6 Page_fault exceptions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#riscv-h"><span class="nav-number">1.3.</span> <span class="nav-text">riscv.h</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.3.1.</span> <span class="nav-text">volatile关键字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#asm%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.4.</span> <span class="nav-text">asm关键字</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -124,7 +124,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -204,7 +204,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-10-25 10:07:29 / Modified: 11:22:42" itemprop="dateCreated datePublished" datetime="2022-10-25T10:07:29+08:00">2022-10-25</time>
+      <time title="Created: 2022-10-25 10:07:29 / Modified: 15:07:01" itemprop="dateCreated datePublished" datetime="2022-10-25T10:07:29+08:00">2022-10-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -226,13 +226,389 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="LEC-6-Isolation-amp-system-call-entry-x2F-exit"><a href="#LEC-6-Isolation-amp-system-call-entry-x2F-exit" class="headerlink" title="LEC 6:Isolation &amp; system call entry&#x2F;exit"></a>LEC 6:Isolation &amp; system call entry&#x2F;exit</h1><h2 id="preparation"><a href="#preparation" class="headerlink" title="preparation:"></a>preparation:</h2><h2 id="Preparation-Read-Chapter-4-except-4-6-and-kernel-x2F-riscv-h-kernel-x2F-trampoline-S-and-kernel-x2F-trap-c"><a href="#Preparation-Read-Chapter-4-except-4-6-and-kernel-x2F-riscv-h-kernel-x2F-trampoline-S-and-kernel-x2F-trap-c" class="headerlink" title="Preparation: Read Chapter 4, except 4.6 and kernel&#x2F;riscv.h, kernel&#x2F;trampoline.S, and kernel&#x2F;trap.c"></a><strong>Preparation</strong>: Read <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/xv6/book-riscv-rev2.pdf">Chapter 4, except 4.6</a> and <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/riscv.h">kernel&#x2F;riscv.h</a>, <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/trampoline.S">kernel&#x2F;trampoline.S</a>, and <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/trap.c">kernel&#x2F;trap.c</a></h2><span id="more"></span>
+        <h1 id="LEC-6-Isolation-amp-system-call-entry-x2F-exit"><a href="#LEC-6-Isolation-amp-system-call-entry-x2F-exit" class="headerlink" title="LEC 6:Isolation &amp; system call entry&#x2F;exit"></a>LEC 6:Isolation &amp; system call entry&#x2F;exit</h1><h2 id="preparation"><a href="#preparation" class="headerlink" title="preparation:"></a>preparation:</h2><p><strong>Preparation</strong>: Read <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2021/xv6/book-riscv-rev2.pdf">Chapter 4, except 4.6</a> and <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/riscv.h">kernel&#x2F;riscv.h</a>, <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/trampoline.S">kernel&#x2F;trampoline.S</a>, and <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/trap.c">kernel&#x2F;trap.c</a></p>
+<span id="more"></span>
 
 <h2 id="4-6-Page-fault-exceptions"><a href="#4-6-Page-fault-exceptions" class="headerlink" title="4.6 Page_fault exceptions"></a>4.6 Page_fault exceptions</h2><p>在Xv6中，如果异常发生在用户空间，内核会杀死错误的进程。如果异常发生在内核，内核就会panic（一个方法）.真实的操作系统以更加有趣的形式去处理。</p>
 <p>比如，许多内核使用page fault实现copy-on-write(COW)fork（参考第三章）。fork通过uvmcopy分配内存使孩子进程与父进程拥有一样的内存。如果父进程和孩子进程共享物理内存的话就更有效率了。直接实现不太可能，因为会造成子进程和父进程之间相互中断。</p>
 <p>使用page-fault就可以共享物理内存了。当CPU无法将虚拟地址转换成物理地址，CPU就会生成一个<em>page-fault exception</em>。RISC-V有3中page fault：load page faults（load 指令无法转换虚拟地址），store page fault（store 指令无法转换他的virtual address）,以及page fault（when the address for an instruction dosen&#96;t tranlate）.寄存器<em>scause</em>的值表明了page fault的类型，而stval寄存器包含了无法转换的地址。</p>
 <p>COW fork的基本方案是父子共享进程，但是只能是只读形式的映射。所以，如果一个子进程或父进程发起一次store instruction，RISC-V就会发起一次page_fault exception,并且拷贝这个包含faulted address的pag。分别分配一个可以读写的地址到子进程的地址空间和父进程的地址空间。在更新完这个page table之后，内核恢复错误的进程在造成错误指令的时刻。因为内核已经更新了相关的PTE去允许写，所以这个错误的指令就可以成功执行了。</p>
 <p>后面就是举得一些将page fault与page table结合的一些例子。</p>
+<h2 id="riscv-h"><a href="#riscv-h" class="headerlink" title="riscv.h"></a>riscv.h</h2><p>然后就是阅读riscv.h</p>
+<pre><code class="c">#ifndef __ASSEMBLER__
+
+// which hart (core) is this?
+static inline uint64
+r_mhartid()
+&#123;
+  uint64 x;
+  asm volatile(&quot;csrr %0, mhartid&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+// Machine Status Register, mstatus
+
+#define MSTATUS_MPP_MASK (3L &lt;&lt; 11) // previous mode.
+#define MSTATUS_MPP_M (3L &lt;&lt; 11)
+#define MSTATUS_MPP_S (1L &lt;&lt; 11)
+#define MSTATUS_MPP_U (0L &lt;&lt; 11)
+#define MSTATUS_MIE (1L &lt;&lt; 3)    // machine-mode interrupt enable.
+
+static inline uint64
+r_mstatus()
+&#123;
+  uint64 x;
+  asm volatile(&quot;csrr %0, mstatus&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+static inline void 
+w_mstatus(uint64 x)
+&#123;
+  asm volatile(&quot;csrw mstatus, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+// machine exception program counter, holds the
+// instruction address to which a return from
+// exception will go.
+static inline void 
+w_mepc(uint64 x)
+&#123;
+  asm volatile(&quot;csrw mepc, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+// Supervisor Status Register, sstatus
+
+#define SSTATUS_SPP (1L &lt;&lt; 8)  // Previous mode, 1=Supervisor, 0=User
+#define SSTATUS_SPIE (1L &lt;&lt; 5) // Supervisor Previous Interrupt Enable
+#define SSTATUS_UPIE (1L &lt;&lt; 4) // User Previous Interrupt Enable
+#define SSTATUS_SIE (1L &lt;&lt; 1)  // Supervisor Interrupt Enable
+#define SSTATUS_UIE (1L &lt;&lt; 0)  // User Interrupt Enable
+
+static inline uint64
+r_sstatus()
+&#123;
+  uint64 x;
+  asm volatile(&quot;csrr %0, sstatus&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+static inline void 
+w_sstatus(uint64 x)
+&#123;
+  asm volatile(&quot;csrw sstatus, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+// Supervisor Interrupt Pending
+static inline uint64
+r_sip()
+&#123;
+  uint64 x;
+  asm volatile(&quot;csrr %0, sip&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+static inline void 
+w_sip(uint64 x)
+&#123;
+  asm volatile(&quot;csrw sip, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+// Supervisor Interrupt Enable
+#define SIE_SEIE (1L &lt;&lt; 9) // external
+#define SIE_STIE (1L &lt;&lt; 5) // timer
+#define SIE_SSIE (1L &lt;&lt; 1) // software
+static inline uint64
+r_sie()
+&#123;
+  uint64 x;
+  asm volatile(&quot;csrr %0, sie&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+static inline void 
+w_sie(uint64 x)
+&#123;
+  asm volatile(&quot;csrw sie, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+// Machine-mode Interrupt Enable
+#define MIE_MEIE (1L &lt;&lt; 11) // external
+#define MIE_MTIE (1L &lt;&lt; 7)  // timer
+#define MIE_MSIE (1L &lt;&lt; 3)  // software
+static inline uint64
+r_mie()
+&#123;
+  uint64 x;
+  asm volatile(&quot;csrr %0, mie&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+static inline void 
+w_mie(uint64 x)
+&#123;
+  asm volatile(&quot;csrw mie, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+// supervisor exception program counter, holds the
+// instruction address to which a return from
+// exception will go.
+static inline void 
+w_sepc(uint64 x)
+&#123;
+  asm volatile(&quot;csrw sepc, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+static inline uint64
+r_sepc()
+&#123;
+  uint64 x;
+  asm volatile(&quot;csrr %0, sepc&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+// Machine Exception Delegation
+static inline uint64
+r_medeleg()
+&#123;
+  uint64 x;
+  asm volatile(&quot;csrr %0, medeleg&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+static inline void 
+w_medeleg(uint64 x)
+&#123;
+  asm volatile(&quot;csrw medeleg, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+// Machine Interrupt Delegation
+static inline uint64
+r_mideleg()
+&#123;
+  uint64 x;
+  asm volatile(&quot;csrr %0, mideleg&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+static inline void 
+w_mideleg(uint64 x)
+&#123;
+  asm volatile(&quot;csrw mideleg, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+// Supervisor Trap-Vector Base Address
+// low two bits are mode.
+static inline void 
+w_stvec(uint64 x)
+&#123;
+  asm volatile(&quot;csrw stvec, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+static inline uint64
+r_stvec()
+&#123;
+  uint64 x;
+  asm volatile(&quot;csrr %0, stvec&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+// Machine-mode interrupt vector
+static inline void 
+w_mtvec(uint64 x)
+&#123;
+  asm volatile(&quot;csrw mtvec, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+// Physical Memory Protection
+static inline void
+w_pmpcfg0(uint64 x)
+&#123;
+  asm volatile(&quot;csrw pmpcfg0, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+static inline void
+w_pmpaddr0(uint64 x)
+&#123;
+  asm volatile(&quot;csrw pmpaddr0, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+// use riscv&#39;s sv39 page table scheme.
+#define SATP_SV39 (8L &lt;&lt; 60)
+
+#define MAKE_SATP(pagetable) (SATP_SV39 | (((uint64)pagetable) &gt;&gt; 12))
+
+// supervisor address translation and protection;
+// holds the address of the page table.
+static inline void 
+w_satp(uint64 x)
+&#123;
+  asm volatile(&quot;csrw satp, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+static inline uint64
+r_satp()
+&#123;
+  uint64 x;
+  asm volatile(&quot;csrr %0, satp&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+static inline void 
+w_mscratch(uint64 x)
+&#123;
+  asm volatile(&quot;csrw mscratch, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+// Supervisor Trap Cause
+static inline uint64
+r_scause()
+&#123;
+  uint64 x;
+  asm volatile(&quot;csrr %0, scause&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+// Supervisor Trap Value
+static inline uint64
+r_stval()
+&#123;
+  uint64 x;
+  asm volatile(&quot;csrr %0, stval&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+// Machine-mode Counter-Enable
+static inline void 
+w_mcounteren(uint64 x)
+&#123;
+  asm volatile(&quot;csrw mcounteren, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+static inline uint64
+r_mcounteren()
+&#123;
+  uint64 x;
+  asm volatile(&quot;csrr %0, mcounteren&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+// machine-mode cycle counter
+static inline uint64
+r_time()
+&#123;
+  uint64 x;
+  asm volatile(&quot;csrr %0, time&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+// enable device interrupts
+static inline void
+intr_on()
+&#123;
+  w_sstatus(r_sstatus() | SSTATUS_SIE);
+&#125;
+
+// disable device interrupts
+static inline void
+intr_off()
+&#123;
+  w_sstatus(r_sstatus() &amp; ~SSTATUS_SIE);
+&#125;
+
+// are device interrupts enabled?
+static inline int
+intr_get()
+&#123;
+  uint64 x = r_sstatus();
+  return (x &amp; SSTATUS_SIE) != 0;
+&#125;
+
+static inline uint64
+r_sp()
+&#123;
+  uint64 x;
+  asm volatile(&quot;mv %0, sp&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+// read and write tp, the thread pointer, which xv6 uses to hold
+// this core&#39;s hartid (core number), the index into cpus[].
+static inline uint64
+r_tp()
+&#123;
+  uint64 x;
+  asm volatile(&quot;mv %0, tp&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+static inline void 
+w_tp(uint64 x)
+&#123;
+  asm volatile(&quot;mv tp, %0&quot; : : &quot;r&quot; (x));
+&#125;
+
+static inline uint64
+r_ra()
+&#123;
+  uint64 x;
+  asm volatile(&quot;mv %0, ra&quot; : &quot;=r&quot; (x) );
+  return x;
+&#125;
+
+// flush the TLB.
+static inline void
+sfence_vma()
+&#123;
+  // the zero, zero means flush all TLB entries.
+  asm volatile(&quot;sfence.vma zero, zero&quot;);
+&#125;
+
+typedef uint64 pte_t;
+typedef uint64 *pagetable_t; // 512 PTEs
+
+#endif // __ASSEMBLER__
+
+#define PGSIZE 4096 // bytes per page
+#define PGSHIFT 12  // bits of offset within a page
+
+#define PGROUNDUP(sz)  (((sz)+PGSIZE-1) &amp; ~(PGSIZE-1))
+#define PGROUNDDOWN(a) (((a)) &amp; ~(PGSIZE-1))
+
+#define PTE_V (1L &lt;&lt; 0) // valid
+#define PTE_R (1L &lt;&lt; 1)
+#define PTE_W (1L &lt;&lt; 2)
+#define PTE_X (1L &lt;&lt; 3)
+#define PTE_U (1L &lt;&lt; 4) // user can access
+
+// shift a physical address to the right place for a PTE.
+#define PA2PTE(pa) ((((uint64)pa) &gt;&gt; 12) &lt;&lt; 10)
+
+#define PTE2PA(pte) (((pte) &gt;&gt; 10) &lt;&lt; 12)
+
+#define PTE_FLAGS(pte) ((pte) &amp; 0x3FF)
+
+// extract the three 9-bit page table indices from a virtual address.
+#define PXMASK          0x1FF // 9 bits
+#define PXSHIFT(level)  (PGSHIFT+(9*(level)))
+#define PX(level, va) ((((uint64) (va)) &gt;&gt; PXSHIFT(level)) &amp; PXMASK)
+
+// one beyond the highest possible virtual address.
+// MAXVA is actually one bit less than the max allowed by
+// Sv39, to avoid having to sign-extend virtual addresses
+// that have the high bit set.
+#define MAXVA (1L &lt;&lt; (9 + 9 + 9 + 12 - 1))
+</code></pre>
+<h3 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h3><p>防止编译器对变量进行优化，每次都从内存读取，不然编译器会把变量当作常量处理。</p>
+<h2 id="asm关键字"><a href="#asm关键字" class="headerlink" title="asm关键字"></a>asm关键字</h2><p>在C和C++,使用asm关键字嵌入内联汇编代码，加速运行效率。</p>
+<p>asm后面跟一个程序集指令、一组在大括号中的指令或者至少一对空大括号。</p>
+<pre><code class="c">asm volatile &#123;
+                &quot;mov	%1, %%eax \n&quot;
+                &quot;sub	%2, %%eax \n&quot;
+                &quot;movq	%1, %%xmm0 \n&quot;	
+&#125;;
+</code></pre>
+<p>感觉得学习一点汇编得知识才能继续下去。估计这门课程得停一段时间。😢</p>
 
     </div>
 
