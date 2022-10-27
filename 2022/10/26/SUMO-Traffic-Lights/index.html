@@ -20,32 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="第五章throw表达式使用throw表达式引发一个异常。关键字throw后接一个异常类型。比如 throw runtime_error(&quot;Data must refer to same ISBN&quot;);">
+    <meta name="description" content="SUMO交通信号灯这里可以知道交通信号灯的生成，包括根据交通情况进行变化部分https:&#x2F;&#x2F;sumo.dlr.de&#x2F;docs&#x2F;Simulation&#x2F;Traffic_Lights.html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++primer第5章">
-<meta property="og:url" content="http://example.com/2022/10/19/C-primer%E7%AC%AC5%E7%AB%A0/index.html">
+<meta property="og:title" content="SUMO_Traffic_Lights">
+<meta property="og:url" content="http://example.com/2022/10/26/SUMO-Traffic-Lights/index.html">
 <meta property="og:site_name" content="哎呀，学不动了">
-<meta property="og:description" content="第五章throw表达式使用throw表达式引发一个异常。关键字throw后接一个异常类型。比如 throw runtime_error(&quot;Data must refer to same ISBN&quot;);">
+<meta property="og:description" content="SUMO交通信号灯这里可以知道交通信号灯的生成，包括根据交通情况进行变化部分https:&#x2F;&#x2F;sumo.dlr.de&#x2F;docs&#x2F;Simulation&#x2F;Traffic_Lights.html">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/typora-user-images/image-20221019150453374.png">
-<meta property="og:image" content="http://example.com/typora-user-images/image-20221019150935355.png">
-<meta property="og:image" content="http://example.com/typora-user-images/image-20221019153317875.png">
-<meta property="article:published_time" content="2022-10-19T06:59:49.000Z">
-<meta property="article:modified_time" content="2022-10-19T14:52:22.404Z">
+<meta property="article:published_time" content="2022-10-26T12:48:38.000Z">
+<meta property="article:modified_time" content="2022-10-26T12:52:22.446Z">
 <meta property="article:author" content="Spike Hu">
-<meta property="article:tag" content="-C++primer -C++">
+<meta property="article:tag" content="-VirusPropagation -LuSTscenario">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/typora-user-images/image-20221019150453374.png">
 
 
-<link rel="canonical" href="http://example.com/2022/10/19/C-primer%E7%AC%AC5%E7%AB%A0/">
+<link rel="canonical" href="http://example.com/2022/10/26/SUMO-Traffic-Lights/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/19/C-primer%E7%AC%AC5%E7%AB%A0/","path":"2022/10/19/C-primer第5章/","title":"C++primer第5章"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/26/SUMO-Traffic-Lights/","path":"2022/10/26/SUMO-Traffic-Lights/","title":"SUMO_Traffic_Lights"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>C++primer第5章 | 哎呀，学不动了</title>
+<title>SUMO_Traffic_Lights | 哎呀，学不动了</title>
   
 
 
@@ -114,7 +110,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0"><span class="nav-number">1.</span> <span class="nav-text">第五章</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#throw%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">throw表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try%E8%AF%AD%E5%8F%A5%E5%9D%97"><span class="nav-number">1.2.</span> <span class="nav-text">try语句块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%BC%82%E5%B8%B8"><span class="nav-number">1.3.</span> <span class="nav-text">标准异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E7%BB%83%E4%B9%A0"><span class="nav-number">1.4.</span> <span class="nav-text">一个练习</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SUMO%E4%BA%A4%E9%80%9A%E4%BF%A1%E5%8F%B7%E7%81%AF"><span class="nav-number">1.</span> <span class="nav-text">SUMO交通信号灯</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -177,7 +173,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/19/C-primer%E7%AC%AC5%E7%AB%A0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/26/SUMO-Traffic-Lights/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -190,12 +186,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="C++primer第5章 | 哎呀，学不动了">
+      <meta itemprop="name" content="SUMO_Traffic_Lights | 哎呀，学不动了">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          C++primer第5章
+          SUMO_Traffic_Lights
         </h1>
 
         <div class="post-meta-container">
@@ -207,7 +203,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-10-19 14:59:49 / Modified: 22:52:22" itemprop="dateCreated datePublished" datetime="2022-10-19T14:59:49+08:00">2022-10-19</time>
+      <time title="Created: 2022-10-26 20:48:38 / Modified: 20:52:22" itemprop="dateCreated datePublished" datetime="2022-10-26T20:48:38+08:00">2022-10-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -215,7 +211,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+          <a href="/categories/VirusPropagation/" itemprop="url" rel="index"><span itemprop="name">VirusPropagation</span></a>
         </span>
     </span>
 
@@ -229,51 +225,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="第五章"><a href="#第五章" class="headerlink" title="第五章"></a>第五章</h1><h2 id="throw表达式"><a href="#throw表达式" class="headerlink" title="throw表达式"></a>throw表达式</h2><p>使用throw表达式引发一个异常。关键字throw后接一个异常类型。比如</p>
-<pre><code class="c">throw runtime_error(&quot;Data must refer to same ISBN&quot;);
-</code></pre>
+        <h1 id="SUMO交通信号灯"><a href="#SUMO交通信号灯" class="headerlink" title="SUMO交通信号灯"></a>SUMO交通信号灯</h1><p>这里可以知道交通信号灯的生成，包括根据交通情况进行变化部分<a target="_blank" rel="noopener" href="https://sumo.dlr.de/docs/Simulation/Traffic_Lights.html">https://sumo.dlr.de/docs/Simulation/Traffic_Lights.html</a></p>
 <span id="more"></span>
-
-<h2 id="try语句块"><a href="#try语句块" class="headerlink" title="try语句块"></a>try语句块</h2><p>try语句块的通用语法</p>
-<p><img src="/../typora-user-images/image-20221019150453374.png" alt="image-20221019150453374"></p>
-<h2 id="标准异常"><a href="#标准异常" class="headerlink" title="标准异常"></a>标准异常</h2><p>C++定义的异常类，分别在4个头文件中。</p>
-<ul>
-<li>exception头文件定义了最通用的异常类exception,只报告异常的发生，不提供额外的信息。</li>
-<li>stdexcept头文件定义了常用的异常类，在表5,1列出</li>
-<li>new头文件定义了bad_alloc异常类型，在12.1.2节详细介绍</li>
-<li>type_info头文件定义了bad_cast异常类型，19.2节详细介绍</li>
-</ul>
-<p><img src="/../typora-user-images/image-20221019150935355.png" alt="image-20221019150935355"></p>
-<h2 id="一个练习"><a href="#一个练习" class="headerlink" title="一个练习"></a>一个练习</h2><p><img src="/../typora-user-images/image-20221019153317875.png" alt="image-20221019153317875"></p>
-<pre><code class="c">
-int main(int argc , char* argv[]) &#123;
-    double a ;
-    int b;
-    cout&lt;&lt;&quot;input  a:&quot;;
-    cin&gt;&gt;a;
-    while(1)
-     &#123;
-        try &#123;
-            cout&lt;&lt;&quot;input b:&quot;;
-            cin&gt;&gt;b;
-            if(b==0)throw runtime_error(&quot;b can not be 0&quot;);
-            cout&lt;&lt;a/b&lt;&lt;endl;
-            break;
-        &#125; catch (runtime_error err) &#123;
-            cout&lt;&lt;err.what()&lt;&lt;&quot;\n Try again? Enter y or n&quot;&lt;&lt;endl;
-            char c;
-            cin&gt;&gt;c;
-            if(!cin || c == &#39;n&#39;)
-            &#123;
-                break;
-            &#125;
-        &#125;
-
-    &#125;
-
-    exit(1);
-&#125;
-</code></pre>
 
     </div>
 
@@ -283,21 +236,18 @@ int main(int argc , char* argv[]) &#123;
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/C-primer-C/" rel="tag"># -C++primer -C++</a>
+              <a href="/tags/VirusPropagation-LuSTscenario/" rel="tag"># -VirusPropagation -LuSTscenario</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/10/18/Debug-Hack%E7%AC%AC%E4%BA%8C%E7%AB%A0/" rel="prev" title="Debug.Hack第二章">
-                  <i class="fa fa-chevron-left"></i> Debug.Hack第二章
+                <a href="/2022/10/26/Veins%E4%BF%A1%E5%8F%B7%E4%BC%A0%E8%BE%93%E6%A8%A1%E6%8B%9F/" rel="prev" title="Veins信号传输模拟">
+                  <i class="fa fa-chevron-left"></i> Veins信号传输模拟
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/10/19/C-primer%E7%AC%AC6%E7%AB%A0/" rel="next" title="C++primer第6章">
-                  C++primer第6章 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
