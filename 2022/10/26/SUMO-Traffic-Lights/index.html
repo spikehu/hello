@@ -27,11 +27,14 @@
 <meta property="og:site_name" content="哎呀，学不动了">
 <meta property="og:description" content="SUMO交通信号灯这里可以知道交通信号灯的生成，包括根据交通情况进行变化部分https:&#x2F;&#x2F;sumo.dlr.de&#x2F;docs&#x2F;Simulation&#x2F;Traffic_Lights.html">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://sumo.dlr.de/docs/images/Traci_tutorial_tls.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221027112241385.png">
 <meta property="article:published_time" content="2022-10-26T12:48:38.000Z">
-<meta property="article:modified_time" content="2022-10-26T12:52:22.446Z">
+<meta property="article:modified_time" content="2022-10-27T07:48:31.987Z">
 <meta property="article:author" content="Spike Hu">
 <meta property="article:tag" content="-VirusPropagation -LuSTscenario">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sumo.dlr.de/docs/images/Traci_tutorial_tls.png">
 
 
 <link rel="canonical" href="http://example.com/2022/10/26/SUMO-Traffic-Lights/">
@@ -110,7 +113,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SUMO%E4%BA%A4%E9%80%9A%E4%BF%A1%E5%8F%B7%E7%81%AF"><span class="nav-number">1.</span> <span class="nav-text">SUMO交通信号灯</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SUMO%E4%BA%A4%E9%80%9A%E4%BF%A1%E5%8F%B7%E7%81%AF"><span class="nav-number">1.</span> <span class="nav-text">SUMO交通信号灯</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Traffic-Lights-that-respond-to-traffic"><span class="nav-number">1.1.</span> <span class="nav-text">Traffic Lights that respond to traffic</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Type-%E2%80%98actuated%E2%80%99"><span class="nav-number">1.1.1.</span> <span class="nav-text">Type ‘actuated’</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93actuated%E7%B1%BB%E5%9E%8B%E7%BA%A2%E7%BB%BF%E7%81%AF%E7%9A%84%E8%BF%90%E8%A1%8C%E8%A7%84%E5%88%99%E7%9A%84%E8%A7%A3%E9%87%8A%EF%BC%88Lust%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%ADactuated%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">总结actuated类型红绿灯的运行规则的解释（Lust数据集中actuated）</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -201,9 +204,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-10-26 20:48:38 / Modified: 20:52:22" itemprop="dateCreated datePublished" datetime="2022-10-26T20:48:38+08:00">2022-10-26</time>
+      <time title="Created: 2022-10-26 20:48:38" itemprop="dateCreated datePublished" datetime="2022-10-26T20:48:38+08:00">2022-10-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-27 15:48:31" itemprop="dateModified" datetime="2022-10-27T15:48:31+08:00">2022-10-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -227,6 +236,216 @@
     <div class="post-body" itemprop="articleBody">
         <h1 id="SUMO交通信号灯"><a href="#SUMO交通信号灯" class="headerlink" title="SUMO交通信号灯"></a>SUMO交通信号灯</h1><p>这里可以知道交通信号灯的生成，包括根据交通情况进行变化部分<a target="_blank" rel="noopener" href="https://sumo.dlr.de/docs/Simulation/Traffic_Lights.html">https://sumo.dlr.de/docs/Simulation/Traffic_Lights.html</a></p>
 <span id="more"></span>
+
+<p>在lust.net.xml中可以看到type为actuate的红绿灯的逻辑</p>
+<pre><code class="xml">    &lt;tlLogic id=&quot;-10156&quot; type=&quot;actuated&quot; programID=&quot;0&quot; offset=&quot;0&quot;&gt;
+        &lt;phase duration=&quot;30&quot; state=&quot;GGgrrGGG&quot;/&gt;
+        &lt;phase duration=&quot;4&quot; state=&quot;yygrryyy&quot;/&gt;
+        &lt;phase duration=&quot;10&quot; state=&quot;rrGrrrrr&quot;/&gt;
+        &lt;phase duration=&quot;4&quot; state=&quot;rryrrrrr&quot;/&gt;
+        &lt;phase duration=&quot;30&quot; state=&quot;rrrGGGrr&quot;/&gt;
+        &lt;phase duration=&quot;4&quot; state=&quot;rrryyyrr&quot;/&gt;
+    &lt;/tlLogic&gt;
+</code></pre>
+<p>而在tll.static.xml中同样ID的红绿灯的设置如下：</p>
+<pre><code class="xml">    &lt;tlLogic id=&quot;-10156&quot; type=&quot;static&quot; programID=&quot;1&quot; offset=&quot;0&quot;&gt;
+        &lt;phase duration=&quot;31&quot; state=&quot;GGgrrGGG&quot;/&gt;
+        &lt;phase duration=&quot;6&quot; state=&quot;yygrryyy&quot;/&gt;
+        &lt;phase duration=&quot;6&quot; state=&quot;rrGrrrrr&quot;/&gt;
+        &lt;phase duration=&quot;6&quot; state=&quot;rryrrrrr&quot;/&gt;
+        &lt;phase duration=&quot;31&quot; state=&quot;rrrGGGrr&quot;/&gt;
+        &lt;phase duration=&quot;6&quot; state=&quot;rrryyyrr&quot;/&gt;
+    &lt;/tlLogic&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th align="left">Attribute Name</th>
+<th align="center">Value Type</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>id</strong></td>
+<td align="center">id (string)</td>
+<td align="center">The id of the traffic light. This must be an existing traffic light id in the .net.xml file. Typically the id for a traffic light is identical with the junction id. The name may be obtained by right-clicking the red&#x2F;green bars in front of a controlled intersection.</td>
+</tr>
+<tr>
+<td align="left"><strong>type</strong></td>
+<td align="center">enum (static, actuated, delay_based)</td>
+<td align="center">The type of the traffic light (fixed phase durations, phase prolongation based on time gaps between vehicles (actuated), or on accumulated time loss of queued vehicles (delay_based) )</td>
+</tr>
+<tr>
+<td align="left"><strong>programID</strong></td>
+<td align="center">id (string)</td>
+<td align="center">The id of the traffic light program; This must be a new program name for the traffic light id. Please note that “off” is reserved, see below.</td>
+</tr>
+<tr>
+<td align="left"><strong>offset</strong></td>
+<td align="center">int</td>
+<td align="center">The initial time offset of the program</td>
+</tr>
+</tbody></table>
+<p>上面是对tlLogic中各种属性的说明，可以看到对actuated的说明如下：(fixed phase durations, phase prolongation based on time gaps between vehicles (actuated)，说明这种类型的红绿灯的相位延长是由实际车辆的间隔驱动设置的。</p>
+<p>对于信号灯颜色的解释：</p>
+<table>
+<thead>
+<tr>
+<th align="center">Character</th>
+<th align="center"></th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">r</td>
+<td align="center"></td>
+<td align="left">‘red light’ for a signal - vehicles must stop</td>
+</tr>
+<tr>
+<td align="center">y</td>
+<td align="center"></td>
+<td align="left">‘amber (yellow) light’ for a signal - vehicles will start to decelerate if far away from the junction, otherwise they pass</td>
+</tr>
+<tr>
+<td align="center">g</td>
+<td align="center"></td>
+<td align="left">‘green light’ for a signal, no priority - vehicles may pass the junction if no vehicle uses a higher priorised foe stream, otherwise they decelerate for letting it pass. They always decelerate on approach until they are within the configured <a target="_blank" rel="noopener" href="https://sumo.dlr.de/docs/Networks/PlainXML.html#explicitly_setting_which_edge_lane_is_connected_to_which">visibility distance</a></td>
+</tr>
+<tr>
+<td align="center">G</td>
+<td align="center"></td>
+<td align="left">‘green light’ for a signal, priority - vehicles may pass the junction</td>
+</tr>
+<tr>
+<td align="center">s</td>
+<td align="center"></td>
+<td align="left">‘green right-turn arrow’ requires stopping - vehicles may pass the junction if no vehicle uses a higher priorised foe stream. They always stop before passing. This is only generated for junction type <em>traffic_light_right_on_red</em>.</td>
+</tr>
+<tr>
+<td align="center">u</td>
+<td align="center"></td>
+<td align="left">‘red+yellow light’ for a signal, may be used to indicate upcoming green phase but vehicles may not drive yet (shown as orange in the gui)</td>
+</tr>
+<tr>
+<td align="center">o</td>
+<td align="center"></td>
+<td align="left">‘off - blinking’ signal is switched off, blinking light indicates vehicles have to yield</td>
+</tr>
+<tr>
+<td align="center">O</td>
+<td align="center"></td>
+<td align="left">‘off - no signal’ signal is switched off, vehicles have the right of way</td>
+</tr>
+</tbody></table>
+<p><img src="https://sumo.dlr.de/docs/images/Traci_tutorial_tls.png" alt="traci_tutorial_tls.png"></p>
+<p>以上是对一个红绿灯相位的解释：</p>
+<p>Example: traffic light with the current state <strong>“GrGr”</strong>. The leftmost letter “G” encodes the green light for link 0, followed by red for link 1, green for link 2 and red for link 3. The link numbers are enabled via <a target="_blank" rel="noopener" href="https://sumo.dlr.de/docs/sumo-gui.html">sumo-gui settings</a> by activating <em>show link tls index</em>.</p>
+<p>每个颜色表示一条同行方向的红绿灯状态。</p>
+<p><img src="/../typora-user-images/image-20221027112241385.png" alt="image-20221027112241385"></p>
+<p>比如junction ID&#x3D; -824的路口，有15条通行的方向，所以信号灯一个相位应该有15个，该图的信号状态为：</p>
+<pre><code>GGGGgrrrGGGGgrrr
+</code></pre>
+<h2 id="Traffic-Lights-that-respond-to-traffic"><a href="#Traffic-Lights-that-respond-to-traffic" class="headerlink" title="Traffic Lights that respond to traffic"></a>Traffic Lights that respond to traffic</h2><h3 id="Type-‘actuated’"><a href="#Type-‘actuated’" class="headerlink" title="Type ‘actuated’"></a>Type ‘actuated’</h3><p><u>SUMO supports <em>gap-based</em> actuated traffic control.</u>这句话说明了类型为actuated类型信号灯是根据车辆间隔来动态规划的。当检测到一个连续通过的车流的时候，就会延长当前相位的红绿灯时间，当检测到连续的车辆之前有充足的时间间隔的时候就会进入下一个相位。</p>
+<table>
+<thead>
+<tr>
+<th align="center">Attribute Name</th>
+<th align="center">Value Type</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>duration</strong></td>
+<td align="center">time (int)</td>
+<td align="center">The duration of the phase</td>
+</tr>
+<tr>
+<td align="center"><strong>state</strong></td>
+<td align="center">list of signal states</td>
+<td align="center">The traffic light states for this phase, see below</td>
+</tr>
+<tr>
+<td align="center">minDur</td>
+<td align="center">time (int)</td>
+<td align="center">The minimum duration of the phase when using type <strong>actuated</strong>. <strong>Optional, defaults to duration.</strong></td>
+</tr>
+<tr>
+<td align="center">maxDur</td>
+<td align="center">time (int)</td>
+<td align="center">The maximum duration of the phase when using type <strong>actuated</strong>. <strong>Optional, if minDur is not set it defaults to duration , otherwise to 2147483.</strong></td>
+</tr>
+<tr>
+<td align="center">name</td>
+<td align="center">string</td>
+<td align="center">An optional description for the phase. This can be used to establish the correspondence between SUMO-phase-indexing and traffic engineering phase names.</td>
+</tr>
+<tr>
+<td align="center">next</td>
+<td align="center">list of phase indices (int …)</td>
+<td align="center">The next phase in the cycle after the current. This is useful when adding extra transition phases to a traffic light plan which are not part of every cycle. Traffic lights of type ‘actuated’ can make use of a list of indices for selecting among alternative successor phases.</td>
+</tr>
+</tbody></table>
+<p><strong>在该实验中，minDur和maxDur都没有设置，所以minDur 的值和duration相等，而maxDur也等于duration。</strong></p>
+<p><strong>这是一个官方的例子，其中param的值都是默认值。</strong></p>
+<pre><code class="xml">&lt;tlLogic id=&quot;0&quot; programID=&quot;my_program&quot; offset=&quot;0&quot; type=&quot;actuated&quot;&gt;
+  &lt;param key=&quot;max-gap&quot; value=&quot;3.0&quot;/&gt;
+  &lt;param key=&quot;detector-gap&quot; value=&quot;2.0&quot;/&gt;
+  &lt;param key=&quot;passing-time&quot; value=&quot;2.0&quot;/&gt;
+  &lt;param key=&quot;vTypes&quot; value=&quot;&quot;/&gt;
+  &lt;param key=&quot;show-detectors&quot; value=&quot;false&quot;/&gt;
+  &lt;param key=&quot;file&quot; value=&quot;NULL&quot;/&gt;
+  &lt;param key=&quot;freq&quot; value=&quot;300&quot;/&gt;
+  &lt;param key=&quot;jam-threshold&quot; value=&quot;-1&quot;/&gt;
+  &lt;param key=&quot;detector-length&quot; value=&quot;0&quot;/&gt;  
+
+  &lt;phase duration=&quot;31&quot; minDur=&quot;5&quot; maxDur=&quot;45&quot; state=&quot;GGggrrrrGGggrrrr&quot;/&gt;
+  ...
+&lt;/tlLogic&gt;
+</code></pre>
+<p>对参数的解释：</p>
+<ul>
+<li><strong>max-gap</strong>: the maximum time gap between successive vehicles that will cause the current phase to be prolonged (within maxDur limit)</li>
+<li><strong>detector-gap</strong>: determines the time distance between the (automatically generated) detector and the stop line in seconds (at each lanes maximum speed).</li>
+<li><strong>passing-time</strong>: estimates the headway between vehicles when passing the stop line. This sets an upper bound on the distance between detector and stop line according to the formula <code>(minDur / passingTime + 0.5) / 7.5</code>. The intent of this bound is to allow all vehicles between the detector and the stop line to pass the intersection within the minDur time. A warning will be issued if the minDur gives insufficient clearing time.</li>
+<li><strong>linkMaxDur:X</strong> (where X is a traffic light index): This sets an additional maximum duration criterion based on individual signals green duration rather than phase duration.</li>
+<li><del><strong>linkMinDur:X</strong> (where X is a traffic light index): This sets an additional minimum duration criterion based on individual signals green duration rather than phase duration.</del></li>
+<li><strong>show-detectors</strong> controls whether generated detectors will be visible or hidden in <a target="_blank" rel="noopener" href="https://sumo.dlr.de/docs/sumo-gui.html">sumo-gui</a>. The default for all traffic lights can be set with option <strong>–tls.actuated.show-detectors</strong>. It is also possible to toggle this value from within the GUI by right-clicking on a traffic light.</li>
+<li>parameters <strong>vTypes</strong>, <strong>file</strong> and <strong>freq</strong> have the same meaning as for <a target="_blank" rel="noopener" href="https://sumo.dlr.de/docs/Simulation/Output/Induction_Loops_Detectors_(E1).html">regular induction loop detectors</a>.</li>
+<li><strong>coordinated</strong> (true&#x2F;false) Influence there reference point for time-in-cycle when using <a target="_blank" rel="noopener" href="https://sumo.dlr.de/docs/Simulation/Traffic_Lights.html#coordination">coordination</a></li>
+<li><strong>cycleTime</strong> sets the cycle time (in s) when using <a target="_blank" rel="noopener" href="https://sumo.dlr.de/docs/Simulation/Traffic_Lights.html#coordination">coordination</a>. Defaults to the sum of all phase ‘durations’ values.</li>
+<li><strong>jam-threshold</strong>: ignore detected vehicles if they have stood on a detector for the given time or more (activated by setting a position value)</li>
+<li><strong>detector-length</strong>: set detector length to the given value (to ensure robust request detection with varying gaps and vehicle positions)</li>
+</ul>
+<p>Some parameters are only used when a signal plan with <a target="_blank" rel="noopener" href="https://sumo.dlr.de/docs/Simulation/Traffic_Lights.html#dynamic_phase_selection_phase_skipping">dynamic phase selection</a> is active:</p>
+<ul>
+<li><strong>inactive-threshold</strong> (default 180): The parameter sets the time in s after which an inactive phase will be entered preferentially.</li>
+<li><strong>linkMinDur:X</strong> (where X is a traffic light index): This sets an additional minimum duration criterion based on individual signals rather than phase duration</li>
+</ul>
+<p>对该属性值进行解释：</p>
+<ul>
+<li>parameters <strong>vTypes</strong>, <strong>file</strong> and <strong>freq</strong> have the same meaning as for <a target="_blank" rel="noopener" href="https://sumo.dlr.de/docs/Simulation/Output/Induction_Loops_Detectors_(E1).html">regular induction loop detectors</a>.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Value Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>period (alias freq)</td>
+<td>int (time)</td>
+<td>The aggregation period the values the detector collects shall be summed up (<em>default: whole simulation time</em>).</td>
+</tr>
+<tr>
+<td>vTypes</td>
+<td>string</td>
+<td>space separated list of vehicle type ids to consider, “” means all; default “”.</td>
+</tr>
+</tbody></table>
+<h2 id="总结actuated类型红绿灯的运行规则的解释（Lust数据集中actuated）"><a href="#总结actuated类型红绿灯的运行规则的解释（Lust数据集中actuated）" class="headerlink" title="总结actuated类型红绿灯的运行规则的解释（Lust数据集中actuated）"></a>总结actuated类型红绿灯的运行规则的解释（Lust数据集中actuated）</h2><p>首先要使用actuated类型红绿灯，就得在车道前设置一个detector,它离stop line的距离是以该车道最高速度行驶2s的距离，detector会检测所有的车辆，检测器的长度为0。</p>
+<p>所以，延长当前红绿灯状态的规则就是，如果连续车辆之前的最大间距没有超过3s，当前红绿灯会延长一个相位，即在重复一遍，后面不会再重复而是直接进入下一个红绿灯状态（下一个phase）。</p>
 
     </div>
 
