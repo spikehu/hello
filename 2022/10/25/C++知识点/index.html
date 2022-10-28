@@ -28,7 +28,7 @@
 <meta property="og:description" content="C++基础知识静态成员变量">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-10-25T07:19:28.000Z">
-<meta property="article:modified_time" content="2022-10-27T01:49:19.786Z">
+<meta property="article:modified_time" content="2022-10-28T13:39:51.559Z">
 <meta property="article:author" content="Spike Hu">
 <meta property="article:tag" content="-C++primer -C++">
 <meta name="twitter:card" content="summary">
@@ -110,7 +110,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">C++基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.</span> <span class="nav-text">静态成员变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%B1%BB-%E7%AE%80%E5%8D%95%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">对象和类-简单对象模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="nav-number">1.2.</span> <span class="nav-text">关系运算符重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A6%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="nav-number">1.3.</span> <span class="nav-text">左移运算符重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E4%B8%8B%E6%A0%87%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.4.</span> <span class="nav-text">重载下标运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.5.</span> <span class="nav-text">重载赋值运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%B1%BB-%E9%87%8D%E8%BD%BDnew-amp-delete%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.6.</span> <span class="nav-text">使用类-重载new &amp; delete运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B1%A0"><span class="nav-number">1.7.</span> <span class="nav-text">内存池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E6%8B%AC%E5%8F%B7%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.8.</span> <span class="nav-text">重载括号运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E4%B8%80%E5%85%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.9.</span> <span class="nav-text">重载一元运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.10.</span> <span class="nav-text">自动类型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="nav-number">1.11.</span> <span class="nav-text">转换函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E7%BB%A7%E6%89%BF"><span class="nav-number">1.12.</span> <span class="nav-text">类的继承</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">C++基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.</span> <span class="nav-text">静态成员变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%B1%BB-%E7%AE%80%E5%8D%95%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">对象和类-简单对象模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="nav-number">1.2.</span> <span class="nav-text">关系运算符重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A6%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="nav-number">1.3.</span> <span class="nav-text">左移运算符重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E4%B8%8B%E6%A0%87%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.4.</span> <span class="nav-text">重载下标运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.5.</span> <span class="nav-text">重载赋值运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%B1%BB-%E9%87%8D%E8%BD%BDnew-amp-delete%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.6.</span> <span class="nav-text">使用类-重载new &amp; delete运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B1%A0"><span class="nav-number">1.7.</span> <span class="nav-text">内存池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E6%8B%AC%E5%8F%B7%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.8.</span> <span class="nav-text">重载括号运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E4%B8%80%E5%85%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.9.</span> <span class="nav-text">重载一元运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.10.</span> <span class="nav-text">自动类型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="nav-number">1.11.</span> <span class="nav-text">转换函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E7%BB%A7%E6%89%BF"><span class="nav-number">1.12.</span> <span class="nav-text">类的继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E7%BB%A7%E6%89%BF-%E7%BB%A7%E6%89%BF%E7%9A%84%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.13.</span> <span class="nav-text">类继承-继承的对象模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%9E%84%E9%80%A0%E5%9F%BA%E7%B1%BB"><span class="nav-number">1.14.</span> <span class="nav-text">如何构造基类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8D%E5%AD%97%E9%81%AE%E8%94%BD"><span class="nav-number">1.15.</span> <span class="nav-text">名字遮蔽</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E7%9A%84%E7%89%B9%E6%AE%8A%E5%85%B3%E7%B3%BB"><span class="nav-number">1.16.</span> <span class="nav-text">继承的特殊关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%BB%A7%E6%89%BF%E4%B8%8E%E8%99%9A%E7%BB%A7%E6%89%BF"><span class="nav-number">1.17.</span> <span class="nav-text">多继承与虚继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%A4%9A%E6%80%81-%E5%A4%9A%E6%80%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.18.</span> <span class="nav-text">类多态-多态的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%80%81%E7%9A%84%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.19.</span> <span class="nav-text">多态的内存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%9E%90%E6%9E%84%E6%B4%BE%E7%94%9F%E7%B1%BB"><span class="nav-number">1.20.</span> <span class="nav-text">如何析构派生类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0%E5%92%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-number">1.21.</span> <span class="nav-text">纯虚函数和抽象类</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -209,7 +209,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-27 09:49:19" itemprop="dateModified" datetime="2022-10-27T09:49:19+08:00">2022-10-27</time>
+      <time title="Modified: 2022-10-28 21:39:51" itemprop="dateModified" datetime="2022-10-28T21:39:51+08:00">2022-10-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -432,6 +432,46 @@ using 基类::基类成员变量
 private:
 using 基类：：基类成员变量
 </code></pre>
+<h2 id="类继承-继承的对象模型"><a href="#类继承-继承的对象模型" class="headerlink" title="类继承-继承的对象模型"></a>类继承-继承的对象模型</h2><ol>
+<li>创建派生类对象时，先调用基类的构造函数，在调用派生类的构造函数。</li>
+<li>销毁派生类对象时，先调用派生类的析构函数，在调用基类的析构函数</li>
+<li>创建派生类对象时只会申请一次内存，派生类对象包含了基类对象的内存空间，this指针相同的</li>
+<li>创建派生类对象时，先初始化基类对象，再初始化派生类对象</li>
+<li>再VS中，用cl.exe可以查看类的内存模型</li>
+<li>对派生类对象用sizeof得到的是基类所有成隐患（包括私有成员）+派生类对象所有成员的大小</li>
+<li>在C++中，不同继承方式的访问权限知识语法上的处理</li>
+<li>对派生类对象用memset()会清空基类私有成员</li>
+<li>用指针可以访问到基类的私有成员（没有内存对齐，没有占位符）</li>
+</ol>
+<h2 id="如何构造基类"><a href="#如何构造基类" class="headerlink" title="如何构造基类"></a>如何构造基类</h2><ul>
+<li>基类的成员变量由基类的构造函数初始化 ，派生类新增的成员变量由派生类的构造函数初始化</li>
+</ul>
+<h2 id="名字遮蔽"><a href="#名字遮蔽" class="headerlink" title="名字遮蔽"></a>名字遮蔽</h2><ul>
+<li>如果派生类中的成员和基类中的成员重名，通过派生类对象或者在派生类的成员函数中使用该成员时，将使用派生类新增的成员，而不是基类的。<strong>注意：基类的成员函数和派生类的成员函数不会构成重载，如果派生类有同名函数，那么就会遮蔽基类中的所有同名函数</strong></li>
+</ul>
+<h2 id="继承的特殊关系"><a href="#继承的特殊关系" class="headerlink" title="继承的特殊关系"></a>继承的特殊关系</h2><p>注意：</p>
+<ul>
+<li>基类指针或引用只能调用基类的方法，不能调用派生类的方法</li>
+<li>可以用派生类构造基类</li>
+<li>如果函数的形参是基类，实参可以用派生类</li>
+<li>C++要求指针引用类型与赋给的类型匹配，这一规则对继承来说是例外。</li>
+</ul>
+<h2 id="多继承与虚继承"><a href="#多继承与虚继承" class="headerlink" title="多继承与虚继承"></a>多继承与虚继承</h2><p>使用virtual关键字避免二义性和数据冗余</p>
+<h2 id="类多态-多态的基本概念"><a href="#类多态-多态的基本概念" class="headerlink" title="类多态-多态的基本概念"></a>类多态-多态的基本概念</h2><p>如果基类指针只能调用基类的成员函数，不能调用派生类的。</p>
+<p>使用virtual关键字可以使得调用的是派生类的成员函数，通过派生类的成员函数还可以访问派生类的成员变量。</p>
+<h2 id="多态的内存模型"><a href="#多态的内存模型" class="headerlink" title="多态的内存模型"></a>多态的内存模型</h2><ul>
+<li>静态多态：编译时的多态；在编译时期确定要执行的函数地址；主要有函数重载和函数模板。</li>
+<li>动态多态：即动态绑定，在运行时采取确定对象类型和正确选择需要调用的函数，一般用于解决基类指针或引用派生类对象调用类中重写的方法（函数）时出现的问题。</li>
+</ul>
+<h2 id="如何析构派生类"><a href="#如何析构派生类" class="headerlink" title="如何析构派生类"></a>如何析构派生类</h2><ul>
+<li>在生成过程中，一般是先调用基类的构造函数，在调用派生类的构造函数，销毁时候就是先调用派生类的析构函数，在调用基类的析构函数。</li>
+<li>如果时多态的话，基类就要提供一个虚析构函数</li>
+<li>在析构函数中销毁内存时，记得将指针指向空</li>
+</ul>
+<h2 id="纯虚函数和抽象类"><a href="#纯虚函数和抽象类" class="headerlink" title="纯虚函数和抽象类"></a>纯虚函数和抽象类</h2><ul>
+<li>virtual 返回值类型 函数名（参数列表）&#x3D;0</li>
+<li>纯虚析构函数必须实现</li>
+</ul>
 
     </div>
 
