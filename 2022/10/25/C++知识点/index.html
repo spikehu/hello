@@ -28,7 +28,7 @@
 <meta property="og:description" content="C++基础知识静态成员变量">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-10-25T07:19:28.000Z">
-<meta property="article:modified_time" content="2022-10-30T14:13:01.732Z">
+<meta property="article:modified_time" content="2022-10-31T14:32:45.808Z">
 <meta property="article:author" content="Spike Hu">
 <meta property="article:tag" content="-C++primer -C++">
 <meta name="twitter:card" content="summary">
@@ -110,7 +110,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">C++基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.</span> <span class="nav-text">静态成员变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%B1%BB-%E7%AE%80%E5%8D%95%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">对象和类-简单对象模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="nav-number">1.2.</span> <span class="nav-text">关系运算符重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A6%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="nav-number">1.3.</span> <span class="nav-text">左移运算符重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E4%B8%8B%E6%A0%87%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.4.</span> <span class="nav-text">重载下标运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.5.</span> <span class="nav-text">重载赋值运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%B1%BB-%E9%87%8D%E8%BD%BDnew-amp-delete%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.6.</span> <span class="nav-text">使用类-重载new &amp; delete运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B1%A0"><span class="nav-number">1.7.</span> <span class="nav-text">内存池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E6%8B%AC%E5%8F%B7%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.8.</span> <span class="nav-text">重载括号运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E4%B8%80%E5%85%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.9.</span> <span class="nav-text">重载一元运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.10.</span> <span class="nav-text">自动类型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="nav-number">1.11.</span> <span class="nav-text">转换函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E7%BB%A7%E6%89%BF"><span class="nav-number">1.12.</span> <span class="nav-text">类的继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E7%BB%A7%E6%89%BF-%E7%BB%A7%E6%89%BF%E7%9A%84%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.13.</span> <span class="nav-text">类继承-继承的对象模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%9E%84%E9%80%A0%E5%9F%BA%E7%B1%BB"><span class="nav-number">1.14.</span> <span class="nav-text">如何构造基类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8D%E5%AD%97%E9%81%AE%E8%94%BD"><span class="nav-number">1.15.</span> <span class="nav-text">名字遮蔽</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E7%9A%84%E7%89%B9%E6%AE%8A%E5%85%B3%E7%B3%BB"><span class="nav-number">1.16.</span> <span class="nav-text">继承的特殊关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%BB%A7%E6%89%BF%E4%B8%8E%E8%99%9A%E7%BB%A7%E6%89%BF"><span class="nav-number">1.17.</span> <span class="nav-text">多继承与虚继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%A4%9A%E6%80%81-%E5%A4%9A%E6%80%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.18.</span> <span class="nav-text">类多态-多态的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%80%81%E7%9A%84%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.19.</span> <span class="nav-text">多态的内存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%9E%90%E6%9E%84%E6%B4%BE%E7%94%9F%E7%B1%BB"><span class="nav-number">1.20.</span> <span class="nav-text">如何析构派生类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0%E5%92%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-number">1.21.</span> <span class="nav-text">纯虚函数和抽象类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E9%98%B6%E6%AE%B5%E7%B1%BB%E5%9E%8B%E8%AF%86%E5%88%AB-dynamic-cast"><span class="nav-number">1.22.</span> <span class="nav-text">运行阶段类型识别 dynamic_cast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#typeid%E8%BF%90%E7%AE%97%E7%AC%A6%E5%92%8Ctype-info%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.23.</span> <span class="nav-text">typeid运算符和type_info运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#auto%E8%87%AA%E5%8A%A8%E6%8E%A8%E5%AF%BC%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.24.</span> <span class="nav-text">auto自动推导类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.25.</span> <span class="nav-text">函数模板的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-1"><span class="nav-number">1.26.</span> <span class="nav-text">函数模板的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%85%B7%E4%BD%93%E5%8C%96"><span class="nav-number">1.27.</span> <span class="nav-text">函数模板的具体化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%8C%96"><span class="nav-number">1.27.1.</span> <span class="nav-text">具体化</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">C++基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.</span> <span class="nav-text">静态成员变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%B1%BB-%E7%AE%80%E5%8D%95%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">对象和类-简单对象模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="nav-number">1.2.</span> <span class="nav-text">关系运算符重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A6%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="nav-number">1.3.</span> <span class="nav-text">左移运算符重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E4%B8%8B%E6%A0%87%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.4.</span> <span class="nav-text">重载下标运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.5.</span> <span class="nav-text">重载赋值运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%B1%BB-%E9%87%8D%E8%BD%BDnew-amp-delete%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.6.</span> <span class="nav-text">使用类-重载new &amp; delete运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B1%A0"><span class="nav-number">1.7.</span> <span class="nav-text">内存池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E6%8B%AC%E5%8F%B7%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.8.</span> <span class="nav-text">重载括号运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E4%B8%80%E5%85%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.9.</span> <span class="nav-text">重载一元运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.10.</span> <span class="nav-text">自动类型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="nav-number">1.11.</span> <span class="nav-text">转换函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E7%BB%A7%E6%89%BF"><span class="nav-number">1.12.</span> <span class="nav-text">类的继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E7%BB%A7%E6%89%BF-%E7%BB%A7%E6%89%BF%E7%9A%84%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.13.</span> <span class="nav-text">类继承-继承的对象模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%9E%84%E9%80%A0%E5%9F%BA%E7%B1%BB"><span class="nav-number">1.14.</span> <span class="nav-text">如何构造基类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8D%E5%AD%97%E9%81%AE%E8%94%BD"><span class="nav-number">1.15.</span> <span class="nav-text">名字遮蔽</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E7%9A%84%E7%89%B9%E6%AE%8A%E5%85%B3%E7%B3%BB"><span class="nav-number">1.16.</span> <span class="nav-text">继承的特殊关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%BB%A7%E6%89%BF%E4%B8%8E%E8%99%9A%E7%BB%A7%E6%89%BF"><span class="nav-number">1.17.</span> <span class="nav-text">多继承与虚继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%A4%9A%E6%80%81-%E5%A4%9A%E6%80%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.18.</span> <span class="nav-text">类多态-多态的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%80%81%E7%9A%84%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.19.</span> <span class="nav-text">多态的内存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%9E%90%E6%9E%84%E6%B4%BE%E7%94%9F%E7%B1%BB"><span class="nav-number">1.20.</span> <span class="nav-text">如何析构派生类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0%E5%92%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-number">1.21.</span> <span class="nav-text">纯虚函数和抽象类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E9%98%B6%E6%AE%B5%E7%B1%BB%E5%9E%8B%E8%AF%86%E5%88%AB-dynamic-cast"><span class="nav-number">1.22.</span> <span class="nav-text">运行阶段类型识别 dynamic_cast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#typeid%E8%BF%90%E7%AE%97%E7%AC%A6%E5%92%8Ctype-info%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.23.</span> <span class="nav-text">typeid运算符和type_info运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#auto%E8%87%AA%E5%8A%A8%E6%8E%A8%E5%AF%BC%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.24.</span> <span class="nav-text">auto自动推导类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.25.</span> <span class="nav-text">函数模板的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-1"><span class="nav-number">1.26.</span> <span class="nav-text">函数模板的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%85%B7%E4%BD%93%E5%8C%96"><span class="nav-number">1.27.</span> <span class="nav-text">函数模板的具体化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%8C%96"><span class="nav-number">1.27.1.</span> <span class="nav-text">具体化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF%E5%88%86%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99"><span class="nav-number">1.28.</span> <span class="nav-text">函数模板分文件编写</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF%E9%AB%98%E7%BA%A7"><span class="nav-number">1.28.0.1.</span> <span class="nav-text">函数模板高级</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.29.</span> <span class="nav-text">类模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%B1%BB%E7%9A%84%E5%AE%9E%E4%BE%8B-%E6%A0%88"><span class="nav-number">1.30.</span> <span class="nav-text">模板类的实例-栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%B1%BB%E7%9A%84%E7%A4%BA%E4%BE%8B%E2%80%93%E6%95%B0%E7%BB%84"><span class="nav-number">1.31.</span> <span class="nav-text">模板类的示例–数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B5%8C%E5%A5%97%E5%92%8C%E9%80%92%E5%BD%92%E4%BD%BF%E7%94%A8%E6%A8%A1%E6%9D%BF%E7%B1%BB"><span class="nav-number">1.32.</span> <span class="nav-text">嵌套和递归使用模板类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E6%A8%A1%E6%9D%BF%E5%85%B7%E4%BD%93%E5%8C%96"><span class="nav-number">1.33.</span> <span class="nav-text">类模板具体化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%B1%BB%E4%B8%8E%E7%BB%A7%E6%89%BF"><span class="nav-number">1.34.</span> <span class="nav-text">模板类与继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E6%A8%A1%E6%9D%BF-%E6%A8%A1%E6%9D%BF%E7%B1%BB%E4%B8%8E%E5%87%BD%E6%95%B0"><span class="nav-number">1.35.</span> <span class="nav-text">类模板-模板类与函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%B1%BB%E4%B8%8E%E5%8F%8B%E5%85%83"><span class="nav-number">1.36.</span> <span class="nav-text">模板类与友元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.37.</span> <span class="nav-text">模板类的成员模板</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -209,7 +209,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-30 22:13:01" itemprop="dateModified" datetime="2022-10-30T22:13:01+08:00">2022-10-30</time>
+      <time title="Modified: 2022-10-31 22:32:45" itemprop="dateModified" datetime="2022-10-31T22:32:45+08:00">2022-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -495,7 +495,357 @@ using 基类：：基类成员变量
 <li>如果要发生类型转换，不需要转换的更优先</li>
 </ul>
 <h3 id="具体化"><a href="#具体化" class="headerlink" title="具体化"></a>具体化</h3><p>template&lt;&gt; 函数声明或者定义</p>
+<h2 id="函数模板分文件编写"><a href="#函数模板分文件编写" class="headerlink" title="函数模板分文件编写"></a>函数模板分文件编写</h2><p>函数模板在头文件中，函数模板的具体化放在源文件中。</p>
+<h4 id="函数模板高级"><a href="#函数模板高级" class="headerlink" title="函数模板高级"></a>函数模板高级</h4><p>如果使用如下形式函数：</p>
+<pre><code class="c++">template &lt;class T1,class T2&gt;
+void func(T1 a , T2 b)
+//有如下代码
+    a+b
+    //如何得到a+b结果的类型
+</code></pre>
+<p> 确定a+b的结果类型可以使用decltype,或者auto ，decltype的详细用法可以看书。</p>
+<p>如果有返回值，可以使用auto func()-&gt;delctype(表达式或者值),后置返回类型</p>
+<h2 id="类模板"><a href="#类模板" class="headerlink" title="类模板"></a>类模板</h2><p>类模板只能显示指定模板的类型。</p>
+<p>类模板可以为通用数据类型指定缺省的数据类型（C++11标准的函数模板也可以）</p>
+<p>可以在类外定义函数</p>
+<pre><code>template&lt;class T1,class T2&gt;
+T2 AA&lt;T1,T2&gt;::getb()
+</code></pre>
+<h2 id="模板类的实例-栈"><a href="#模板类的实例-栈" class="headerlink" title="模板类的实例-栈"></a>模板类的实例-栈</h2><pre><code class="c++">#include &lt;iostream&gt;
 
+
+//实现一个简单的栈
+using namespace  std;
+template&lt;class dataType&gt;
+class Stack
+&#123;
+private:
+    int m_size;
+    dataType* m_item;
+    int m_top;
+public:
+    Stack(int size):m_size(size)
+    &#123;
+        m_item   =  new dataType[size];
+        m_top    = -1;
+    &#125;
+    //判断栈是否为空
+    bool empty()
+    &#123;
+        return m_top == -1;
+    &#125;
+    bool full()
+    &#123;
+        return m_top== m_size -1;
+    &#125;
+    //出栈
+    void    pop()
+    &#123;
+        m_top--;
+    &#125;
+    //入栈
+    void push(dataType item)
+    &#123;
+        m_top++;
+        m_item[m_top]= item;
+    &#125;
+    //返回栈顶元素
+    dataType top()
+    &#123;
+        return m_item[m_top];
+    &#125;
+    ~Stack()
+    &#123;
+        delete[] m_item;
+        m_item = nullptr;
+    &#125;
+
+
+&#125;;
+
+int main() &#123;
+    Stack&lt;string&gt; stk(5);
+    stk.push(&quot;a&quot;);
+    stk.push(&quot;b&quot;);
+    stk.push(&quot;c&quot;);
+    stk.push(&quot;d&quot;);
+    stk.push(&quot;e&quot;);
+    while(!stk.empty())
+    &#123;
+            cout&lt;&lt;stk.top()&lt;&lt;endl;
+            stk.pop();
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<p>可以先实现普通的类，然后再改成模板类</p>
+<h2 id="模板类的示例–数组"><a href="#模板类的示例–数组" class="headerlink" title="模板类的示例–数组"></a>模板类的示例–数组</h2><p>类模板可以有非通用类型参数：</p>
+<ol>
+<li>通常是整型（C++20标准可以用其它）</li>
+<li>实例化模板时必须用常量表达式</li>
+<li>模板中不能修改参数的值</li>
+</ol>
+<pre><code class="c++">//实现一个简单的vector
+template&lt;class  T&gt;
+class Vector
+&#123;
+public:
+    int m_size;
+    T* m_item;
+    int m_item_cnt;
+public:
+    Vector():m_size(0),m_item_cnt(0)
+    &#123;
+
+    &#125;
+    Vector(int size):m_size(size),m_item_cnt(0)
+    &#123;
+        m_item  = new T[m_size];
+    &#125;
+    void push_back(T item)
+    &#123;
+        if(m_item_cnt == m_size)resize(m_size+5);
+        m_item[m_item_cnt] = item;
+        m_item_cnt++;
+    &#125;
+
+    ~Vector()
+    &#123;
+        delete[] m_item;
+        m_item  = nullptr;
+    &#125;
+    int size()
+    &#123;
+        return m_item_cnt;
+    &#125;
+    T operator[](int index)
+    &#123;
+        return m_item[index];
+    &#125;
+
+private:
+    void resize(int size)
+    &#123;
+        //重新开辟一块更大的空间，并把原来空间的值复制到新的空间
+        T*   p = new T[m_size + size];
+        for(int i = 0 ;i &lt; m_item_cnt;i++)
+        &#123;
+            p[i] = m_item[i];
+        &#125;
+        delete[] m_item;
+        m_item = p;
+    &#125;
+
+
+&#125;;
+</code></pre>
+<h2 id="嵌套和递归使用模板类"><a href="#嵌套和递归使用模板类" class="headerlink" title="嵌套和递归使用模板类"></a>嵌套和递归使用模板类</h2><pre><code class="C++">#include &lt;iostream&gt;
+
+
+//实现一个简单的栈
+using namespace  std;
+template&lt;class dataType&gt;
+class Stack
+&#123;
+private:
+    int m_size;
+    dataType* m_item;
+    int m_top;
+public:
+    Stack():m_size(2),m_top(-1)
+    &#123;
+        m_item  = new dataType[m_size];
+    &#125;
+    Stack(int size):m_size(size)
+    &#123;
+        m_item   =  new dataType[size];
+        m_top    = -1;
+    &#125;
+    //判断栈是否为空
+    bool empty()
+    &#123;
+
+        return m_top == -1;
+    &#125;
+    bool full()
+    &#123;
+        return m_top== m_size -1;
+    &#125;
+    //出栈
+    void    pop()
+    &#123;
+        m_top--;
+    &#125;
+    //入栈
+    void push(dataType item)
+    &#123;
+        if(m_size==m_top+1)resize(4);
+        m_top++;
+        m_item[m_top]= item;
+    &#125;
+    void resize(int size)
+    &#123;
+          dataType* p = new dataType[m_size+size];
+          m_size  +=size;
+          for(int i =0;i &lt;= m_top;i++ )
+          &#123;
+              p[i] = m_item[i];
+          &#125;
+          delete[] m_item;
+          m_item = p;
+    &#125;
+    //返回栈顶元素
+    dataType top()
+    &#123;
+        return m_item[m_top];
+    &#125;
+    ~Stack()
+    &#123;
+        delete[] m_item;
+        m_item = nullptr;
+    &#125;
+
+    //这里需要重载深拷贝
+    Stack&amp; operator=(const Stack&amp; it)
+    &#123;
+                delete[] m_item;
+                m_top = it.m_top;
+                m_size = it.m_size;
+                m_item  = new dataType[m_size];
+                //复制
+                for(int i =0 ;i&lt;m_size;i++)m_item[i] = it.m_item[i];
+                return *this;
+    &#125;
+&#125;;
+
+
+//实现一个简单的vector
+template&lt;class  T&gt;
+class Vector
+&#123;
+public:
+    int m_size;
+    T* m_item;
+    int m_item_cnt;
+public:
+    Vector():m_size(0),m_item_cnt(0)
+    &#123;
+        m_item = nullptr;
+    &#125;
+    Vector(int size):m_size(size),m_item_cnt(0)
+    &#123;
+        m_item  = new T[m_size];
+    &#125;
+    void push_back(const T&amp; item)
+    &#123;
+        if(m_item_cnt == m_size)resize(m_size+5);
+        m_item[m_item_cnt] = item;
+        m_item_cnt++;
+    &#125;
+
+    ~Vector()
+    &#123;
+        delete[] m_item;
+        m_item  = nullptr;
+    &#125;
+    int size()
+    &#123;
+        return m_item_cnt;
+    &#125;
+    T&amp; operator[](int index)
+    &#123;
+        return m_item[index];
+    &#125;
+
+private:
+    void resize(int size)
+    &#123;
+        //重新开辟一块更大的空间，并把原来空间的值复制到新的空间
+        T*   p = new T[m_size + size];
+        m_size  +=size;
+        for(int i = 0 ;i &lt; m_item_cnt;i++)
+        &#123;
+            p[i] = m_item[i];
+        &#125;
+        if(m_item!= nullptr)
+        delete[] m_item;
+        m_item = p;
+    &#125;
+&#125;;
+int main() &#123;
+    //嵌套使用
+    Vector&lt;Stack&lt;int&gt;&gt; vs;
+    Stack&lt;int&gt; stk1;
+    stk1.push(0);
+    stk1.push(1);
+    stk1.push(2);
+    stk1.push(2);
+    stk1.push(3);
+    stk1.push(4);
+
+    Stack&lt;int&gt; stk2;
+    stk2.push(2);
+    stk2.push(3);
+    stk2.push(4);
+    stk2.push(0);
+    stk2.push(1);
+    stk2.push(2);
+
+    vs.push_back(stk1);
+    vs.push_back(stk2);
+
+    for(int i=0;i&lt;vs.size();i++)
+    &#123;
+        while(!vs[i].empty())
+        &#123;
+            cout&lt;&lt;vs[i].top()&lt;&lt;&quot; &quot;;
+            vs[i].pop();
+        &#125;
+        cout&lt;&lt;endl;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<p>拷贝构造这里还是要注意一下，如果是类的话。</p>
+<p>还是就是操作符重载，返回的到底是什么的注意。</p>
+<h2 id="类模板具体化"><a href="#类模板具体化" class="headerlink" title="类模板具体化"></a>类模板具体化</h2><p>类似函数模板具体化，不过多了一个部分具体化。</p>
+<pre><code class="c++">template&lt;class T1,class T2&gt;
+class AA
+&#123;
+    ....
+&#125;
+//完全具体化
+template&lt;&gt;
+class AA&lt;string ,int&gt;
+&#123;
+    ....
+&#125;
+//部分具体化
+template&lt;class T&gt;
+class AA&lt;T,string&gt;
+&#123;
+    ....
+&#125;
+</code></pre>
+<h2 id="模板类与继承"><a href="#模板类与继承" class="headerlink" title="模板类与继承"></a>模板类与继承</h2><ol>
+<li>模板类继承普通类（常见）</li>
+<li>普通类继承模板类的实例化版本</li>
+<li>普通类继承模板类（常见）</li>
+<li>模板类继承模板类</li>
+<li>模板类继承模板参数给出的基类（不能是模板类）</li>
+</ol>
+<h2 id="类模板-模板类与函数"><a href="#类模板-模板类与函数" class="headerlink" title="类模板-模板类与函数"></a>类模板-模板类与函数</h2><pre><code class="c++">template&lt;typename T&gt;
+T func(T&amp; a)
+&#123;
+    ...
+&#125;
+</code></pre>
+<h2 id="模板类与友元"><a href="#模板类与友元" class="headerlink" title="模板类与友元"></a>模板类与友元</h2><ul>
+<li>非模板友元：需要在类中实现</li>
+<li>约束模板友元：在模板类的定义前面声明友元函数模板，然后再模板类中，再次声明友元函数模板</li>
+<li>非模板约束的友元函数，实例化后，每个函数都是每个类的右元</li>
+</ul>
+<h2 id="模板类的成员模板"><a href="#模板类的成员模板" class="headerlink" title="模板类的成员模板"></a>模板类的成员模板</h2>
     </div>
 
     
