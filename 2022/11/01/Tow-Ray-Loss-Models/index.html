@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="论文On the Applicability of Two-Ray Path Loss Models for Vehicular Network Simulation这篇论文主要讲了Veins中应用的信号路径衰减的模型。 无线电传播的分析模型接收功率Pr一般表示为，Lx为各种信号损失，如lage-scale path loss,determinstic small-scale fading,pro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tow-Ray-Loss-Models">
+<meta property="og:url" content="http://example.com/2022/11/01/Tow-Ray-Loss-Models/index.html">
+<meta property="og:site_name" content="哎呀，学不动了">
+<meta property="og:description" content="论文On the Applicability of Two-Ray Path Loss Models for Vehicular Network Simulation这篇论文主要讲了Veins中应用的信号路径衰减的模型。 无线电传播的分析模型接收功率Pr一般表示为，Lx为各种信号损失，如lage-scale path loss,determinstic small-scale fading,pro">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221101204413518.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221101205957332.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221101210031262.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221101210852327.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221101211222684.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221101211957786.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221101211945904.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221101211924109.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221101212410051.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221101212757751.png">
+<meta property="og:image" content="http://example.com/typora-user-images/image-20221101213235974.png">
+<meta property="article:published_time" content="2022-11-01T12:18:55.000Z">
+<meta property="article:modified_time" content="2022-11-01T13:46:15.708Z">
+<meta property="article:author" content="Spike Hu">
+<meta property="article:tag" content="-VirusPropagation -LuSTscenario -Signal Propagation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/typora-user-images/image-20221101204413518.png">
+
+
+<link rel="canonical" href="http://example.com/2022/11/01/Tow-Ray-Loss-Models/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/11/01/Tow-Ray-Loss-Models/","path":"2022/11/01/Tow-Ray-Loss-Models/","title":"Tow-Ray-Loss-Models"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Tow-Ray-Loss-Models | 哎呀，学不动了</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">哎呀，学不动了</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BA%E6%96%87On-the-Applicability-of-Two-Ray-Path-Loss-Models-for-Vehicular-Network-Simulation"><span class="nav-number">1.</span> <span class="nav-text">论文On the Applicability of Two-Ray Path Loss Models for Vehicular Network Simulation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E7%BA%BF%E7%94%B5%E4%BC%A0%E6%92%AD%E7%9A%84%E5%88%86%E6%9E%90%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">无线电传播的分析模型</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Spike Hu</p>
+  <div class="site-description" itemprop="description">长得丑，脑子也不行，只有努力咯</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/01/Tow-Ray-Loss-Models/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Spike Hu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="哎呀，学不动了">
+      <meta itemprop="description" content="长得丑，脑子也不行，只有努力咯">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Tow-Ray-Loss-Models | 哎呀，学不动了">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Tow-Ray-Loss-Models
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-11-01 20:18:55 / Modified: 21:46:15" itemprop="dateCreated datePublished" datetime="2022-11-01T20:18:55+08:00">2022-11-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/VirusPropagation/" itemprop="url" rel="index"><span itemprop="name">VirusPropagation</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="论文On-the-Applicability-of-Two-Ray-Path-Loss-Models-for-Vehicular-Network-Simulation"><a href="#论文On-the-Applicability-of-Two-Ray-Path-Loss-Models-for-Vehicular-Network-Simulation" class="headerlink" title="论文On the Applicability of Two-Ray Path Loss Models for Vehicular Network Simulation"></a>论文On the Applicability of Two-Ray Path Loss Models for Vehicular Network Simulation</h1><p>这篇论文主要讲了Veins中应用的信号路径衰减的模型。</p>
+<h2 id="无线电传播的分析模型"><a href="#无线电传播的分析模型" class="headerlink" title="无线电传播的分析模型"></a>无线电传播的分析模型</h2><p>接收功率Pr一般表示为，Lx为各种信号损失，如lage-scale path loss,determinstic small-scale fading,probabilistic loss effect.</p>
+<p><img src="/../typora-user-images/image-20221101204413518.png" alt="image-20221101204413518"></p>
+<p>这篇论文主要讨论path Loss,Free-space模型只考虑了距离d和波长λ</p>
+<p><img src="/../typora-user-images/image-20221101205957332.png" alt="image-20221101205957332"></p>
+<p>后面考虑到非理想信道根据经验进行了改进</p>
+<p><img src="/../typora-user-images/image-20221101210031262.png" alt="image-20221101210031262"></p>
+<p>但是以上没有考虑到地面反射,基于相位差φ产生Two-ray interface模型。</p>
+<p><img src="/../typora-user-images/image-20221101210852327.png" alt="image-20221101210852327"></p>
+<p>dlos与dref表示直线到达的信号与折射到达的信号的传输距离。根据波长得到相位差φ</p>
+<p><img src="/../typora-user-images/image-20221101211222684.png" alt="image-20221101211222684"></p>
+<p>ε表示固定的反射系数，θ表示反射角，在计算反射角的正弦和余弦得到最后的反射系数</p>
+<p><img src="/../typora-user-images/image-20221101211957786.png" alt="image-20221101211957786"></p>
+<p><img src="/../typora-user-images/image-20221101211945904.png" alt="image-20221101211945904"></p>
+<p><img src="/../typora-user-images/image-20221101211924109.png" alt="image-20221101211924109"></p>
+<p>由于相长或相消干扰引起的信号强度的相对变化可以通过修正方程（2）来建模</p>
+<p><img src="/../typora-user-images/image-20221101212410051.png" alt="image-20221101212410051"></p>
+<p>对于大距离d，公式可以简化为</p>
+<p><img src="/../typora-user-images/image-20221101212757751.png" alt="image-20221101212757751">    </p>
+<p>最终的模型为</p>
+<p><img src="/../typora-user-images/image-20221101213235974.png" alt="image-20221101213235974"></p>
+<p>dc为两个模型的cross over distance</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/VirusPropagation-LuSTscenario-Signal-Propagation/" rel="tag"># -VirusPropagation -LuSTscenario -Signal Propagation</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/10/26/SUMO-Traffic-Lights/" rel="prev" title="SUMO_Traffic_Lights">
+                  <i class="fa fa-chevron-left"></i> SUMO_Traffic_Lights
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Spike Hu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300,"hOffset":-15,"vOffset":-15},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

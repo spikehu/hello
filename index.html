@@ -119,7 +119,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -130,7 +130,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -204,7 +204,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-31 22:33:32" itemprop="dateModified" datetime="2022-10-31T22:33:32+08:00">2022-10-31</time>
+      <time title="Modified: 2022-11-01 22:00:35" itemprop="dateModified" datetime="2022-11-01T22:00:35+08:00">2022-11-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -235,6 +235,106 @@
             </div>
           <!--/noindex-->
         
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/01/Tow-Ray-Loss-Models/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Spike Hu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="哎呀，学不动了">
+      <meta itemprop="description" content="长得丑，脑子也不行，只有努力咯">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 哎呀，学不动了">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/11/01/Tow-Ray-Loss-Models/" class="post-title-link" itemprop="url">Tow-Ray-Loss-Models</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-11-01 20:18:55 / Modified: 21:46:15" itemprop="dateCreated datePublished" datetime="2022-11-01T20:18:55+08:00">2022-11-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/VirusPropagation/" itemprop="url" rel="index"><span itemprop="name">VirusPropagation</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="论文On-the-Applicability-of-Two-Ray-Path-Loss-Models-for-Vehicular-Network-Simulation"><a href="#论文On-the-Applicability-of-Two-Ray-Path-Loss-Models-for-Vehicular-Network-Simulation" class="headerlink" title="论文On the Applicability of Two-Ray Path Loss Models for Vehicular Network Simulation"></a>论文On the Applicability of Two-Ray Path Loss Models for Vehicular Network Simulation</h1><p>这篇论文主要讲了Veins中应用的信号路径衰减的模型。</p>
+<h2 id="无线电传播的分析模型"><a href="#无线电传播的分析模型" class="headerlink" title="无线电传播的分析模型"></a>无线电传播的分析模型</h2><p>接收功率Pr一般表示为，Lx为各种信号损失，如lage-scale path loss,determinstic small-scale fading,probabilistic loss effect.</p>
+<p><img src="/../typora-user-images/image-20221101204413518.png" alt="image-20221101204413518"></p>
+<p>这篇论文主要讨论path Loss,Free-space模型只考虑了距离d和波长λ</p>
+<p><img src="/../typora-user-images/image-20221101205957332.png" alt="image-20221101205957332"></p>
+<p>后面考虑到非理想信道根据经验进行了改进</p>
+<p><img src="/../typora-user-images/image-20221101210031262.png" alt="image-20221101210031262"></p>
+<p>但是以上没有考虑到地面反射,基于相位差φ产生Two-ray interface模型。</p>
+<p><img src="/../typora-user-images/image-20221101210852327.png" alt="image-20221101210852327"></p>
+<p>dlos与dref表示直线到达的信号与折射到达的信号的传输距离。根据波长得到相位差φ</p>
+<p><img src="/../typora-user-images/image-20221101211222684.png" alt="image-20221101211222684"></p>
+<p>ε表示固定的反射系数，θ表示反射角，在计算反射角的正弦和余弦得到最后的反射系数</p>
+<p><img src="/../typora-user-images/image-20221101211957786.png" alt="image-20221101211957786"></p>
+<p><img src="/../typora-user-images/image-20221101211945904.png" alt="image-20221101211945904"></p>
+<p><img src="/../typora-user-images/image-20221101211924109.png" alt="image-20221101211924109"></p>
+<p>由于相长或相消干扰引起的信号强度的相对变化可以通过修正方程（2）来建模</p>
+<p><img src="/../typora-user-images/image-20221101212410051.png" alt="image-20221101212410051"></p>
+<p>对于大距离d，公式可以简化为</p>
+<p><img src="/../typora-user-images/image-20221101212757751.png" alt="image-20221101212757751">    </p>
+<p>最终的模型为</p>
+<p><img src="/../typora-user-images/image-20221101213235974.png" alt="image-20221101213235974"></p>
+<p>dc为两个模型的cross over distance</p>
+
       
     </div>
 
@@ -475,7 +575,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-11-01 09:34:39" itemprop="dateModified" datetime="2022-11-01T09:34:39+08:00">2022-11-01</time>
+      <time title="Modified: 2022-11-01 21:52:00" itemprop="dateModified" datetime="2022-11-01T21:52:00+08:00">2022-11-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -939,93 +1039,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/10/20/%E5%A4%A7%E7%AB%AF%E5%AD%98%E5%82%A8%E5%92%8C%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/19/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6%E6%97%A0%E6%B3%95%E7%94%9F%E6%88%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Spike Hu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="哎呀，学不动了">
-      <meta itemprop="description" content="长得丑，脑子也不行，只有努力咯">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 哎呀，学不动了">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/10/19/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6%E6%97%A0%E6%B3%95%E7%94%9F%E6%88%90/" class="post-title-link" itemprop="url">内核转储文件无法生成</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2022-10-19 21:44:46 / Modified: 22:51:31" itemprop="dateCreated datePublished" datetime="2022-10-19T21:44:46+08:00">2022-10-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GDB/" itemprop="url" rel="index"><span itemprop="name">GDB</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="ubuntu内核转储文件无法生成问题"><a href="#ubuntu内核转储文件无法生成问题" class="headerlink" title="ubuntu内核转储文件无法生成问题"></a>ubuntu内核转储文件无法生成问题</h1><p>在运行程序出现*Segmentation fault (core dumped)*本该在本目录下生成内核转储core文件，但是却怎么也没找到。</p>
-<p>参考连接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_60028455/article/details/125977337">https://blog.csdn.net/m0_60028455/article/details/125977337</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/10/19/%E5%86%85%E6%A0%B8%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6%E6%97%A0%E6%B3%95%E7%94%9F%E6%88%90/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
