@@ -28,7 +28,7 @@
 <meta property="og:description" content="C++基础知识静态成员变量">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-10-25T07:19:28.000Z">
-<meta property="article:modified_time" content="2022-10-31T14:32:45.808Z">
+<meta property="article:modified_time" content="2022-11-01T01:34:39.864Z">
 <meta property="article:author" content="Spike Hu">
 <meta property="article:tag" content="-C++primer -C++">
 <meta name="twitter:card" content="summary">
@@ -209,7 +209,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-31 22:32:45" itemprop="dateModified" datetime="2022-10-31T22:32:45+08:00">2022-10-31</time>
+      <time title="Modified: 2022-11-01 09:34:39" itemprop="dateModified" datetime="2022-11-01T09:34:39+08:00">2022-11-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -827,13 +827,246 @@ class AA&lt;T,string&gt;
     ....
 &#125;
 </code></pre>
+<pre><code class="c++">#include &lt;iostream&gt;
+//模板类具体化实现
+#include &lt;string&gt;
+using namespace  std;
+template&lt;class T1,class T2&gt;
+class AA
+&#123;
+public:
+    T1 a;
+    T2 b;
+    void func()
+    &#123;
+        cout&lt;&lt;&quot;模板类AA&lt;T1,T2&gt;&quot;&lt;&lt;endl;
+    &#125;
+
+&#125;;
+//模板类具体化实现
+template&lt;&gt; class AA&lt;string ,int&gt;
+&#123;
+public:
+    string a;
+    int b;
+    void func()
+    &#123;
+        cout&lt;&lt;&quot;模板类AA&lt;string,int&gt; 具体化实现&quot;&lt;&lt;endl;
+    &#125;
+&#125;;
+//模板类半具体化实现
+template&lt;class T&gt;
+class AA&lt;T,int&gt;
+&#123;
+public:
+    T a;
+    int b;
+    void func()
+    &#123;
+        cout&lt;&lt;&quot;模板类部分具体化AA&lt;T,int&gt;&quot;&lt;&lt;endl;
+    &#125;
+&#125;;
+int main() &#123;
+    AA&lt;char ,char&gt; a1;
+    AA&lt;string ,int&gt; a2;
+    AA&lt;char ,int&gt; a3;
+
+    a1.func();
+    a2.func();
+    a3.func();
+    return 0;
+&#125;
+</code></pre>
 <h2 id="模板类与继承"><a href="#模板类与继承" class="headerlink" title="模板类与继承"></a>模板类与继承</h2><ol>
 <li>模板类继承普通类（常见）</li>
+</ol>
+<pre><code class="c++">#include &lt;iostream&gt;
+//模板类继承普通类
+#include &lt;string&gt;
+using namespace  std;
+class  B
+&#123;
+public:
+    void func1()
+    &#123;
+        cout&lt;&lt;&quot;普通类B&quot;&lt;&lt;endl;
+    &#125;
+
+&#125;;
+template&lt;class T&gt;
+class A :public B
+&#123;
+public:
+    T a;
+    void func()
+    &#123;
+        cout&lt;&lt;&quot;模板类A&lt;T&gt;&quot;&lt;&lt;endl;
+    &#125;
+&#125;;
+
+
+
+int main() &#123;
+    A&lt;int&gt; a;
+    a.func1();
+    a.func();
+    return 0;
+&#125;
+</code></pre>
+<ol>
 <li>普通类继承模板类的实例化版本</li>
-<li>普通类继承模板类（常见）</li>
+</ol>
+<pre><code class="c++">#include &lt;iostream&gt;
+//模板类继承普通类
+#include &lt;string&gt;
+using namespace  std;
+
+template&lt;class T&gt;
+class A
+&#123;
+public:
+    T a;
+    void func()
+    &#123;
+        cout&lt;&lt;&quot;模板类A&lt;T&gt;&quot;&lt;&lt;endl;
+    &#125;
+&#125;;
+class  B:public A&lt;int&gt;
+&#123;
+public:
+    void func1()
+    &#123;
+        cout&lt;&lt;&quot;普通类B&quot;&lt;&lt;endl;
+    &#125;
+
+&#125;;
+
+
+
+int main() &#123;
+    B b;
+    b.func1();
+    b.func();
+    return 0;
+&#125;
+</code></pre>
+<ol>
+<li>普通类继承模板类（常见）,此时普通类变成了模板类</li>
+</ol>
+<pre><code class="c++">#include &lt;iostream&gt;
+//模板类继承普通类
+#include &lt;string&gt;
+using namespace  std;
+
+template&lt;class T&gt;
+class A
+&#123;
+public:
+    T a;
+    void func()
+    &#123;
+        cout&lt;&lt;&quot;模板类A&lt;T&gt;&quot;&lt;&lt;endl;
+    &#125;
+&#125;;
+template&lt;class T&gt;
+class  B:public A&lt;T&gt;
+&#123;
+public:
+    void func1()
+    &#123;
+        cout&lt;&lt;&quot;普通类B&quot;&lt;&lt;endl;
+    &#125;
+
+&#125;;
+
+
+
+int main() &#123;
+    B&lt;int&gt; b;
+    b.func1();
+    b.func();
+    return 0;
+&#125;
+</code></pre>
+<ol>
 <li>模板类继承模板类</li>
+</ol>
+<pre><code class="c++">#include &lt;iostream&gt;
+//模板类继承普通类
+#include &lt;string&gt;
+using namespace  std;
+
+template&lt;class T&gt;
+class A
+&#123;
+public:
+    T a;
+    void func()
+    &#123;
+        cout&lt;&lt;&quot;模板类A&lt;T&gt;&quot;&lt;&lt;endl;
+    &#125;
+&#125;;
+template&lt;class T,class T2&gt;
+class  B:public A&lt;T2&gt;
+&#123;
+public:
+    T a;
+    void func1()
+    &#123;
+        cout&lt;&lt;&quot;普通类B&quot;&lt;&lt;endl;
+    &#125;
+
+&#125;;
+
+
+
+int main() &#123;
+    B&lt;int,int&gt; b;
+    b.func1();
+    b.func();
+    return 0;
+&#125;
+</code></pre>
+<ol>
 <li>模板类继承模板参数给出的基类（不能是模板类）</li>
 </ol>
+<pre><code class="C++">#include &lt;iostream&gt;
+//模板类继承普通类
+#include &lt;string&gt;
+using namespace  std;
+
+template&lt;class T&gt;
+class A
+&#123;
+public:
+    T a;
+    void func()
+    &#123;
+        cout&lt;&lt;&quot;模板类A&lt;T&gt;&quot;&lt;&lt;endl;
+    &#125;
+&#125;;
+template&lt;class T,class  T2&gt;
+class  B:public T2
+&#123;
+public:
+    T a;
+    B():T2()&#123;&#125;
+    void func1()
+    &#123;
+        cout&lt;&lt;&quot;模板类B&quot;&lt;&lt;endl;
+    &#125;
+
+&#125;;
+
+
+
+int main() &#123;
+    B&lt;int,A&lt;int&gt;&gt; b;
+    b.func1();
+    b.func();
+    return 0;
+&#125;
+</code></pre>
 <h2 id="类模板-模板类与函数"><a href="#类模板-模板类与函数" class="headerlink" title="类模板-模板类与函数"></a>类模板-模板类与函数</h2><pre><code class="c++">template&lt;typename T&gt;
 T func(T&amp; a)
 &#123;
